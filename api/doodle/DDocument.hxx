@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include "DObject.hpp"
+#incldue "DDocument.hpp"
+
+namespace yq::doodle {
+    template <SomeDObject S>
+    S*      DDocument::create()
+    {
+        return static_cast<S*>(create(meta<S>()));
+    }
+}
