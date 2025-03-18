@@ -1,2 +1,3 @@
-# doodle
-Sketching utility
+# YQ Doodle
+
+Sketching utility leveraging the your quill libraries.
