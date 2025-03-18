@@ -1,2 +1,2 @@
-# yq-doodle
+# doodle
 Sketching utility
