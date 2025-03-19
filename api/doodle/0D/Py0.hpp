@@ -27,8 +27,8 @@ namespace yq::doodle {
         static void init_info();
 
     protected:
-        Py0(DDocument&);
-        Py0(DDocument&, const Py0&);
+        Py0(Project&);
+        Py0(Project&, const Py0&);
         ~Py0();
 
         //! Remap IDs/pointers appropriately

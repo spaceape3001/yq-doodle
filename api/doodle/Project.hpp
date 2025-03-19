@@ -10,8 +10,8 @@
 #include <doodle/bit/SStringMap.hpp>
 #include <doodle/bit/SFormat.hpp>
 #include <doodle/bit/ID.hpp>
-#include <doodle/typedef/sdocument.hpp>
-#include <doodle/typedef/sobject.hpp>
+#include <doodle/typedef/project.hpp>
+#include <doodle/typedef/dobject.hpp>
 #include <doodle/typedef/revision.hpp>
 #include <filesystem>
 #include <vector>
@@ -35,11 +35,11 @@ namespace yq::doodle {
     };
     
     //! This is more about data than anything....
-    class DDocument  {
+    class Project  {
     public:
 
-        DDocument();
-        ~DDocument();
+        Project();
+        ~Project();
     
         DObject*            object(ID);
         const DObject*      object(ID) const;
@@ -49,9 +49,9 @@ namespace yq::doodle {
 
         static bool             census(Census&, const std::filesystem::path&, SFormat fmt=SFormat::AUTO);
         
-        static DDocumentSPtr    load(shared_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
-        static DDocumentUPtr    load(unique_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
-        static DDocument*       load(raw_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static ProjectSPtr    load(shared_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static ProjectUPtr    load(unique_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static Project*       load(raw_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
     
         bool                    save(const std::filesystem::path&, SFormat sf=SFormat::AUTO) const;
         
@@ -91,10 +91,10 @@ namespace yq::doodle {
     
     private:
         friend class DObject;
-        DDocument(DDocument&&) = delete;
-        DDocument(const DDocument&) = delete;
-        DDocument& operator=(const DDocument&) = delete;
-        DDocument& operator=(DDocument&&) = delete;
+        Project(Project&&) = delete;
+        Project(const Project&) = delete;
+        Project& operator=(const Project&) = delete;
+        Project& operator=(Project&&) = delete;
 
         SStringMap                              m_attributes;
         SStringMap                              m_variables;

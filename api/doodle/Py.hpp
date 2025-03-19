@@ -30,8 +30,8 @@ namespace yq::doodle {
         static void init_info();
     
     protected:
-        Py(DDocument&);
-        Py(DDocument&, const Py&);
+        Py(Project&);
+        Py(Project&, const Py&);
         ~Py();
 
         //! Remap IDs/pointers appropriately

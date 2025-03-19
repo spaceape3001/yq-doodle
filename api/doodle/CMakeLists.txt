@@ -12,12 +12,19 @@
 
 add_library(yq_doodle SHARED
 
-    Py.cpp
-    DDocument.cpp
+    Association.cpp
+    Camera.cpp
+    Constraint.cpp
     DObject.cpp
+    Light.cpp
+    Motion.cpp
+    Project.cpp
+    Py.cpp
+    Space.cpp
     
     0D/Py0.cpp
     1D/Py1.cpp
+    2D/Py2.cpp
     3D/Py3.cpp
     4D/Py4.cpp
     

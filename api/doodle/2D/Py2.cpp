@@ -25,11 +25,11 @@ namespace yq::doodle {
         w.description("Physical Object in 2D");
     }
 
-    Py2::Py2(DDocument& doc) : Py(doc)
+    Py2::Py2(Project& prj) : Py(prj)
     {
     }
     
-    Py2::Py2(DDocument& doc, const Py2&cp) : Py(doc, cp)
+    Py2::Py2(Project& prj, const Py2&cp) : Py(prj, cp)
     {
     }
 

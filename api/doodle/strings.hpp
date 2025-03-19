@@ -60,7 +60,7 @@ namespace yq::doodle {
     static constexpr const char*    szColumn            = "column";
     static constexpr const char*    szComment           = "comment";
     static constexpr const char*    szConsole           = "console";
-    static constexpr const char*    szConstraint        = "constraint";
+    static constexpr const char*    szDConstraint        = "constraint";
     static constexpr const char*    szContext           = "context";
     static constexpr const char*    szContext_          = "_context_";
     static constexpr const char*    szCopyAssert        = "copyright_assert";

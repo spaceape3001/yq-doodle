@@ -12,13 +12,13 @@
 #include <doodle/bit/Dim.hpp>
 #include <doodle/bit/ID.hpp>
 #include <doodle/typedef/revision.hpp>
-#include <doodle/typedef/sobject.hpp>
+#include <doodle/typedef/dobject.hpp>
 #include <doodle/keywords.hpp>
 #include <unordered_map>
 
 namespace yq::doodle {
     class DObject;
-    class DDocument;
+    class Project;
     struct Remapper;
     template <typename Obj> class DObjectFixer;
     
@@ -29,8 +29,8 @@ namespace yq::doodle {
         DObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
 
         Object* create() const override { return nullptr; }
-        virtual DObject* create(DDocument&) const = 0;
-        virtual DObject* copy(DDocument&, const DObject&) const = 0;
+        virtual DObject* create(Project&) const = 0;
+        virtual DObject* copy(Project&, const DObject&) const = 0;
 
         DimFlags    supports() const { return m_supports; }
 
@@ -50,12 +50,12 @@ namespace yq::doodle {
         YQ_OBJECT_INFO(DObjectInfo)
         YQ_OBJECT_FIXER(DObjectFixer)
         YQ_OBJECT_DECLARE(DObject, Object)
-        friend class DDocument;
+        friend class Project;
     public:
 
         //! Attribute on THIS object
         std::string_view    attribute(const std::string&) const;
-        //! Attribute (either this object or parent or document)
+        //! Attribute (either this object or parent or project)
         std::string_view    attribute(const std::string&, all_k) const;
         void                attribute_erase(const std::string&);
         string_set_t        attribute_keys() const;
@@ -65,8 +65,8 @@ namespace yq::doodle {
         
         const std::string&  description() const { return m_description; }
         
-        DDocument&          document() { return m_doc; }
-        const DDocument&    document() const { return m_doc; }
+        Project&          project() { return m_prj; }
+        const Project&    project() const { return m_prj; }
 
         //! TRUE if this is an attribute on THIS object
         bool                is_attribute(const std::string&) const;
@@ -102,8 +102,8 @@ namespace yq::doodle {
 
     protected:
     
-        DObject(DDocument&);
-        DObject(DDocument&, const DObject&);
+        DObject(Project&);
+        DObject(Project&, const DObject&);
         ~DObject();
 
         //! Remap IDs/pointers appropriately (call base class first)
@@ -117,7 +117,7 @@ namespace yq::doodle {
         DObject& operator=(const DObject&) = delete;
         DObject& operator=(DObject&&) = delete;
 
-        DDocument&              m_doc;
+        Project&              m_prj;
         const ID                m_id;
         SStringMap              m_attributes;
         ID                      m_parent;

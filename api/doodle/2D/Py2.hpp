@@ -36,8 +36,8 @@ namespace yq::doodle {
         std::string_view    y() const;
 
     protected:
-        Py2(DDocument&);
-        Py2(DDocument&, const Py2&);
+        Py2(Project&);
+        Py2(Project&, const Py2&);
         ~Py2();
 
         //! Remap IDs/pointers appropriately

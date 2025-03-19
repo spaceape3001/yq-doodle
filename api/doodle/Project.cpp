@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "DDocument.hpp"
+#include "Project.hpp"
 #include "DObject.hpp"
 #include <doodle/bit/ID.hpp>
 #include <yq/xml/XmlFile.hpp>
@@ -18,57 +18,57 @@
 #include <yq/xml/XmlUtils.hpp>
 
 namespace yq::doodle {
-    DDocument::DDocument()
+    Project::Project()
     {
         m_objects.push_back(nullptr);
     }
     
-    DDocument::~DDocument()
+    Project::~Project()
     {
     }
 
 
-    std::string_view        DDocument::attribute(const std::string&k) const
+    std::string_view        Project::attribute(const std::string&k) const
     {
         return m_attributes.get(k);
     }
 
-    void                    DDocument::attribute_erase(const std::string&k)
+    void                    Project::attribute_erase(const std::string&k)
     {
         m_attributes.erase(k);
     }
     
-    string_set_t            DDocument::attribute_keys() const
+    string_set_t            Project::attribute_keys() const
     {
         return m_attributes.keys();
     }
     
-    void                    DDocument::attribute_set(const std::string& k, const std::string& v)
+    void                    Project::attribute_set(const std::string& k, const std::string& v)
     {
         m_attributes.set(k,v);
     }
     
-    void                    DDocument::attribute_set(const std::string& k, std::string&&v)
+    void                    Project::attribute_set(const std::string& k, std::string&&v)
     {
         m_attributes.set(k, std::move(v));
     }
 
-    const string_map_t&     DDocument::attributes() const
+    const string_map_t&     Project::attributes() const
     {
         return m_attributes.data();
     }
 
-    void                    DDocument::bump()
+    void                    Project::bump()
     {
         ++m_revision;
     }
 
-    DObject*                DDocument::create(const DObjectInfo& info)
+    DObject*                Project::create(const DObjectInfo& info)
     { 
         return info.create(*this);
     }
 
-    ID  DDocument::insert(DObject* obj)
+    ID  Project::insert(DObject* obj)
     {
         if(!obj)
             return {};
@@ -77,84 +77,84 @@ namespace yq::doodle {
         return ret;
     }
 
-    bool                    DDocument::is_attribute(const std::string&k) const
+    bool                    Project::is_attribute(const std::string&k) const
     {
         return m_attributes.contains(k);
     }
     
-    bool                    DDocument::is_variable(const std::string&k) const
+    bool                    Project::is_variable(const std::string&k) const
     {
         return m_attributes.contains(k);
     }
 
-    DObject*                DDocument::object(ID i)
+    DObject*                Project::object(ID i)
     {
         if(i >= (ID::id_t) m_objects.size())
             return m_objects[i];
         return m_objects[i];
     }
     
-    const DObject*          DDocument::object(ID i) const
+    const DObject*          Project::object(ID i) const
     {
         if(i >= (ID::id_t) m_objects.size())
             return m_objects[i];
         return m_objects[i];
     }
 
-    void                    DDocument::set_description(const std::string&d)
+    void                    Project::set_description(const std::string&d)
     {
         m_description = d;
         bump();
     }
 
-    void                    DDocument::set_notes(const std::string& n)
+    void                    Project::set_notes(const std::string& n)
     {
         m_notes = n;
         bump();
     }
 
-    void                    DDocument::set_title(const std::string& t)
+    void                    Project::set_title(const std::string& t)
     {
         m_title = t;
         bump();
     }
 
-    void    DDocument::uid_map(const std::string&s, ID )
+    void    Project::uid_map(const std::string&s, ID )
     {
         // TODO
     }
     
-    void    DDocument::uid_umap(const std::string&s, ID)
+    void    Project::uid_umap(const std::string&s, ID)
     {
         // TODO
     }
 
-    std::string_view        DDocument::variable(const std::string&k) const
+    std::string_view        Project::variable(const std::string&k) const
     {
         return m_variables.get(k);
     }
 
-    void                    DDocument::variable_erase(const std::string&k)
+    void                    Project::variable_erase(const std::string&k)
     {
         m_variables.erase(k);
     }
     
-    string_set_t            DDocument::variable_keys() const
+    string_set_t            Project::variable_keys() const
     {
         return m_variables.keys();
     }
     
-    void                    DDocument::variable_set(const std::string&k, const std::string&v)
+    void                    Project::variable_set(const std::string&k, const std::string&v)
     {
         m_variables.set(k, v);
     }
     
-    void                    DDocument::variable_set(const std::string&k, std::string&&v)
+    void                    Project::variable_set(const std::string&k, std::string&&v)
     {
         m_variables.set(k, std::move(v));
     }
     
-    const string_map_t&     DDocument::variables() const
+    const string_map_t&     Project::variables() const
     {
         return m_variables.data();
     }
@@ -163,20 +163,20 @@ namespace yq::doodle {
     //  B3
     
 
-    bool     DDocument::census_b3(Census&, const std::filesystem::path&)
+    bool     Project::census_b3(Census&, const std::filesystem::path&)
     {   
         doodleError << "B3 reading not yet implemented";
         return false;
     }
 
     template <typename Pred> 
-    bool         DDocument::load_b3(ByteArray& bytes, Pred&& pred)
+    bool         Project::load_b3(ByteArray& bytes, Pred&& pred)
     {
         doodleError << "B3 reading not yet implemented";
         return false;
     }
     
-    bool         DDocument::save_b3(const std::filesystem::path&) const
+    bool         Project::save_b3(const std::filesystem::path&) const
     {
         doodleError << "B3 saving not yet implemented";
         return false;
@@ -185,13 +185,13 @@ namespace yq::doodle {
     ////////////////////////////////////////////////////////////////////////////
     //  XML
 
-    bool     DDocument::census_xml(Census&, const std::filesystem::path& fp)
+    bool     Project::census_xml(Census&, const std::filesystem::path& fp)
     {
-        XmlDocument doc;
-        std::error_code ec  = read_file(doc, fp);
+        XmlDocument prj;
+        std::error_code ec  = read_file(prj, fp);
         if(ec != std::error_code())
             return false;
-        const XmlNode* root = doc.first_node(szB3X);
+        const XmlNode* root = prj.first_node(szB3X);
         if(!root)
             return false;
         
@@ -199,9 +199,9 @@ namespace yq::doodle {
         return false;
     }
 
-    bool         DDocument::read(const XmlDocument&doc)
+    bool         Project::read(const XmlDocument&prj)
     {
-        const XmlNode* root = doc.first_node(szB3X);
+        const XmlNode* root = prj.first_node(szB3X);
         if(!root){
             doodleError << szExtXML << " does not contain the root element";
             return false;
@@ -212,29 +212,29 @@ namespace yq::doodle {
     }
 
     template <typename Pred> 
-    bool         DDocument::load_xml(ByteArray& bytes, Pred&& pred)
+    bool         Project::load_xml(ByteArray& bytes, Pred&& pred)
     {
-        XmlDocument doc;
+        XmlDocument prj;
         bytes << '\0';  // safety....
 
         try {
-            doc.parse<0>(bytes.data());
+            prj.parse<0>(bytes.data());
         } catch(const rapidxml::parse_error& pe){
             size_t  pt  = pe.where<char>() - bytes.data();
             doodleError << "Xml parse error: " << pe.what() << " (at byte " << pt << ")";
             return false;
         }
         
-        DDocument*p   = pred();
+        Project*p   = pred();
         if(!p)
             return false;
         
-        return p->read(doc);
+        return p->read(prj);
     }
 
-    bool         DDocument::save_xml(const std::filesystem::path&) const
+    bool         Project::save_xml(const std::filesystem::path&) const
     {
-        XmlDocument doc;
+        XmlDocument prj;
         
         
     
@@ -248,14 +248,14 @@ namespace yq::doodle {
     static SFormat  guess_format(const std::filesystem::path& fp)
     {
         std::string sfx = fp.extension().string().substr(1);
-        if(is_similar(sfx, DDocument::szExtB3))
+        if(is_similar(sfx, Project::szExtB3))
             return B3;
-        if(is_similar(sfx, DDocument::szExtXML))
+        if(is_similar(sfx, Project::szExtXML))
             return XML;
         return SFormat::AUTO;
     }
 
-    bool   DDocument::census(Census&ret, const std::filesystem::path&fp, SFormat fmt)
+    bool   Project::census(Census&ret, const std::filesystem::path&fp, SFormat fmt)
     {
         if(fmt == SFormat::AUTO)
             fmt = guess_format(fp);
@@ -271,7 +271,7 @@ namespace yq::doodle {
     }
 
     template <typename Pred> 
-    bool    DDocument::load(const std::filesystem::path& fp, SFormat fmt, Pred&& pred)
+    bool    Project::load(const std::filesystem::path& fp, SFormat fmt, Pred&& pred)
     {
         if(!file_exists(fp)){
             doodleError << "File does not exist.  " << fp.string();
@@ -307,12 +307,12 @@ namespace yq::doodle {
         }
     }
 
-    DDocumentSPtr    DDocument::load(shared_k, const std::filesystem::path&fp, SFormat sf)
+    ProjectSPtr    Project::load(shared_k, const std::filesystem::path&fp, SFormat sf)
     {
-        DDocumentSPtr   ret;
+        ProjectSPtr   ret;
         
-        bool    loaded  = load(fp, sf, [&]() -> DDocument* {
-            ret = std::make_shared<DDocument>();
+        bool    loaded  = load(fp, sf, [&]() -> Project* {
+            ret = std::make_shared<Project>();
             return ret.get();
         });
         
@@ -321,11 +321,11 @@ namespace yq::doodle {
         return {};
     }
     
-    DDocumentUPtr    DDocument::load(unique_k, const std::filesystem::path&fp, SFormat sf)
+    ProjectUPtr    Project::load(unique_k, const std::filesystem::path&fp, SFormat sf)
     {
-        DDocumentUPtr   ret;
-        bool    loaded  = load(fp, sf, [&]() -> DDocument* {
-            ret = std::make_unique<DDocument>();
+        ProjectUPtr   ret;
+        bool    loaded  = load(fp, sf, [&]() -> Project* {
+            ret = std::make_unique<Project>();
             return ret.get();
         });
         
@@ -334,11 +334,11 @@ namespace yq::doodle {
         return {};
     }
     
-    DDocument*       DDocument::load(raw_k, const std::filesystem::path&fp, SFormat sf)
+    Project*       Project::load(raw_k, const std::filesystem::path&fp, SFormat sf)
     {
-        DDocument*  ret = nullptr;
-        bool    loaded  = load(fp, sf, [&]() -> DDocument* {
-            ret = new DDocument;
+        Project*  ret = nullptr;
+        bool    loaded  = load(fp, sf, [&]() -> Project* {
+            ret = new Project;
             return ret;
         });
         if(loaded)
@@ -348,7 +348,7 @@ namespace yq::doodle {
         return nullptr;
     }
 
-    bool             DDocument::save(const std::filesystem::path&fp, SFormat fmt) const
+    bool             Project::save(const std::filesystem::path&fp, SFormat fmt) const
     {
         if(fmt == SFormat::AUTO)
             fmt = guess_format(fp);

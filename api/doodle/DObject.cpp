@@ -7,7 +7,7 @@
 #include "DObject.hpp"
 #include "DObjectInfoWriter.hpp"
 
-#include <doodle/DDocument.hpp>
+#include <doodle/Project.hpp>
 
 namespace yq::doodle {
     struct DObject::Repo {
@@ -78,12 +78,12 @@ namespace yq::doodle {
         w.property("revision", &DObject::get_revision);
     }
 
-    DObject::DObject(DDocument& doc) : m_doc(doc), m_id(doc.insert(this))
+    DObject::DObject(Project& prj) : m_prj(prj), m_id(prj.insert(this))
     {
     }
     
-    DObject::DObject(DDocument& doc, const DObject& cp) : 
-        m_doc(doc), m_id(doc.insert(this)), m_attributes(cp.m_attributes)
+    DObject::DObject(Project& prj, const DObject& cp) : 
+        m_prj(prj), m_id(prj.insert(this)), m_attributes(cp.m_attributes)
     {
         m_parent    = cp.m_parent;
         m_children  = cp.m_children;
@@ -109,10 +109,10 @@ namespace yq::doodle {
         if(i != map.end())
             return i->second;
         
-        if(const DObject*p = m_doc.object(m_parent)){
+        if(const DObject*p = m_prj.object(m_parent)){
             return p->attribute(k);
         } else {
-            return m_doc.attribute(k);
+            return m_prj.attribute(k);
         }
     }
     
@@ -147,19 +147,19 @@ namespace yq::doodle {
         ++m_revision.all;
         
         for(ID i = m_parent; i;){
-            DObject*p   = m_doc.object(i);
+            DObject*p   = m_prj.object(i);
             if(!p)
                 break;
             ++(p->m_revision.all);
             i   = p->m_parent;
         }
         
-        m_doc.bump();
+        m_prj.bump();
     }
 
     DObject*    DObject::create(child_k, const DObjectInfo& sinfo)
     {
-        DObject* obj = sinfo.create(m_doc);
+        DObject* obj = sinfo.create(m_prj);
         if(!obj)
             return nullptr;
         
@@ -176,12 +176,12 @@ namespace yq::doodle {
 
     const DObject*      DObject::parent(pointer_k) const
     {
-        return m_doc.object(m_parent);
+        return m_prj.object(m_parent);
     }
     
     DObject*            DObject::parent(pointer_k)
     {
-        return m_doc.object(m_parent);
+        return m_prj.object(m_parent);
     }
 
     void     DObject::remap(const Remapper& theMap)
@@ -190,7 +190,7 @@ namespace yq::doodle {
         
         for(ID& i : m_children){
             i   = theMap(i);
-            DObject*    dob = m_doc.object(i);
+            DObject*    dob = m_prj.object(i);
             if(dob)
                 dob -> remap(theMap);
         }

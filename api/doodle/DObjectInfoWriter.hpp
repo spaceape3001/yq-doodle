@@ -82,9 +82,9 @@ namespace yq::doodle {
         }
 
         
-        virtual DObject* create(DDocument&prj) const override
+        virtual DObject* create(Project&prj) const override
         {
-            if constexpr (std::is_constructible_v<Obj, DDocument&> && !std::is_abstract_v<Obj>) {
+            if constexpr (std::is_constructible_v<Obj, Project&> && !std::is_abstract_v<Obj>) {
                 if(ObjectInfo::is_abstract())
                     return nullptr;
                 return new Obj(prj);
@@ -92,9 +92,9 @@ namespace yq::doodle {
                 return nullptr;
         }
         
-        virtual DObject* copy(DDocument&prj, const DObject&obj) const override
+        virtual DObject* copy(Project&prj, const DObject&obj) const override
         {
-            if constexpr (std::is_constructible_v<Obj, DDocument&, const Obj&> && !std::is_abstract_v<Obj>) {
+            if constexpr (std::is_constructible_v<Obj, Project&, const Obj&> && !std::is_abstract_v<Obj>) {
                 if(ObjectInfo::is_abstract())
                     return nullptr;
                 return new Obj(prj, static_cast<const Obj&>(obj));

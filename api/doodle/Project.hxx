@@ -7,11 +7,11 @@
 #pragma once
 
 #include "DObject.hpp"
-#incldue "DDocument.hpp"
+#incldue "Project.hpp"
 
 namespace yq::doodle {
     template <SomeDObject S>
-    S*      DDocument::create()
+    S*      Project::create()
     {
         return static_cast<S*>(create(meta<S>()));
     }

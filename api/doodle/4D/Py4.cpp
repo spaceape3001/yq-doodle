@@ -25,11 +25,11 @@ namespace yq::doodle {
         w.description("Physical Object in 4D");
     }
 
-    Py4::Py4(DDocument& doc) : Py(doc)
+    Py4::Py4(Project& prj) : Py(prj)
     {
     }
     
-    Py4::Py4(DDocument& doc, const Py4&cp) : Py(doc, cp)
+    Py4::Py4(Project& prj, const Py4&cp) : Py(prj, cp)
     {
     }
 

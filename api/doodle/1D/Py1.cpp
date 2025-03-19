@@ -24,11 +24,11 @@ namespace yq::doodle {
         w.description("Physical Object in 1D");
     }
 
-    Py1::Py1(DDocument& prj) : Py(prj)
+    Py1::Py1(Project& prj) : Py(prj)
     {
     }
     
-    Py1::Py1(DDocument& prj, const Py1&cp) : Py(prj, cp)
+    Py1::Py1(Project& prj, const Py1&cp) : Py(prj, cp)
     {
     }
 
