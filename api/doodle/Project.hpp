@@ -39,7 +39,7 @@ namespace yq::doodle {
     public:
 
         Project();
-        ~Project();
+        virtual ~Project();
     
         DObject*            object(ID);
         const DObject*      object(ID) const;
@@ -53,7 +53,7 @@ namespace yq::doodle {
         static ProjectUPtr    load(unique_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
         static Project*       load(raw_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
     
-        bool                    save(const std::filesystem::path&, SFormat sf=SFormat::AUTO) const;
+        virtual bool            save(const std::filesystem::path&, SFormat sf=SFormat::AUTO) const;
         
         std::string_view        attribute(const std::string&) const;
         void                    attribute_erase(const std::string&);
@@ -89,6 +89,10 @@ namespace yq::doodle {
         template <SomeDObject S>
         S*                      create();
     
+    protected:
+        using generator_fn  = std::function<Project*()>;
+        static bool     load(const std::filesystem::path&, SFormat, generator_fn&&);
+    
     private:
         friend class DObject;
         Project(Project&&) = delete;
@@ -110,12 +114,8 @@ namespace yq::doodle {
         void    uid_map(const std::string&, ID);
         void    uid_umap(const std::string&, ID);
         
-        template <typename Pred> 
-        static bool     load(const std::filesystem::path&, SFormat, Pred&&);
-        template <typename Pred> 
-        static bool     load_b3(ByteArray&, Pred&&);
-        template <typename Pred> 
-        static bool     load_xml(ByteArray&, Pred&&);
+        static bool     load_b3(ByteArray&, generator_fn&&);
+        static bool     load_xml(ByteArray&, generator_fn&&);
         
         bool            read(const XmlDocument&);
         

@@ -23,9 +23,16 @@ add_library(yq_doodle SHARED
     Space.cpp
     
     0D/Py0.cpp
+    
     1D/Py1.cpp
+    
     2D/Py2.cpp
+    2D/Space2.cpp
+    
+    
+    
     3D/Py3.cpp
+    
     4D/Py4.cpp
     
     bit/SStringMap.cpp

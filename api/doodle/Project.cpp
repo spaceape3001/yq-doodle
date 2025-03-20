@@ -169,8 +169,7 @@ namespace yq::doodle {
         return false;
     }
 
-    template <typename Pred> 
-    bool         Project::load_b3(ByteArray& bytes, Pred&& pred)
+    bool         Project::load_b3(ByteArray& bytes, generator_fn&& pred)
     {
         doodleError << "B3 reading not yet implemented";
         return false;
@@ -211,8 +210,7 @@ namespace yq::doodle {
         return false;
     }
 
-    template <typename Pred> 
-    bool         Project::load_xml(ByteArray& bytes, Pred&& pred)
+    bool         Project::load_xml(ByteArray& bytes, generator_fn&& fn)
     {
         XmlDocument prj;
         bytes << '\0';  // safety....
@@ -225,7 +223,7 @@ namespace yq::doodle {
             return false;
         }
         
-        Project*p   = pred();
+        Project*p   = fn();
         if(!p)
             return false;
         
@@ -270,8 +268,7 @@ namespace yq::doodle {
         }
     }
 
-    template <typename Pred> 
-    bool    Project::load(const std::filesystem::path& fp, SFormat fmt, Pred&& pred)
+    bool    Project::load(const std::filesystem::path& fp, SFormat fmt, generator_fn&& fn)
     {
         if(!file_exists(fp)){
             doodleError << "File does not exist.  " << fp.string();
@@ -299,9 +296,9 @@ namespace yq::doodle {
         
         switch(fmt){
         case SFormat::B3:
-            return load_b3(bytes, std::move(pred));
+            return load_b3(bytes, std::move(fn));
         case SFormat::XML:
-            return load_xml(bytes, std::move(pred));
+            return load_xml(bytes, std::move(fn));
         default:
             return false;
         }
