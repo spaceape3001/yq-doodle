@@ -57,6 +57,12 @@ namespace yq::doodle {
         return has(Flag::D6);
     }
     
+    const DObjectInfo*       DObjectInfo::lookup(std::string_view ks)
+    {
+        auto& r = DObject::repo();
+        return r.objects.find(ks);
+    }
+
     
 ////////////////////////////////////////////////////////////////////////////////
 

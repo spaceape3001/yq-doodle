@@ -25,6 +25,7 @@ namespace yq::doodle {
         std::string_view    get(const std::span<const std::string>&) const;
         string_set_t        keys() const;
         bool                contains(const std::string&) const;
+        bool                empty() const;
     
         SStringMap();
         SStringMap(const SStringMap&);

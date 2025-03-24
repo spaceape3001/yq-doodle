@@ -13,6 +13,7 @@ add_library(yq_doodleQt SHARED
 
 target_link_libraries(yq_doodleQt
     PUBLIC
+        yq_gluon
         yq_doodle
         Qt6::Core
         Qt6::Gui

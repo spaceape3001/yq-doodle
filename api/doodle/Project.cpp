@@ -15,12 +15,14 @@
 #include <doodle/logging.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/text/match.hpp>
-#include <yq/xml/XmlUtils.hpp>
+#include <yq/tags.hpp>
+#include <yq/core/Any.hpp>
 
 namespace yq::doodle {
+    static constexpr unsigned kFormat       = 1;
+
     Project::Project()
     {
-        m_objects.push_back(nullptr);
     }
     
     Project::~Project()
@@ -72,8 +74,9 @@ namespace yq::doodle {
     {
         if(!obj)
             return {};
-        ID  ret{ (ID::id_t) m_objects.size() };
-        m_objects.push_back(obj);
+            
+        ID  ret = m_loading ? m_loading : ID{ ++m_nextID };
+        m_objects[ret]  = obj;
         return ret;
     }
 
@@ -82,23 +85,31 @@ namespace yq::doodle {
         return m_attributes.contains(k);
     }
     
+    bool                    Project::is_empty() const
+    {
+        return m_objects.empty() && m_attributes.empty() && m_variables.empty() && m_title.empty() && 
+            m_description.empty() && m_notes.empty() && m_uidmap.empty();
+    }
+
     bool                    Project::is_variable(const std::string&k) const
     {
         return m_attributes.contains(k);
     }
 
-    DObject*                Project::object(ID i)
+    DObject*                Project::object(ID id)
     {
-        if(i >= (ID::id_t) m_objects.size())
-            return m_objects[i];
-        return m_objects[i];
+        auto i = m_objects.find(id);
+        if(i != m_objects.end())
+            return i->second;
+        return nullptr;
     }
     
-    const DObject*          Project::object(ID i) const
+    const DObject*          Project::object(ID id) const
     {
-        if(i >= (ID::id_t) m_objects.size())
-            return m_objects[i];
-        return m_objects[i];
+        auto i = m_objects.find(id);
+        if(i != m_objects.end())
+            return i->second;
+        return nullptr;
     }
 
     void                    Project::set_description(const std::string&d)
@@ -190,7 +201,7 @@ namespace yq::doodle {
         std::error_code ec  = read_file(prj, fp);
         if(ec != std::error_code())
             return false;
-        const XmlNode* root = prj.first_node(szB3X);
+        const XmlNode* root = prj.first_node(szD3X);
         if(!root)
             return false;
         
@@ -200,14 +211,107 @@ namespace yq::doodle {
 
     bool         Project::read(const XmlDocument&prj)
     {
-        const XmlNode* root = prj.first_node(szB3X);
+        const XmlNode* root = prj.first_node(szD3X);
         if(!root){
             doodleError << szExtXML << " does not contain the root element";
             return false;
         }
-        
-        doodleError << "xml reading not yet implemented";
-        return false;
+
+        m_title         = read_child(*root, szTitle, x_string);
+        m_description   = read_child(*root, szTitle, x_string);
+        m_notes         = read_child(*root, szNotes, x_string);
+        for(const XmlNode* x = root->first_node(szAttribute); x; x = x->next_sibling(szAttribute)){
+            std::string k = read_attribute(*x, szKey, x_string);
+            std::string v = x_string(*x);
+            m_attributes.set(k,v);
+        }
+        for(const XmlNode* x = root->first_node(szVariable); x; x = x->next_sibling(szVariable)){
+            std::string k = read_attribute(*x, szKey, x_string);
+            std::string v = x_string(*x);
+            m_variables.set(k,v);
+        }
+        for(const XmlNode* x = root->first_node(szObject); x; x = x->next_sibling(szObject)){
+            std::string cls = read_attribute(*x, szClass, x_string);
+            if(cls.empty()){
+                doodleWarning << "unspecified class for object";
+                continue;
+            }
+            auto id = read_attribute(*x, szID, x_uint32);
+            if(!id){
+                doodleWarning << "unable to read the ID for object (" << cls << ")";
+                continue;
+            }
+            
+            const DObjectInfo*   dinfo  = DObjectInfo::lookup(cls);
+            if(!dinfo){
+                doodleWarning << "unable to find an object type " << cls;
+                continue;
+            }
+            
+            m_loading.id    = *id;
+            DObject*    obj = dinfo->create(*this);
+            if(!obj){
+                doodleWarning << "unable to create an object type " << cls;
+                continue;
+            }
+
+            auto par = read_child(*x, szParent, x_uint64);
+            if(par)
+                obj->m_parent.id    = *par;
+
+            obj->m_uid          = read_child(*x, szParent, x_string);
+            obj->m_title        = read_child(*x, szTitle, x_string);
+            obj->m_description  = read_child(*x, szDescription, x_string);
+            obj->m_notes        = read_child(*x, szNotes, x_string);
+            
+            for(const XmlNode* c = x->first_node(szChild); c; c=c->next_sibling(szChild)){
+                auto id = x_uint32(*c);
+                if(!id)
+                    continue;
+                obj->m_children.push_back({*id});
+            }
+            
+            for(const XmlNode* a = x->first_node(szAttribute); a; a = a->next_sibling(szAttribute)){
+                std::string k = read_attribute(*a, szKey, x_string);
+                std::string v = x_string(*a);
+                obj->m_attributes.set(k,v);
+            }
+            
+            for(const XmlNode* p = x->first_node(szProperty); p; p = p->next_sibling(szProperty)){
+                std::string k = read_attribute(*p, szKey, x_string);
+                const PropertyInfo* pi  = dinfo->properties(ALL).find(k);
+                if(!pi){
+                    doodleWarning << "unable to find property (" << k << ") on type " << cls;
+                    continue;
+                }
+                
+                std::string t = read_attribute(*p, szType, x_string);
+                const TypeInfo* ti  = nullptr;
+                if(!t.empty()){
+                    ti  = TypeInfo::find(t);
+                    if(!ti){
+                        doodleWarning << "Unable to find type info for " << t;
+                        continue;
+                    }
+                }
+
+                const TypeInfo& type = ti ? *ti : pi->type();
+                Any value;
+
+                if(type.can_write_and_parse()){
+                    if(!value.parse(type, x_string(*p)))
+                        continue;
+                } else {
+                    //  non write/parse.... TODO
+                    continue;
+                }
+                pi->set(obj, value);
+            }
+            
+            obj->load(*x);
+        }
+        m_loading = {};
+        return true;
     }
 
     bool         Project::load_xml(ByteArray& bytes, generator_fn&& fn)
@@ -230,14 +334,83 @@ namespace yq::doodle {
         return p->read(prj);
     }
 
-    bool         Project::save_xml(const std::filesystem::path&) const
+    void         Project::write(XmlDocument&doc) const
+    {
+        XmlNode& root    = *doc.create_element(szD3X);
+        write_attribute(root, szFormat, kFormat);
+        if(!m_title.empty())
+            write_child(root, szTitle, m_title);
+        if(!m_description.empty())
+            write_child(root, szDescription, m_description);
+        if(!m_notes.empty())
+            write_child(root, szNotes, m_notes);
+        for(auto& i : m_attributes.data()){
+            XmlNode& x   = *root.create_element(szAttribute);
+            write_attribute(x, szKey, i.first);
+            write_x(x, i.second);
+        }
+        for(auto& i : m_variables.data()){
+            XmlNode& x   = *root.create_element(szVariable);
+            write_attribute(x, szKey, i.first);
+            write_x(x, i.second);
+        }
+        for(auto& itr : m_objects){
+            const DObject* obj  = itr.second;
+            if(!obj)
+                continue;
+            XmlNode& x = *root.create_element(szObject);
+            write_attribute(x, szID, obj->id().id);
+            write_attribute(x, szClass, obj->metaInfo().name());
+            if(!obj->uid().empty())
+                write_child(x, szUID, obj->uid());
+            if(obj->parent())
+                write_child(x, szParent, obj->parent().id);
+            if(!obj->title().empty())
+                write_child(root, szTitle, obj->title());
+            if(!obj->description().empty())
+                write_child(root, szDescription, obj->description());
+            if(!obj->notes().empty())
+                write_child(root, szNotes, obj->notes());
+            for(ID j : obj->children())
+                write_child(x, szChild, j.id);
+            for(auto& i : obj->attributes()){
+                XmlNode& a = *x.create_element(szAttribute);
+                write_attribute(a, szKey, i.first);
+                write_x(a, i.second);
+            }
+            for(const PropertyInfo* p : obj->metaInfo().properties(ALL).all){
+                if(!p->tagged(kTag_Save))
+                    continue;
+                
+                any_x   value   = p->get(obj);
+                if(!value)  
+                    continue;
+                    
+            
+                XmlNode& prop = *x.create_element(szProperty);
+                write_attribute(prop, szKey, p->name());
+                
+                const TypeInfo& type    = (*value).type();
+                if(type.id() != p->type().id())
+                    write_attribute(prop, szType, type.name());
+                
+                if(type.can_write_and_parse()){
+                    write_x(prop, (*value).writable());
+                    continue;
+                }
+
+                //  non write/parse.... TBD
+            }
+            obj->save(x);
+        }
+    }
+
+    bool         Project::save_xml(const std::filesystem::path& fp) const
     {
         XmlDocument prj;
-        
-        
-    
-        doodleError << "xml saving not yet implemented";
-        return false;
+        xml_start(prj);
+        write(prj);
+        return save_file(prj, fp) == std::error_code();
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -245,7 +418,10 @@ namespace yq::doodle {
 
     static SFormat  guess_format(const std::filesystem::path& fp)
     {
-        std::string sfx = fp.extension().string().substr(1);
+        std::string sfx = fp.extension().string();
+        if(sfx.empty())
+            return SFormat::AUTO;
+        sfx = sfx.substr(1);
         if(is_similar(sfx, Project::szExtB3))
             return B3;
         if(is_similar(sfx, Project::szExtXML))

@@ -16,6 +16,11 @@ namespace yq::doodle {
         return m_data.contains(k);
     }
 
+    bool                SStringMap::empty() const
+    {
+        return m_data.empty();
+    }
+
     void                SStringMap::erase(const std::string& k)
     {
         m_data.erase(k);

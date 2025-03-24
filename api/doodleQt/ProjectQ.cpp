@@ -8,14 +8,23 @@
 
 #include <gluon/core/QtTypes.hpp>
 
+using namespace yq::gluon;
+
 namespace yq::doodle {
-    ProjectQPtr  ProjectQ::load(const QString& fp)
+    ProjectQPtr  ProjectQ::load(const QString& fp, SFormat fmt)
     {
-        using namespace yq::gluon;
-        ProjectQPtr     qpp = new ProjectQ;
-        if(qpp -> load_impl(yFilePath(fp)))
-            return qpp;
-        return {};
+        ProjectQPtr     qpp;
+        if(!Project::load(yFilePath(fp), fmt, 
+            [&]() -> Project* {
+                qpp = new ProjectQ;
+                return &(qpp->m_project);
+            }
+        )){
+            return {};
+        }
+        qpp->m_filename     = fp;
+        qpp->m_savePoint    = qpp->m_project.revision();
+        return qpp;
     }
 
     ProjectQ::ProjectQ(QObject*parent) : QObject(parent)
@@ -26,37 +35,81 @@ namespace yq::doodle {
     {
     }
 
-    QString     ProjectQ::fileName() const
+    void    ProjectQ::decrementEditors()
     {
-        using namespace yq::gluon;
-        return qFilePath(file());
+        --m_editors;
     }
 
-    void    ProjectQ::saveTo(const QString&s) const
+    QString     ProjectQ::filename() const
     {
-        using namespace yq::gluon;
-        save_to(yFilePath(s));
+        return m_filename;
+    }
+
+    bool        ProjectQ::hasFilename() const
+    {
+        return !m_filename.isEmpty();
+    }
+
+    void    ProjectQ::incrementEditors()
+    {
+        ++m_editors;
+    }
+
+    bool    ProjectQ::isDirty() const
+    {
+        return m_project.revision() != m_savePoint;
+    }
+
+    bool    ProjectQ::isEmpty() const
+    {
+        return m_project.is_empty() && m_filename.isEmpty();
+    }
+
+    bool    ProjectQ::save()
+    {
+        if(!saveTo(m_filename))
+            return false;
+        m_savePoint = m_project.revision();
+        return true;
+    }
+
+    bool    ProjectQ::saveTo(const QString&s) const
+    {
+        if(s.isEmpty())
+            return false;
+        return m_project.save(yFilePath(s));
     }
     
-    void    ProjectQ::saveAs(const QString&s)
+    bool    ProjectQ::saveAs(const QString&s)
     {
-        using namespace yq::gluon;
-        if(save_as(yFilePath(s)) == std::error_code()){
+        if(!saveTo(s))
+            return false;
+        m_savePoint = m_project.revision();
+        if(s != m_filename){
+            m_filename  = s;
             emit fileChanged(s);
         }
+        return true;
     }
 
     void    ProjectQ::setTitle(const QString&str)
     {
-        using namespace yq::gluon;
-        set_title(yString(str));
+        std::string     s   = str.toStdString();
+        if(s == m_project.title())
+            return ;
+        m_project.set_title(s);
         emit titleChanged(str);
+    }
+
+    unsigned    ProjectQ::takeANumber()
+    {
+        return ++m_number;
     }
 
     QString     ProjectQ::title() const
     {
         using namespace yq::gluon;
-        return qString(Project::title());
+        return qString(m_project.title());
     }
 }
 

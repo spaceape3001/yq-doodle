@@ -14,6 +14,7 @@
 #include <doodle/typedef/revision.hpp>
 #include <doodle/typedef/dobject.hpp>
 #include <doodle/keywords.hpp>
+#include <yq/typedef/xml.hpp>
 #include <unordered_map>
 
 namespace yq::doodle {
@@ -42,6 +43,8 @@ namespace yq::doodle {
         bool    is_5d() const;
         bool    is_6d() const;
 
+        static const DObjectInfo*       lookup(std::string_view);
+
     protected:
         DimFlags    m_supports;
     };
@@ -62,6 +65,8 @@ namespace yq::doodle {
         void                attribute_set(const std::string&, const std::string&);
         void                attribute_set(const std::string&, std::string&&);
         const string_map_t& attributes() const;
+        
+        std::span<const ID> children() const { return m_children; }
         
         const std::string&  description() const { return m_description; }
         
@@ -86,6 +91,7 @@ namespace yq::doodle {
 
         static void init_info();
         
+        
         //! Marks this item as having changed
         void    bump();
         
@@ -109,6 +115,9 @@ namespace yq::doodle {
         //! Remap IDs/pointers appropriately (call base class first)
         virtual void            remap(const Remapper&);
 
+        virtual void            save(XmlNode&) const {}
+        virtual bool            load(const XmlNode&) { return true; }
+
     private:
         friend class DObjectInfo;
         
@@ -117,7 +126,7 @@ namespace yq::doodle {
         DObject& operator=(const DObject&) = delete;
         DObject& operator=(DObject&&) = delete;
 
-        Project&              m_prj;
+        Project&                m_prj;
         const ID                m_id;
         SStringMap              m_attributes;
         ID                      m_parent;

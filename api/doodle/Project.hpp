@@ -44,14 +44,14 @@ namespace yq::doodle {
         DObject*            object(ID);
         const DObject*      object(ID) const;
         
-        static constexpr const char*    szExtB3     = "b3";
-        static constexpr const char*    szExtXML    = "b3x";
+        static constexpr const char*    szExtB3     = "d3";
+        static constexpr const char*    szExtXML    = "d3x";
 
         static bool             census(Census&, const std::filesystem::path&, SFormat fmt=SFormat::AUTO);
         
-        static ProjectSPtr    load(shared_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
-        static ProjectUPtr    load(unique_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
-        static Project*       load(raw_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static ProjectSPtr      load(shared_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static ProjectUPtr      load(unique_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static Project*         load(raw_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
     
         virtual bool            save(const std::filesystem::path&, SFormat sf=SFormat::AUTO) const;
         
@@ -61,6 +61,8 @@ namespace yq::doodle {
         void                    attribute_set(const std::string&, const std::string&);
         void                    attribute_set(const std::string&, std::string&&);
         const string_map_t&     attributes() const;
+        
+        bool                    is_empty() const;
         
         bool                    is_attribute(const std::string&) const;
         bool                    is_variable(const std::string&) const;
@@ -89,7 +91,6 @@ namespace yq::doodle {
         template <SomeDObject S>
         S*                      create();
     
-    protected:
         using generator_fn  = std::function<Project*()>;
         static bool     load(const std::filesystem::path&, SFormat, generator_fn&&);
     
@@ -105,9 +106,11 @@ namespace yq::doodle {
         std::string                             m_title;
         std::string                             m_description;
         std::string                             m_notes;
-        std::vector<DObject*>                   m_objects;
+        std::map<ID,DObject*>                   m_objects;
         std::multimap<std::string,ID,IgCase>    m_uidmap;
         revision_t                              m_revision  = {};
+        ID::id_t                                m_nextID    = 1;
+        ID                                      m_loading   = {};
         
         ID  insert(DObject*);
         
@@ -118,6 +121,7 @@ namespace yq::doodle {
         static bool     load_xml(ByteArray&, generator_fn&&);
         
         bool            read(const XmlDocument&);
+        void            write(XmlDocument&) const;
         
         bool            save_xml(const std::filesystem::path&) const;
         bool            save_b3(const std::filesystem::path&) const;
