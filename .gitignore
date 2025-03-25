@@ -3,6 +3,8 @@
 yq-toolbox
 yq-vulqan
 qt-utilities
+Debug
+Release
 
 # Prerequisites
 *.d
