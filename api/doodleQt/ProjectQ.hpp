@@ -11,6 +11,8 @@
 #include <yq/core/Ref.hpp>
 #include <gluon/core/RefQ.hpp>
 
+class QTimer;
+
 namespace yq::doodle {
     class ProjectQ;
 
@@ -52,6 +54,7 @@ namespace yq::doodle {
     signals:
         void        titleChanged(const QString&);
         void        fileChanged(const QString&);
+        void        projectChanged();
         
     public slots:
         void        setTitle(const QString&);
@@ -59,12 +62,17 @@ namespace yq::doodle {
         bool        saveAs(const QString&);
         bool        save();
     
+    private slots:
+        void        checkProject();
+    
     private:
         Project     m_project;
         QString     m_filename;
-        revision_t  m_savePoint = {};
-        unsigned    m_number    = 0;
-        unsigned    m_editors   = 0;
+        QTimer*     m_checker       = nullptr;
+        revision_t  m_checkPoint    = {};
+        revision_t  m_savePoint     = {};
+        unsigned    m_number        = 0;
+        unsigned    m_editors       = 0;
     };
     
 }

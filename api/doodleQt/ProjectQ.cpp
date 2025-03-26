@@ -7,6 +7,7 @@
 #include "ProjectQ.hpp"
 
 #include <gluon/core/QtTypes.hpp>
+#include <QTimer>
 
 using namespace yq::gluon;
 
@@ -24,15 +25,29 @@ namespace yq::doodle {
         }
         qpp->m_filename     = fp;
         qpp->m_savePoint    = qpp->m_project.revision();
+        qpp->m_checkPoint   = qpp->m_project.revision();
         return qpp;
     }
 
     ProjectQ::ProjectQ(QObject*parent) : QObject(parent)
     {
+        m_checker   = new QTimer(this);
+        m_checker->setTimerType(Qt::CoarseTimer);
+        m_checker->setInterval(100);
+        connect(m_checker, &QTimer::timeout, this, &ProjectQ::checkProject);
+        m_checker -> start();
     }
     
     ProjectQ::~ProjectQ()
     {
+    }
+
+    void    ProjectQ::checkProject()
+    {
+        if(m_checkPoint != m_project.revision()){
+            m_checkPoint    = m_project.revision();
+            emit projectChanged();
+        }
     }
 
     void    ProjectQ::decrementEditors()

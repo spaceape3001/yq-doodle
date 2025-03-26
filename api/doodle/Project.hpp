@@ -12,6 +12,7 @@
 #include <doodle/bit/ID.hpp>
 #include <doodle/typedef/project.hpp>
 #include <doodle/typedef/dobject.hpp>
+#include <doodle/typedef/id.hpp>
 #include <doodle/typedef/revision.hpp>
 #include <filesystem>
 #include <vector>
@@ -37,6 +38,7 @@ namespace yq::doodle {
     //! This is more about data than anything....
     class Project  {
     public:
+        using object_map_t  = std::map<ID,DObject*>;
 
         Project();
         virtual ~Project();
@@ -88,6 +90,8 @@ namespace yq::doodle {
         
         DObject*                create(const DObjectInfo&);
         
+        const object_map_t&     objects() const { return m_objects; }
+        
         template <SomeDObject S>
         S*                      create();
     
@@ -106,7 +110,7 @@ namespace yq::doodle {
         std::string                             m_title;
         std::string                             m_description;
         std::string                             m_notes;
-        std::map<ID,DObject*>                   m_objects;
+        object_map_t                            m_objects;
         std::multimap<std::string,ID,IgCase>    m_uidmap;
         revision_t                              m_revision  = {};
         ID::id_t                                m_nextID    = 1;

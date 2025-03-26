@@ -5,8 +5,11 @@
 ################################################################################
 
 find_package(Qt6 COMPONENTS Core Gui Widgets)
+set(CMAKE_AUTOMOC ON)
 
 add_library(yq_doodleQt SHARED
+    DObjectTableModel.hpp
+    DObjectTableModel.cpp
     ProjectQ.hpp
     ProjectQ.cpp
 )
