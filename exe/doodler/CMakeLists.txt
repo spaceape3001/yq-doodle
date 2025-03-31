@@ -4,8 +4,10 @@
 ##
 ################################################################################
 
-add_library(yq_doodleVk SHARED
-    commands/DoodleCommand.cpp
+add_executable(doodler 
+    main.cpp
+    DoodleApp.cpp
+    DoodleMW.cpp
 )
 
-target_link_libraries(yq_doodleVk PUBLIC yq_doodle yq_tachyon)
+target_link_libraries(doodler PUBLIC yq_doodle yq_tachyon yq_doodleVk)

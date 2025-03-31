@@ -22,7 +22,7 @@ if(PROJECT_IS_TOP_LEVEL)
     endif()
 
     if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/yq-vulqan)
-        option(Feature_Vulkan   "Enable Vulkan (API and Apps)" OFF)
+        option(Feature_Vulkan   "Enable Vulkan (API and Apps)" ON)
         set(Build_Vulkan ${Feature_Vulkan})
     else()
         set(Build_Vulkan OFF)
