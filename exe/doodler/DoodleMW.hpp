@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <ya/widgets/AppWidget.hpp>
+#include <yt/ui/Widget.hpp>
 #include <doodle/typedef/project.hpp>
 
 using namespace yq;
 using namespace yq::doodle;
 using namespace yq::tachyon;
 
-class DoodleMW : public AppWidget {
-    YQ_TACHYON_DECLARE(DoodleMW, AppWidget)
+class DoodleMW : public Widget {
+    YQ_TACHYON_DECLARE(DoodleMW, Widget)
 public:
     DoodleMW();
     DoodleMW(ProjectSPtr);
@@ -22,8 +22,7 @@ public:
     
     static void init_info();
     
-    bool    menubar(enabled_k) const override { return true; }
-    void    menubar(ViContext&) override;
+    void    imgui(ViContext&) override;
     
 private:
     ProjectSPtr     m_project;
