@@ -9,6 +9,7 @@
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yt/ui/UIWriter.hxx>
+#include <yq/core/Logging.hpp>
 
 void DoodleMW::init_info()
 {
@@ -28,9 +29,9 @@ void DoodleMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
     
-    auto toolbar    = w.toolbar(HORIZONTAL, "Generic ToolBar");
+    auto toolbar    = w.toolbar(UIBorder::NNW, "Generic ToolBar");
     toolbar.button("FOO");
-    toolbar.button("BAR");
+    toolbar.button("BAR", &DoodleMW::bar);
     
     auto win        = w.window("Window");
     win.label("Hello World!");
@@ -54,5 +55,9 @@ void DoodleMW::imgui(ViContext& u)
     Widget::imgui(UI,u);
 }
 
+void DoodleMW::bar()
+{
+    yInfo() << "BAR!";
+}
 
 YQ_TACHYON_IMPLEMENT(DoodleMW)

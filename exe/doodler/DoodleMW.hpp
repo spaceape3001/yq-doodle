@@ -24,6 +24,8 @@ public:
     
     void    imgui(ViContext&) override;
     
+    void    bar();
+    
 private:
     ProjectSPtr     m_project;
 };
