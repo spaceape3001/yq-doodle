@@ -9,6 +9,7 @@ project(doodle LANGUAGES CXX)
 
 include(configure.cmake)
 enable_testing()
+set(Build_UnitTests ON)
 
 if(PROJECT_IS_TOP_LEVEL)
     if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/yq-toolbox)
