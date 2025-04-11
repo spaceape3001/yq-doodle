@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 3.26.0)
 project(doodle LANGUAGES CXX)
 
 include(configure.cmake)
+enable_testing()
 
 if(PROJECT_IS_TOP_LEVEL)
     if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/yq-toolbox)
@@ -51,7 +52,6 @@ else()
 
 endif()
 
-enable_testing()
 
 add_subdirectory(api)
 add_subdirectory(test)
