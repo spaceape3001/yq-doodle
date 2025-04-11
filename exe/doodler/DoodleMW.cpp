@@ -8,15 +8,15 @@
 #include <doodle/Project.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
-#include <yt/ui/UIWriter.hxx>
+#include <yt/ui/UIWriters.hxx>
 #include <yq/core/Logging.hpp>
 
 void DoodleMW::init_info()
 {
-    auto w = writer<DoodleMW>();
-    w.imgui();
+    auto w          = writer<DoodleMW>();
     
-    auto mmb        = w.menubar(MAIN);
+    auto app        = w.imgui(UI, APP);
+    auto mmb        = app.menubar(MAIN);
     auto file       = mmb.menu("File");
     auto edit       = mmb.menu("Edit");
     auto view       = mmb.menu("View");
@@ -29,11 +29,11 @@ void DoodleMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
     
-    auto toolbar    = w.toolbar(UIBorder::NNW, "Generic ToolBar");
+    auto toolbar    = app.toolbar(Vector2F{0.75,1.0}, "Generic ToolBar");
     toolbar.button("FOO");
     toolbar.button("BAR", &DoodleMW::bar);
     
-    auto win        = w.window("Window");
+    auto win        = app.window("Window");
     win.label("Hello World!");
 }
 
