@@ -30,8 +30,12 @@ void DoodleMW::init_info()
     edit.menuitem("Paste", "Ctrl+V");
     
     auto toolbar    = app.toolbar(Vector2F{0.75,1.0}, "Generic ToolBar");
+    toolbar.image("openicon/icons/png/32x32/actions/arrow-left-double.png", { 32, 32 });
+    toolbar.spacer({ 16, 32});
     toolbar.button("FOO");
     toolbar.button("BAR", &DoodleMW::bar);
+    toolbar.spacer({ 16, 32});
+    toolbar.image("foobar", { 32, 32 });
     
     auto win        = app.window("Window");
     win.label("Hello World!");

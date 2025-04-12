@@ -9,6 +9,8 @@
 
 int main(int argc, char* argv[])
 {
+    configure_standand_asset_path();
+
     AppCreateInfo        aci;
     aci.thread.sim        = true;
     aci.view.title        = "Doodler";
