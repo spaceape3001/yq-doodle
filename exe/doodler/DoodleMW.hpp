@@ -26,6 +26,9 @@ public:
     
     void    bar();
     
+    void    btn_left();
+    void    btn_right();
+
 private:
     ProjectSPtr     m_project;
 };
