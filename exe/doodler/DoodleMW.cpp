@@ -29,13 +29,16 @@ void DoodleMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
     
-    auto toolbar    = app.toolbar(Vector2F{0.75,1.0}, "Generic ToolBar");
-    toolbar.image("openicon/icons/png/32x32/actions/arrow-left-double.png", { 32, 32 }).action(&DoodleMW::btn_left);
-    toolbar.spacer({ 16, 32});
-    toolbar.button("FOO");
-    toolbar.button("BAR").action(&DoodleMW::bar);
-    toolbar.spacer({ 16, 32});
-    toolbar.image("openicon/icons/png/32x32/actions/arrow-right-double.png", { 32, 32 }).action(&DoodleMW::btn_right);
+    auto buttonbar     = app.toolbar(Vector2F{0.75,1.0}, "Generic ToolBar");
+    buttonbar.image("openicon/icons/png/32x32/actions/arrow-left-double.png", { 32, 32 }).action(&DoodleMW::btn_left);
+    buttonbar.spacer({ 16, 32});
+    buttonbar.button("FOO");
+    buttonbar.button("BAR").action(&DoodleMW::bar);
+    buttonbar.spacer({ 16, 32});
+    buttonbar.image("openicon/icons/png/32x32/actions/arrow-right-double.png", { 32, 32 }).action(&DoodleMW::btn_right);
+    
+    auto subbar         = app.toolbar(Vector2F{0.25, 1.0}, "Subbar");
+    subbar.button("GENERIC").action(VISIBLE, buttonbar);
     
     auto win        = app.window("Window");
     win.label("Hello World!");
