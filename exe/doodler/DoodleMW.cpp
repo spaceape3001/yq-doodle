@@ -29,7 +29,7 @@ void DoodleMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
     
-    auto buttonbar     = app.toolbar(Vector2F{0.75,1.0}, "Generic ToolBar");
+    auto buttonbar     = app.buttonbar(Vector2F{0.75,1.0}, "Generic ToolBar");
     buttonbar.image("openicon/icons/png/32x32/actions/arrow-left-double.png", { 32, 32 }).action(&DoodleMW::btn_left);
     buttonbar.spacer({ 16, 32});
     buttonbar.button("FOO");
@@ -37,11 +37,13 @@ void DoodleMW::init_info()
     buttonbar.spacer({ 16, 32});
     buttonbar.image("openicon/icons/png/32x32/actions/arrow-right-double.png", { 32, 32 }).action(&DoodleMW::btn_right);
     
-    auto subbar         = app.toolbar(Vector2F{0.25, 1.0}, "Subbar");
+    auto subbar         = app.buttonbar(Vector2F{0.25, 1.0}, "Subbar");
     subbar.button("GENERIC").action(VISIBLE, buttonbar);
     
     auto win        = app.window("Window");
     win.label("Hello World!");
+    
+    help.checkbox(VISIBLE, win);
 }
 
 DoodleMW::DoodleMW() : DoodleMW(std::make_shared<Project>())
