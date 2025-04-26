@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/msg/Command.hpp>
+#include <tachyon/api/Command.hpp>
 
 namespace yq::doodle {
     class Doodle;

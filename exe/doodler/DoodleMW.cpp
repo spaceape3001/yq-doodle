@@ -6,9 +6,9 @@
 
 #include "DoodleMW.hpp"
 #include <doodle/Project.hpp>
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
-#include <yt/ui/UIWriters.hxx>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/UIWriters.hxx>
 #include <yq/core/Logging.hpp>
 
 void DoodleMW::init_info()

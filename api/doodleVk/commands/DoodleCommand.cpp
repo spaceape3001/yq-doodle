@@ -6,7 +6,7 @@
 
 #include <doodleVk/commands/DoodleCommand.hpp>
 
-#include <yt/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::DoodleCommand)
 
