@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <doodleVk/commands/DoodleCommand.hpp>
+#include <doodleVk/command/DoodleCommand.hpp>
 
 #include <tachyon/api/CommandInfoWriter.hpp>
 

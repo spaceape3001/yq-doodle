@@ -54,5 +54,10 @@ target_include_directories(yq_doodle
         ${YQ_DOODLE_API_DIR}
 )
 
+target_compile_definitions(yq_doodle
+    PRIVATE 
+        "-DYQ_DOODLE_DATA_DIR=\"${YQ_DOODLE_DATA_DIR}\"" 
+)
+
 LinkTest(yq_doodle)
 

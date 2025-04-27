@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include <doodle/config/build.hpp>
+
+namespace yq::doodle {
+    //! The share path to the one inside the build directory;
+    const char*     default_data_directory()
+    {
+        return YQ_DOODLE_DATA_DIR;
+    }
+}
