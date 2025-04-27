@@ -81,6 +81,8 @@ namespace yq::doodle {
         {
         }
 
+        virtual Obj* create() const override { return nullptr; }
+
         
         virtual DObject* create(Project&prj) const override
         {
