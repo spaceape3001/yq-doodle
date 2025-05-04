@@ -16,6 +16,7 @@
 #include <doodle/keywords.hpp>
 #include <yq/typedef/xml.hpp>
 #include <unordered_map>
+#include <map>
 
 namespace yq::doodle {
     class DObject;
@@ -43,12 +44,22 @@ namespace yq::doodle {
         bool    is_5d() const;
         bool    is_6d() const;
 
-        static const DObjectInfo*       lookup(std::string_view);
+        static const DObjectInfo*           lookup(std::string_view);
+
+        std::string_view    icon(uint16_t) const;
+        std::string_view    icon(local_k, uint16_t) const;
 
     protected:
-        DimFlags    m_supports;
+        DimFlags                            m_supports;
+        
+        //  we'll get smarter.... (likely in the sweep)
+        std::map<uint16_t,std::string>      m_icons; // icons based on pixels with 0 being SVG
     };
     
+    /*! \brief Doodle Object
+    
+    
+    */
     class DObject : public Object {
         YQ_OBJECT_INFO(DObjectInfo)
         YQ_OBJECT_FIXER(DObjectFixer)

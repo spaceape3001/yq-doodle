@@ -8,6 +8,10 @@
 #include "DoodleApp.hpp"
 #include <QMenuBar>
 #include <QFileDialog>
+#include <doodleQt/drawing/DrawingWindow.hpp>
+#include <doodle/Drawing.hpp>
+#include <doodle/2D/Space2.hpp>
+#include <doodle/Project.hxx>
 
 DoodleMain::DoodleMain() : DoodleMain(new ProjectQ)
 {
@@ -29,10 +33,11 @@ DoodleMain::DoodleMain(ProjectQPtr prj) : UndoMainWindow(),
     addAction("cut", "Cut").shortcut(QKeySequence::Cut);
     addAction("paste", "Paste").shortcut(QKeySequence::Paste);
     addAction("delete", "Delete").shortcut(QKeySequence::Delete);
-    addAction("new", "New").shortcut(QKeySequence::New).connect(this, &DoodleMain::cmdNew);
-    addAction("open", "Open").shortcut(QKeySequence::New).connect(this, &DoodleMain::cmdOpen);
-    addAction("save", "Save").shortcut(QKeySequence::Save).connect(this, &DoodleMain::cmdSave);
-    addAction("saveas", "Save As").shortcut(QKeySequence::SaveAs).connect(this, &DoodleMain::cmdSaveAs);
+    addAction("new", "New Project").shortcut("Ctrl+Shift+N").connect(this, &DoodleMain::cmdNew);
+    addAction("open", "Open Project").shortcut(QKeySequence::New).connect(this, &DoodleMain::cmdOpen);
+    addAction("save", "Save Project").shortcut(QKeySequence::Save).connect(this, &DoodleMain::cmdSave);
+    addAction("saveas", "Save Project As").shortcut(QKeySequence::SaveAs).connect(this, &DoodleMain::cmdSaveAs);
+    addAction("newdrawing", "New Drawing").shortcut("Ctrl+N").connect(this, &DoodleMain::cmdNewDrawing);
 
     QMenu* fileMenu     = makeMenu("file", "File");
     QMenu* editMenu     = makeMenu("edit", "Edit");
@@ -47,6 +52,9 @@ DoodleMain::DoodleMain(ProjectQPtr prj) : UndoMainWindow(),
         QStringList() 
             << "new"
             << "open"
+            << "--"
+            << "newdrawing"
+            << "--"
             << "save"
             << "saveas"
     );
@@ -60,6 +68,8 @@ DoodleMain::DoodleMain(ProjectQPtr prj) : UndoMainWindow(),
             << "copy"
             << "paste"
             << "delete"
+            << "--"
+            << "newdrawing"
     );
 
     addToMenu(viewMenu,
@@ -91,6 +101,22 @@ DoodleMain::~DoodleMain()
 
 void    DoodleMain::cmdNew()
 {
+    
+}
+
+void    DoodleMain::cmdNewDrawing()
+{
+    if(!m_project)
+        return;
+    
+    using namespace yq::doodle;
+    
+    Space2*      s   = m_project->project().create<Space2>();
+    Drawing*     d   = m_project->project().create<Drawing>();
+    d->space(SET, s->id());
+    
+    DrawingWindow*dw    = new DrawingWindow(*m_project, d->id());
+    addWindow(dw);
     
 }
 
@@ -158,7 +184,7 @@ void    DoodleMain::updateTitle()
     if(!fn.isEmpty()){
         t += tr(" (%1)").arg(fn);
     }
-    t += tr(" - DoodlerQt");
+    t += tr(" - Doodler");
     setWindowTitle(t);
 }
 

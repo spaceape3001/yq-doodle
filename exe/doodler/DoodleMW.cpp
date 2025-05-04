@@ -8,7 +8,7 @@
 #include <doodle/Project.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>
-#include <tachyon/api/UIWriters.hxx>
+#include <tachyon/ui/UIWriters.hxx>
 #include <yq/core/Logging.hpp>
 
 void DoodleMW::init_info()
@@ -19,15 +19,20 @@ void DoodleMW::init_info()
     auto mmb        = app.menubar(MAIN);
     auto file       = mmb.menu("File");
     auto edit       = mmb.menu("Edit");
+    auto doodleM    = mmb.menu("Doodle");
     auto view       = mmb.menu("View");
     auto window     = mmb.menu("Window");
     auto help       = mmb.menu("Help");
+
 
     auto open       = file.menuitem("Open", "Ctrl+O");
     auto save       = file.menuitem("Save", "Ctrl+S");
 
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
+    
+    doodleM.menuitem("New Drawing", "Ctrl+I").action(&DoodleMW::new_drawing);
+    
     
     auto buttonbar     = app.buttonbar(Vector2F{0.75,1.0}, "Generic ToolBar");
     buttonbar.image("openicon/icons/png/32x32/actions/arrow-left-double.png", { 32, 32 }).action(&DoodleMW::btn_left);
@@ -78,5 +83,11 @@ void DoodleMW::btn_right()
 {
     yInfo() << "RIGHT!";
 }
+
+void DoodleMW::new_drawing()
+{
+    yInfo() << "New drawing requested";
+}
+
 
 YQ_TACHYON_IMPLEMENT(DoodleMW)

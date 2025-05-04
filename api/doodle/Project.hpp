@@ -64,6 +64,8 @@ namespace yq::doodle {
         void                    attribute_set(const std::string&, std::string&&);
         const string_map_t&     attributes() const;
         
+        bool                    contains(ID) const;
+        
         bool                    is_empty() const;
         
         bool                    is_attribute(const std::string&) const;
@@ -94,10 +96,21 @@ namespace yq::doodle {
         
         template <SomeDObject S>
         S*                      create();
+        
+        const std::vector<ID>&  roots() const { return m_roots; }
     
         using generator_fn  = std::function<Project*()>;
         static bool     load(const std::filesystem::path&, SFormat, generator_fn&&);
-    
+        
+        #ifdef foreach
+        #undef foreach
+        #endif
+        
+        template <SomeDObject S=DObject, typename Pred>
+        auto    foreach(Pred&&);
+        template <SomeDObject S=DObject, typename Pred>
+        auto    foreach(Pred&&) const;
+
     private:
         friend class DObject;
         Project(Project&&) = delete;
@@ -111,6 +124,7 @@ namespace yq::doodle {
         std::string                             m_description;
         std::string                             m_notes;
         object_map_t                            m_objects;
+        std::vector<ID>                         m_roots;
         std::multimap<std::string,ID,IgCase>    m_uidmap;
         revision_t                              m_revision  = {};
         ID::id_t                                m_nextID    = 1;

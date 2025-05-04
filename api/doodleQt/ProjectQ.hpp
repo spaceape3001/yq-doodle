@@ -31,6 +31,7 @@ namespace yq::doodle {
         bool            hasFilename() const;
         bool            isDirty() const;
         bool            isEmpty() const;
+        Project&        project() { return m_project; }
         const Project&  project() const { return m_project; }
         bool            saveTo(const QString&) const;
         QString         title() const;

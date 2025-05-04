@@ -29,6 +29,8 @@ public:
     void    btn_left();
     void    btn_right();
 
+    void    new_drawing();
+
 private:
     ProjectSPtr     m_project;
 };

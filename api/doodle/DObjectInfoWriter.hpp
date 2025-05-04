@@ -21,6 +21,13 @@ namespace yq::doodle {
         {
         }
         
+        Writer& icon(uint16_t n, std::string_view v)
+        {
+            if(m_meta)
+                m_meta -> m_icons[n] = std::string(v);
+            return *this;
+        }
+        
         Writer& support_0d()
         {
             if(m_meta)

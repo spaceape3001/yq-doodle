@@ -28,6 +28,7 @@ public slots:
     void            cmdSave();
     void            cmdSaveAs();
     void            cmdSaveCopy();
+    void            cmdNewDrawing();
     
 private:
     ProjectQPtr     m_project;

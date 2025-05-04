@@ -12,6 +12,13 @@ add_library(yq_doodleQt SHARED
     DObjectTableModel.cpp
     ProjectQ.hpp
     ProjectQ.cpp
+
+    drawing/DrawingScene.hpp
+    drawing/DrawingScene.cpp
+    drawing/DrawingView.hpp
+    drawing/DrawingView.cpp
+    drawing/DrawingWindow.hpp
+    drawing/DrawingWindow.cpp
 )
 
 target_link_libraries(yq_doodleQt

@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "Project.hxx"
 #include "Project.hpp"
 #include "DObject.hpp"
 #include <doodle/bit/ID.hpp>
@@ -63,6 +64,12 @@ namespace yq::doodle {
     void                    Project::bump()
     {
         ++m_revision;
+    }
+
+    bool                    Project::contains(ID i) const
+    {
+        auto itr = m_objects.find(i);
+        return (itr != m_objects.end()) && itr->second;
     }
 
     DObject*                Project::create(const DObjectInfo& info)

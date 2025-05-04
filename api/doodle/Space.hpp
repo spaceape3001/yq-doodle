@@ -18,7 +18,8 @@ namespace yq::doodle {
 
     /*! A space 
     
-        Defines a space
+        Defines a space, coordinate system, including limits.  
+        Common coordinate transforms may be set here.
     */
     class Space : public DObject {
         YQ_OBJECT_INFO(SpaceInfo)
@@ -27,6 +28,11 @@ namespace yq::doodle {
     
         static void init_info();
     
+        virtual bool        supports_1D() const { return false; }
+        virtual bool        supports_2D() const { return false; }
+        virtual bool        supports_3D() const { return false; }
+        virtual bool        supports_4D() const { return false; }
+        
     protected:
         Space(Project&);
         Space(Project&, const Space&);
@@ -34,7 +40,6 @@ namespace yq::doodle {
 
         //! Remap IDs/pointers appropriately
         virtual void        remap(const Remapper&);
-        
         
     private:
         Space(const Space&) = delete;

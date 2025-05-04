@@ -22,6 +22,24 @@ namespace yq::doodle {
         DObject::repo().objects << this;
     }
 
+    std::string_view    DObjectInfo::icon(uint16_t n) const
+    {
+        for(const DObjectInfo* di = this; di; di = dynamic_cast<const DObjectInfo*>(di -> base())){
+            auto i = di->m_icons.find(n);
+            if(i != di->m_icons.end())
+                return i->second;
+        }
+        return {};
+    }
+    
+    std::string_view    DObjectInfo::icon(local_k, uint16_t n) const
+    {
+        auto i = m_icons.find(n);
+        if(i != m_icons.end())
+            return i->second;
+        return {};
+    }
+
     bool    DObjectInfo::is_0d() const
     {
         return has(Flag::D0);
