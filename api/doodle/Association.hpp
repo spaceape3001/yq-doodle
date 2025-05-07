@@ -22,7 +22,7 @@ namespace yq::doodle {
     */
     class Association : public DObject {
         YQ_OBJECT_INFO(AssociationInfo)
-        YQ_OBJECT_DECLARE(Association, DObject)
+        YQ_DOODLE_DECLARE(Association, DObject)
     public:
 
         static void init_info();

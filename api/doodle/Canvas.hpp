@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq::doodle {
+    class Project;
+    
+    class Canvas {
+    public:
+    
+    protected:
+        Canvas(const Project&);
+        Canvas(const Project&, const Canvas&);
+        virtual ~Canvas();
+    };
+}

@@ -14,6 +14,7 @@ add_library(yq_doodle SHARED
 
     Association.cpp
     Camera.cpp
+    Canvas.cpp
     Constraint.cpp
     DObject.cpp
     Light.cpp
@@ -39,8 +40,8 @@ add_library(yq_doodle SHARED
     #   2C is three dimensional cylindrical coordinates, its z is considered minor (like 2Z)
     
     #   2D is pure two dimensions
+    2D/Canvas2D.cpp
     2D/Drawing2D.cpp
-    2D/Page2D.cpp
     2D/Py2D.cpp
     2D/Space2D.cpp
     

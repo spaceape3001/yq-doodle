@@ -55,7 +55,17 @@ namespace yq::doodle {
         //  we'll get smarter.... (likely in the sweep)
         std::map<uint16_t,std::string>      m_icons; // icons based on pixels with 0 being SVG
     };
-    
+
+    #define YQ_DOODLE_DECLARE(cls, base)                    \
+        YQ_OBJECT_DECLARE(cls,base)                         \
+        friend class DObjectFixer<cls>;                     \
+        static constexpr bool   kAbstract       = false;
+
+    #define YQ_DOODLE_DECLARE_ABSTRACT(cls, base) \
+        YQ_OBJECT_DECLARE(cls,base)   \
+        friend class DObjectFixer<cls>; \
+        static constexpr bool   kAbstract       = true;
+
     /*! \brief Doodle Object
     
     
@@ -63,7 +73,7 @@ namespace yq::doodle {
     class DObject : public Object {
         YQ_OBJECT_INFO(DObjectInfo)
         YQ_OBJECT_FIXER(DObjectFixer)
-        YQ_OBJECT_DECLARE(DObject, Object)
+        YQ_DOODLE_DECLARE_ABSTRACT(DObject, Object)
         friend class Project;
     public:
 

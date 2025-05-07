@@ -40,6 +40,9 @@ namespace yq::doodle {
     public:
         using object_map_t  = std::map<ID,DObject*>;
 
+        //  DO NOT USE IN PRODUCTION (it's for meta purposes)
+        static Project&         testing(Project* p = nullptr);
+
         Project();
         virtual ~Project();
     

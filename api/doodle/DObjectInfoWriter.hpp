@@ -93,17 +93,22 @@ namespace yq::doodle {
         
         virtual DObject* create(Project&prj) const override
         {
-            if constexpr (std::is_constructible_v<Obj, Project&> && !std::is_abstract_v<Obj>) {
-                if(ObjectInfo::is_abstract())
+            //  While the std::is_constructible_v<> test seemed nice, it unfortunately requires 
+            //  PUBLIC constructors & destructors, which we do *NOT* want here.  Instead, we 
+            //  have to do the macro trick with abstract, and mark appropriately.
+            if constexpr (!Obj::kAbstract && !std::is_abstract_v<Obj>) {
+                if(ObjectInfo::is_abstract()){
                     return nullptr;
+                }
                 return new Obj(prj);
-            } else
+            } else {
                 return nullptr;
+            }
         }
         
         virtual DObject* copy(Project&prj, const DObject&obj) const override
         {
-            if constexpr (std::is_constructible_v<Obj, Project&, const Obj&> && !std::is_abstract_v<Obj>) {
+            if constexpr (!Obj::kAbstract && !std::is_abstract_v<Obj>) {
                 if(ObjectInfo::is_abstract())
                     return nullptr;
                 return new Obj(prj, static_cast<const Obj&>(obj));
@@ -112,3 +117,4 @@ namespace yq::doodle {
         }
     };
 }
+

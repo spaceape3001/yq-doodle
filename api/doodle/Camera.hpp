@@ -20,7 +20,7 @@ namespace yq::doodle {
     */
     class Camera : public DObject {
         YQ_OBJECT_INFO(CameraInfo)
-        YQ_OBJECT_DECLARE(Camera, DObject)
+        YQ_DOODLE_DECLARE(Camera, DObject)
     public:
     
         static void init_info();

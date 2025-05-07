@@ -8,10 +8,10 @@
 #include "DoodleApp.hpp"
 #include <QMenuBar>
 #include <QFileDialog>
-#include <doodleQt/drawing/DrawingWindow.hpp>
-#include <doodle/Drawing.hpp>
-#include <doodle/2D/Space2.hpp>
+#include <doodleQt/Drawing2DWindow.hpp>
+#include <doodle/2D/Drawing2D.hpp>
 #include <doodle/Project.hxx>
+#include <yq/core/Logging.hpp>
 
 DoodleMain::DoodleMain() : DoodleMain(new ProjectQ)
 {
@@ -22,6 +22,7 @@ DoodleMain::DoodleMain(ProjectQPtr prj) : UndoMainWindow(),
 {
     DoodleApp::increment();
     prj->incrementEditors();
+    activateTabs();
     
     resize(1920, 1080);
 
@@ -111,13 +112,14 @@ void    DoodleMain::cmdNewDrawing()
     
     using namespace yq::doodle;
     
-    Space2*      s   = m_project->project().create<Space2>();
-    Drawing*     d   = m_project->project().create<Drawing>();
-    d->space(SET, s->id());
+    Drawing2D*   d          = m_project->project().create<Drawing2D>();
+    if(!d){
+        yError() << "Unable to create a new drawing";
+        return ;
+    }
     
-    DrawingWindow*dw    = new DrawingWindow(*m_project, d->id());
+    Drawing2DWindow*dw      = new Drawing2DWindow(*m_project, d->id());
     addWindow(dw);
-    
 }
 
 void    DoodleMain::cmdOpen()

@@ -22,6 +22,11 @@
 namespace yq::doodle {
     static constexpr unsigned kFormat       = 1;
 
+    Project&         Project::testing(Project*prj)
+    {
+        return *prj;
+    }
+    
     Project::Project()
     {
     }
@@ -74,7 +79,11 @@ namespace yq::doodle {
 
     DObject*                Project::create(const DObjectInfo& info)
     { 
-        return info.create(*this);
+        DObject* obj = info.create(*this);
+        if(!obj)
+            return nullptr;
+        m_roots.push_back(obj->id());
+        return obj;
     }
 
     ID  Project::insert(DObject* obj)

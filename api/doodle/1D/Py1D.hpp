@@ -24,7 +24,7 @@ namespace yq::doodle {
     */
     class Py1D : public Py {
         YQ_OBJECT_INFO(Py1DInfo)
-        YQ_OBJECT_DECLARE(Py1D, Py)
+        YQ_DOODLE_DECLARE(Py1D, Py)
     public:
     
         static constexpr const char *szX     = "x";

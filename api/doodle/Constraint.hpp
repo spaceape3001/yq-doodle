@@ -22,7 +22,7 @@ namespace yq::doodle {
     */
     class Constraint : public DObject {
         YQ_OBJECT_INFO(ConstraintInfo)
-        YQ_OBJECT_DECLARE(Constraint, DObject)
+        YQ_DOODLE_DECLARE(Constraint, DObject)
     public:
     
         static void init_info();

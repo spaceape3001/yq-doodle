@@ -4,28 +4,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "DrawingView.hpp"
-#include "DrawingScene.hpp"
+#include "Canvas2DView.hpp"
+#include "Canvas2DScene.hpp"
 #include <QMouseEvent>
 
 namespace yq::doodle {
-    DrawingView::DrawingView(DrawingScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
+    Canvas2DView::Canvas2DView(Canvas2DScene* scene, QWidget* parent) : gluon::GraphicsView(scene, parent), m_scene(scene)
     {
-        setMouseTracking(true);
     }
     
-    DrawingView::~DrawingView()
+    Canvas2DView::~Canvas2DView()
     {
     }
 
-    void    DrawingView::mouseMoveEvent(QMouseEvent* evt)
+#if 0
+    void    Canvas2DView::mouseMoveEvent(QMouseEvent* evt)
     {
         emit mouseAt(evt->position().x(), evt->position().y());
         QGraphicsView::mouseMoveEvent(evt);
     }
+#endif
 }
 
 
-#include "moc_DrawingView.cpp"
+#include "moc_Canvas2DView.cpp"
 
 

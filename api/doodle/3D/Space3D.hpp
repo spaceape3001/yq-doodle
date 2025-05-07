@@ -29,7 +29,7 @@ namespace yq::doodle {
     */
     class Space3D : public Space {
         YQ_OBJECT_INFO(Space3DInfo)
-        YQ_OBJECT_DECLARE(Space3D, Space)
+        YQ_DOODLE_DECLARE(Space3D, Space)
     public:
     
         static void init_info();

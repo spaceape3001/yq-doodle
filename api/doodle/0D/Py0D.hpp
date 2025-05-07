@@ -19,7 +19,7 @@ namespace yq::doodle {
     */
     class Py0D : public Py {
         YQ_OBJECT_INFO(Py0DInfo)
-        YQ_OBJECT_DECLARE(Py0D, Py)
+        YQ_DOODLE_DECLARE(Py0D, Py)
     public:
     
         virtual uint8_t dimensions(count_k) const final { return 0; }

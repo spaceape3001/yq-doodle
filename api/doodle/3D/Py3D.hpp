@@ -26,7 +26,7 @@ namespace yq::doodle {
     */
     class Py3D : public Py {
         YQ_OBJECT_INFO(Py3DInfo)
-        YQ_OBJECT_DECLARE(Py3D, Py)
+        YQ_DOODLE_DECLARE(Py3D, Py)
     public:
     
         virtual uint8_t dimensions(count_k) const final { return 3; }

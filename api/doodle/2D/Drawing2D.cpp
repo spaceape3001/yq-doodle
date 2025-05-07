@@ -17,11 +17,11 @@ namespace yq::doodle {
         w.description("2D Drawing");
     }
 
-    Drawing2D::Drawing2D(Project& prj) : Page2D(prj)
+    Drawing2D::Drawing2D(Project& prj) : Canvas2D(prj)
     {
     }
     
-    Drawing2D::Drawing2D(Project& prj, const Drawing2D& cp) : Page2D(prj, cp)
+    Drawing2D::Drawing2D(Project& prj, const Drawing2D& cp) : Canvas2D(prj, cp)
     {
         
     }
@@ -34,4 +34,7 @@ namespace yq::doodle {
     {
         DObject::remap(theMap);
     }
+    
+    
+    //Drawing2D   sdraw(Project::testing());
 }

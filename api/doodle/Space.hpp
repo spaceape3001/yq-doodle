@@ -23,7 +23,7 @@ namespace yq::doodle {
     */
     class Space : public DObject {
         YQ_OBJECT_INFO(SpaceInfo)
-        YQ_OBJECT_DECLARE(Space, DObject)
+        YQ_DOODLE_DECLARE_ABSTRACT(Space, DObject)
     public:
     
         static void init_info();
