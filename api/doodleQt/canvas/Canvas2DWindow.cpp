@@ -32,9 +32,9 @@ namespace yq::doodle {
 
     Canvas2DWindow::Canvas2DWindow(Canvas2DEdit*edit, const Config& cfg, QWidget*parent) : 
         gluon::SubWindow(parent), 
-        m_edit(edit),
         m_project(edit->projectQ()),
-        m_canvas(edit->canvas())
+        m_canvas(edit->canvas()),
+        m_edit(edit)
     {
         QVBoxLayout*    layout  = new QVBoxLayout;
         layout -> addWidget(m_edit);
@@ -47,6 +47,21 @@ namespace yq::doodle {
     
     Canvas2DWindow::~Canvas2DWindow()
     {
+    }
+
+    void Canvas2DWindow::setEdgePen(QPen v)
+    {
+        m_edit -> setEdgePen(v);
+    }
+    
+    void Canvas2DWindow::setPaperBrush(QBrush v)
+    {
+        m_edit -> setPaperBrush(v);
+    }
+    
+    void Canvas2DWindow::setBackgroundBrush(QBrush v)
+    {
+        m_edit -> setBackgroundBrush(v);
     }
 }
 

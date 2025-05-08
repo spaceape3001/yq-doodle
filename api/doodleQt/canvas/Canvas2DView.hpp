@@ -8,6 +8,9 @@
 
 #include <gluon/widget/GraphicsView.hpp>
 
+class QBrush;
+class QPen;
+
 namespace yq::doodle {
     class Canvas2DScene;
     
@@ -20,7 +23,12 @@ namespace yq::doodle {
         Canvas2DScene*          scene() { return m_scene; }
         const Canvas2DScene*    scene() const { return m_scene; }
 
-    private:
+        void    setEdgePen(QPen);
+        void    setPaperBrush(QBrush);
+        
+        using QGraphicsView::setBackgroundBrush;
+
+    protected:
         Canvas2DScene* const    m_scene;
     };
 }

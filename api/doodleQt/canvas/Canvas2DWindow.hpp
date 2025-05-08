@@ -10,7 +10,8 @@
 #include <yq/core/Ref.hpp>
 #include <doodle/bit/ID.hpp>
 
-class QLabel;
+class QBrush;
+class QPen;
 
 namespace yq::doodle {
     class Canvas2DEdit;
@@ -30,11 +31,23 @@ namespace yq::doodle {
         Canvas2DWindow(Canvas2DEdit*, const Config& cfg={}, QWidget*parent=nullptr);
         ~Canvas2DWindow();
         
-    private:
-    
-        Canvas2DEdit* const m_edit;
+        Canvas2DEdit*           edit() { return m_edit; }
+        const Canvas2DEdit*     edit() const { return m_edit; }
+        
+        ID                      canvas() const { return m_canvas; }
+        ProjectQ&               projectQ() { return m_project; }
+        const ProjectQ&         projectQ() const { return m_project; }
+
+        void                    setEdgePen(QPen);
+        void                    setPaperBrush(QBrush);
+        void                    setBackgroundBrush(QBrush);
+
+    protected:
         ProjectQ&           m_project;
         const ID            m_canvas;
+        
+    private:
+        Canvas2DEdit* const m_edit;
         
         //  Eventually have a shapes panel, a toolbar, etc.... here
     };

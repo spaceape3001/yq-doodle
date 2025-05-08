@@ -10,6 +10,9 @@
 #include <gluon/widget/GraphicsWidget.hpp>
 #include <doodle/bit/ID.hpp>
 
+class QPen;
+class QBrush;
+
 namespace yq::doodle {
     class Canvas2DScene;
     class Canvas2DView;
@@ -34,16 +37,24 @@ namespace yq::doodle {
         ID                      canvas() const { return m_canvas; }
         ProjectQ&               projectQ() { return m_project; }
         const ProjectQ&         projectQ() const { return m_project; }
+        
+        void    setEdgePen(QPen);
+        void    setPaperBrush(QBrush);
+        void    setBackgroundBrush(QBrush);
 
-    private:
+    protected:
         
         ProjectQ&               m_project;
         const ID                m_canvas;
+        
+    private:
         Canvas2DScene* const    m_scene;
         Canvas2DView* const     m_view;
-        
+
         static Config   config(QObject*, ProjectQ&, ID);
         static Config   config(Canvas2DScene*);
         static Config   config(Canvas2DView*);
+        
+        void    __init();
     };
 }

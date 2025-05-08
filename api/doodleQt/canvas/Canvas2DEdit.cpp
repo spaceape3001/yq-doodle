@@ -8,8 +8,10 @@
 #include "Canvas2DScene.hpp"
 #include "Canvas2DView.hpp"
 
-namespace yq::doodle {
+#include <QBrush>
+#include <QPen>
 
+namespace yq::doodle {
     gluon::GraphicsWidget::Config   Canvas2DEdit::config(QObject*par, ProjectQ&prj, ID id)
     {
         Canvas2DScene*  scene   = new Canvas2DScene(prj, id, par);
@@ -43,6 +45,7 @@ namespace yq::doodle {
         m_scene(dynamic_cast<Canvas2DScene*>(gluon::GraphicsWidget::scene())),
         m_view(dynamic_cast<Canvas2DView*>(gluon::GraphicsWidget::view()))
     {
+        __init();
     }
         
     Canvas2DEdit::Canvas2DEdit(Canvas2DScene*sc, QWidget* parent) : 
@@ -52,6 +55,7 @@ namespace yq::doodle {
         m_scene(dynamic_cast<Canvas2DScene*>(gluon::GraphicsWidget::scene())),
         m_view(dynamic_cast<Canvas2DView*>(gluon::GraphicsWidget::view()))
     {
+        __init();
     }
     
     Canvas2DEdit::Canvas2DEdit(Canvas2DView* view, QWidget* parent) : 
@@ -61,10 +65,32 @@ namespace yq::doodle {
         m_scene(view->scene()),
         m_view(view)
     {
+        __init();
     }
         
     Canvas2DEdit::~Canvas2DEdit()
     {
+    }
+
+    void    Canvas2DEdit::__init()
+    {
+        m_view -> featureEnable(gluon::GraphicsView::Feature_MaxViewport);
+        m_view -> featureEnable(gluon::GraphicsView::Feature_MouseWheelZoom);
+    }
+
+    void    Canvas2DEdit::setEdgePen(QPen v)
+    {
+        m_view -> setEdgePen(v);
+    }
+    
+    void    Canvas2DEdit::setPaperBrush(QBrush v)
+    {
+        m_view -> setPaperBrush(v);
+    }
+    
+    void    Canvas2DEdit::setBackgroundBrush(QBrush v)
+    {
+        m_view -> setBackgroundBrush(v);
     }
 }
 

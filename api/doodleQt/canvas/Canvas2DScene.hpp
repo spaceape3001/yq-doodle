@@ -23,7 +23,7 @@ namespace yq::doodle {
         ProjectQ&           projectQ() { return m_project; }
         const ProjectQ&     projectQ() const { return m_project; }
         
-    private:
+    protected:
         ProjectQ&   m_project;
         const ID    m_canvas;
     };
