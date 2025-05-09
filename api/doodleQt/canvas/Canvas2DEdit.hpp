@@ -7,7 +7,7 @@
 #pragma once
 
 #include <QWidget>
-#include <gluon/widget/GraphicsWidget.hpp>
+#include <gluon/graphics/GraphicsWidget.hpp>
 #include <doodle/bit/ID.hpp>
 
 class QPen;

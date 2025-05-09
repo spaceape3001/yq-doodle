@@ -91,7 +91,7 @@ namespace yq::doodle {
         if(!obj)
             return {};
             
-        ID  ret = m_loading ? m_loading : ID{ ++m_nextID };
+        ID  ret = m_loading ? m_loading : ID{ m_nextID++ };
         m_objects[ret]  = obj;
         return ret;
     }

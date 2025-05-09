@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <gluon/widget/GraphicsView.hpp>
+#include <gluon/graphics/GraphicsView.hpp>
 
 class QBrush;
 class QPen;
