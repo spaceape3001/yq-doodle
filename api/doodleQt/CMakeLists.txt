@@ -15,8 +15,8 @@ add_library(yq_doodleQt SHARED
     ProjectQ.hpp
     ProjectQ.cpp
 
-    canvas/Canvas2DEdit.hpp
-    canvas/Canvas2DEdit.cpp
+    #canvas/Canvas2DEdit.hpp
+    #canvas/Canvas2DEdit.cpp
     canvas/Canvas2DScene.hpp
     canvas/Canvas2DScene.cpp
     canvas/Canvas2DView.hpp

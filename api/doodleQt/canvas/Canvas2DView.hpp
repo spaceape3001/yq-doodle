@@ -23,9 +23,6 @@ namespace yq::doodle {
         Canvas2DScene*          scene() { return m_scene; }
         const Canvas2DScene*    scene() const { return m_scene; }
 
-        void    setEdgePen(QPen);
-        void    setPaperBrush(QBrush);
-        
         using QGraphicsView::setBackgroundBrush;
 
     protected:

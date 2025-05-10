@@ -17,19 +17,6 @@ namespace yq::doodle {
     {
     }
 
-    void    Canvas2DView::setEdgePen(QPen v)
-    {
-        autoDrawEnable(gluon::GraphicsView::AutoDraw_SceneRect);
-        setSceneRectPen(v);
-    }
-    
-    void    Canvas2DView::setPaperBrush(QBrush v)
-    {
-        autoDrawEnable(gluon::GraphicsView::AutoDraw_SceneRect);
-        setSceneRectBrush(v);
-    }
-    
-
 #if 0
     void    Canvas2DView::mouseMoveEvent(QMouseEvent* evt)
     {

@@ -14,10 +14,10 @@ class QBrush;
 class QPen;
 
 namespace yq::doodle {
-    class Canvas2DEdit;
+    class Canvas2DScene;
+    class Canvas2DView;
     class ProjectQ;
-    
-    
+        
     //! 2D Canvas (Which... we'll subclass for drawing/diagrams/etc)
     class Canvas2DWindow : public gluon::SubWindow {
         Q_OBJECT
@@ -27,12 +27,10 @@ namespace yq::doodle {
             // probably some panelling/layouts garnish around the edit
         };
     
-        Canvas2DWindow(ProjectQ&, ID, const Config& cfg={}, QWidget*parent=nullptr);
-        Canvas2DWindow(Canvas2DEdit*, const Config& cfg={}, QWidget*parent=nullptr);
+        Canvas2DWindow(ProjectQ&, ID,  const Config& cfg={}, QWidget*parent=nullptr);
+        Canvas2DWindow(Canvas2DScene*, const Config& cfg={}, QWidget*parent=nullptr);
+        Canvas2DWindow(Canvas2DView*,  const Config& cfg={}, QWidget*parent=nullptr);
         ~Canvas2DWindow();
-        
-        Canvas2DEdit*           edit() { return m_edit; }
-        const Canvas2DEdit*     edit() const { return m_edit; }
         
         ID                      canvas() const { return m_canvas; }
         ProjectQ&               projectQ() { return m_project; }
@@ -42,13 +40,20 @@ namespace yq::doodle {
         void                    setPaperBrush(QBrush);
         void                    setBackgroundBrush(QBrush);
 
+        Canvas2DScene*          scene() { return m_scene; }
+        const Canvas2DScene*    scene() const { return m_scene; }
+        
+        Canvas2DView*           view() { return m_view; }
+        const Canvas2DView*     view() const { return m_view; }
+        
     protected:
-        ProjectQ&           m_project;
-        const ID            m_canvas;
+        ProjectQ&               m_project;
+        const ID                m_canvas;
         
     private:
-        Canvas2DEdit* const m_edit;
-        
+        Canvas2DScene* const    m_scene;
+        Canvas2DView* const     m_view;
+
         //  Eventually have a shapes panel, a toolbar, etc.... here
     };
 }
