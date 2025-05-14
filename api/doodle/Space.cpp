@@ -28,7 +28,7 @@ namespace yq::doodle {
     {
     }
     
-    Space::Space(Project&prj, const Space&cp) : DObject(prj, cp)
+    Space::Space(CopyAPI&api, const Space&cp) : DObject(api, cp)
     {
     }
 

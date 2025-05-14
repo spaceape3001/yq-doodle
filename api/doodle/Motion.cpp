@@ -28,7 +28,7 @@ namespace yq::doodle {
     {
     }
     
-    Motion::Motion(Project& prj, const Motion& cp) : DObject(prj, cp)
+    Motion::Motion(CopyAPI& api, const Motion& cp) : DObject(api, cp)
     {
     }
     

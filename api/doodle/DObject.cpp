@@ -22,24 +22,6 @@ namespace yq::doodle {
         DObject::repo().objects << this;
     }
 
-    std::string_view    DObjectInfo::icon(uint16_t n) const
-    {
-        for(const DObjectInfo* di = this; di; di = dynamic_cast<const DObjectInfo*>(di -> base())){
-            auto i = di->m_icons.find(n);
-            if(i != di->m_icons.end())
-                return i->second;
-        }
-        return {};
-    }
-    
-    std::string_view    DObjectInfo::icon(local_k, uint16_t n) const
-    {
-        auto i = m_icons.find(n);
-        if(i != m_icons.end())
-            return i->second;
-        return {};
-    }
-
     bool    DObjectInfo::is_0d() const
     {
         return has(Flag::D0);
@@ -106,13 +88,15 @@ namespace yq::doodle {
     {
     }
     
-    DObject::DObject(Project& prj, const DObject& cp) : 
-        m_prj(prj), m_id(prj.insert(this)), m_attributes(cp.m_attributes)
+    DObject::DObject(CopyAPI& api, const DObject& cp) : 
+        m_prj(api.project), m_id(api.project.insert(this)), m_attributes(cp.m_attributes)
     {
-        m_parent    = cp.m_parent;
-        m_children  = cp.m_children;
-        m_title     = cp.m_title;
-        m_notes     = cp.m_notes;
+        m_parent        = cp.m_parent;
+        m_children      = cp.m_children;
+        m_title         = cp.m_title;
+        m_notes         = cp.m_notes;
+        
+        api.mapper.data[cp.id()] = id();
     }
     
     DObject::~DObject()

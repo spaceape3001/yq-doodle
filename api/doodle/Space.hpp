@@ -35,7 +35,7 @@ namespace yq::doodle {
         
     protected:
         Space(Project&);
-        Space(Project&, const Space&);
+        Space(CopyAPI&, const Space&);
         ~Space();
 
         //! Remap IDs/pointers appropriately

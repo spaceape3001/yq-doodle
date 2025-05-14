@@ -28,7 +28,7 @@ namespace yq::doodle {
     {
     }
     
-    Camera::Camera(Project& prj, const Camera&cp) : DObject(prj, cp)
+    Camera::Camera(CopyAPI& api, const Camera&cp) : DObject(api, cp)
     {
     }
     

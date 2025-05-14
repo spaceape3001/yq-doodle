@@ -8,12 +8,13 @@
 
 #include <yq/core/AllLocal.hpp>
 #include <yq/core/Object.hpp>
-#include <doodle/bit/SStringMap.hpp>
 #include <doodle/bit/Dim.hpp>
 #include <doodle/bit/ID.hpp>
+#include <doodle/bit/SStringMap.hpp>
 #include <doodle/typedef/revision.hpp>
 #include <doodle/typedef/dobject.hpp>
 #include <doodle/keywords.hpp>
+#include <yq/typedef/string_vectors.hpp>
 #include <yq/typedef/xml.hpp>
 #include <unordered_map>
 #include <map>
@@ -24,6 +25,8 @@ namespace yq::doodle {
     struct Remapper;
     template <typename Obj> class DObjectFixer;
     
+    struct DObjectCopyAPI;
+    
     class DObjectInfo : public ObjectInfo {
     public:
         template <typename C> class Writer;
@@ -32,7 +35,7 @@ namespace yq::doodle {
 
         Object* create() const override { return nullptr; }
         virtual DObject* create(Project&) const = 0;
-        virtual DObject* copy(Project&, const DObject&) const = 0;
+        virtual DObject* copy(DObjectCopyAPI&, const DObject&) const = 0;
 
         DimFlags    supports() const { return m_supports; }
 
@@ -46,14 +49,8 @@ namespace yq::doodle {
 
         static const DObjectInfo*           lookup(std::string_view);
 
-        std::string_view    icon(uint16_t) const;
-        std::string_view    icon(local_k, uint16_t) const;
-
     protected:
         DimFlags                            m_supports;
-        
-        //  we'll get smarter.... (likely in the sweep)
-        std::map<uint16_t,std::string>      m_icons; // icons based on pixels with 0 being SVG
     };
 
     #define YQ_DOODLE_DECLARE(cls, base)                    \
@@ -68,7 +65,8 @@ namespace yq::doodle {
 
     /*! \brief Doodle Object
     
-    
+        \note attributes/properties should be generic 
+        (with advanced capabilities to decode)
     */
     class DObject : public Object {
         YQ_OBJECT_INFO(DObjectInfo)
@@ -76,34 +74,68 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE_ABSTRACT(DObject, Object)
         friend class Project;
     public:
+    
+        /*
+        
+            Attributes are how things are defined on the objects...
+            generally reserved attributes are
+            
+            a       dimension (so for circles, radius)
+            
+            az      angle (in degrees) in the x-y plane
+            th      angle (in radians) in the x-y plane
+            r       distance from origin
+            el      elevation angle (in degrees) from the x-y plane      
+            
+            la      latitude (in degrees)
+            lo      longitude (in degrees)
+            h       height
+            
+            s       parametric attribute (can be a range for curves, or singular)
+            s0      starting S-value (for curves)
+            s1      ending S-value (for curves)
+            
+            pt      reference point (but keep orientation to parent)
+            ref     reference frame (orientation in new space)
+            
+            w       width
+            x       position in x (these take precedence, if defined)
+            y       position in y (these take precedence, if defined)
+            z       position in z (these take precedence, if defined)
+        */
+    
 
         //! Attribute on THIS object
-        std::string_view    attribute(const std::string&) const;
+        std::string_view        attribute(const std::string&) const;
         //! Attribute (either this object or parent or project)
-        std::string_view    attribute(const std::string&, all_k) const;
-        void                attribute_erase(const std::string&);
-        string_set_t        attribute_keys() const;
-        void                attribute_set(const std::string&, const std::string&);
-        void                attribute_set(const std::string&, std::string&&);
-        const string_map_t& attributes() const;
+        std::string_view        attribute(const std::string&, all_k) const;
+        void                    attribute_erase(const std::string&);
+        string_set_t            attribute_keys() const;
+        void                    attribute_set(const std::string&, const std::string&);
+        void                    attribute_set(const std::string&, std::string&&);
+        const string_map_t&     attributes() const;
         
-        std::span<const ID> children() const { return m_children; }
+        std::span<const ID>     children() const { return m_children; }
         
-        const std::string&  description() const { return m_description; }
+        const std::string&      description() const { return m_description; }
         
-        Project&          project() { return m_prj; }
-        const Project&    project() const { return m_prj; }
+        Project&                project() { return m_prj; }
+        const Project&          project() const { return m_prj; }
 
         //! TRUE if this is an attribute on THIS object
-        bool                is_attribute(const std::string&) const;
+        bool                    is_attribute(const std::string&) const;
 
-        constexpr ID        id() const { return m_id; }
-        ID                  parent() const { return m_parent; }
-        const DObject*      parent(pointer_k) const;
-        DObject*            parent(pointer_k);
-        const std::string&  notes() const { return m_notes; }
-        const std::string&  title() const { return m_title; }
-        const std::string&  uid() const { return m_uid; }
+        constexpr ID            id() const { return m_id; }
+        ID                      parent() const { return m_parent; }
+        const DObject*          parent(pointer_k) const;
+        DObject*                parent(pointer_k);
+        const std::string&      notes() const { return m_notes; }
+        const std::string&      title() const { return m_title; }
+        const std::string&      uid() const { return m_uid; }
+
+        size_t                  values(count_k) const { return m_values.size(); }
+        
+        const string_vector_t&  values() const { return m_values; }
 
         void    set_description(const std::string&);
         void    set_notes(const std::string&);
@@ -127,10 +159,12 @@ namespace yq::doodle {
             return static_cast<S*>(create(CHILD, meta<S>()));
         }
 
+        using CopyAPI = DObjectCopyAPI;
+
     protected:
     
         DObject(Project&);
-        DObject(Project&, const DObject&);
+        DObject(CopyAPI&, const DObject&);
         ~DObject();
 
         //! Remap IDs/pointers appropriately (call base class first)
@@ -150,6 +184,7 @@ namespace yq::doodle {
         Project&                m_prj;
         const ID                m_id;
         SStringMap              m_attributes;
+        string_vector_t         m_values;           // positional data (depends on the object)
         ID                      m_parent;
         std::vector<ID>         m_children;
         std::string             m_title;
@@ -170,4 +205,10 @@ namespace yq::doodle {
         std::unordered_map<ID::id_t, ID::id_t>    data;
         ID operator()(ID) const;
     };
+
+    struct DObjectCopyAPI {
+        Project&    project;    //!< New project
+        Remapper    mapper;
+    };
+
 }

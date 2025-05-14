@@ -106,12 +106,12 @@ namespace yq::doodle {
             }
         }
         
-        virtual DObject* copy(Project&prj, const DObject&obj) const override
+        virtual DObject* copy(DObjectCopyAPI& api, const DObject&obj) const override
         {
             if constexpr (!Obj::kAbstract && !std::is_abstract_v<Obj>) {
                 if(ObjectInfo::is_abstract())
                     return nullptr;
-                return new Obj(prj, static_cast<const Obj&>(obj));
+                return new Obj(api, static_cast<const Obj&>(obj));
             } else
                 return nullptr;
         }

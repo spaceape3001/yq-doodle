@@ -27,7 +27,7 @@ namespace yq::doodle {
     
     protected:
         Camera(Project&);
-        Camera(Project&, const Camera&);
+        Camera(CopyAPI&, const Camera&);
         ~Camera();
 
         //! Remap IDs/pointers appropriately

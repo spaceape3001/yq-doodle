@@ -6,16 +6,11 @@
 
 #pragma once
 
+#include <yq/meta/InfoBinder.hpp>
+#include <variant>
+
 namespace yq::doodle {
-    class Project;
-    struct DObjectCopyAPI;
-    
-    class Canvas {
-    public:
-    
-    protected:
-        Canvas(const Project&);
-        Canvas(const DObjectCopyAPI&, const Canvas&);
-        virtual ~Canvas();
-    };
+    using double_v  = std::variant<std::monostate, std::string, double>;
 }
+
+YQ_TYPE_DECLARE(yq::doodle::double_v)

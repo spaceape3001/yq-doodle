@@ -8,8 +8,8 @@
 
 #include <doodle/keywords.hpp>
 #include <doodle/bit/SStringMap.hpp>
-#include <doodle/bit/SFormat.hpp>
 #include <doodle/bit/ID.hpp>
+#include <doodle/io/SFormat.hpp>
 #include <doodle/typedef/project.hpp>
 #include <doodle/typedef/dobject.hpp>
 #include <doodle/typedef/id.hpp>

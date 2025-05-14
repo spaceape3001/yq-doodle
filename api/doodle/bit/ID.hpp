@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <yq/meta/InfoBinder.hpp>
+#include <doodle/typedef/id.hpp>
 
 namespace yq::doodle {
     struct ID {

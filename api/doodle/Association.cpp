@@ -28,7 +28,7 @@ namespace yq::doodle {
     {
     }
     
-    Association::Association(Project& prj, const Association& assn) : DObject(prj, assn)
+    Association::Association(CopyAPI& api, const Association& assn) : DObject(api, assn)
     {
     }
 

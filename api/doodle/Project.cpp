@@ -7,7 +7,6 @@
 #include "Project.hxx"
 #include "Project.hpp"
 #include "DObject.hpp"
-#include <doodle/bit/ID.hpp>
 #include <yq/xml/XmlFile.hpp>
 #include <yq/xml/XmlUtils.hpp>
 #include <yq/file/FileUtils.hpp>
@@ -293,6 +292,10 @@ namespace yq::doodle {
                 obj->m_attributes.set(k,v);
             }
             
+            for(const XmlNode* v = x->first_node(szValue); v; v = v->next_sibling(szValue)){
+                obj->m_values.push_back(x_string(*v));
+            }
+            
             for(const XmlNode* p = x->first_node(szProperty); p; p = p->next_sibling(szProperty)){
                 std::string k = read_attribute(*p, szKey, x_string);
                 const PropertyInfo* pi  = dinfo->properties(ALL).find(k);
@@ -393,6 +396,10 @@ namespace yq::doodle {
                 XmlNode& a = *x.create_element(szAttribute);
                 write_attribute(a, szKey, i.first);
                 write_x(a, i.second);
+            }
+            for(auto& i : obj->values()){
+                XmlNode& v = *x.create_element(szValue);
+                write_x(v, i);
             }
             for(const PropertyInfo* p : obj->metaInfo().properties(ALL).all){
                 if(!p->tagged(kTag_Save))

@@ -6,16 +6,18 @@
 
 #pragma once
 
+#include <doodle/Py.hpp>
+
 namespace yq::doodle {
-    class Project;
-    struct DObjectCopyAPI;
-    
-    class Canvas {
+
+    //! Position in space (can move, etc
+    class Point : public Py {
+        YQ_DOODLE_DECLARE(Point, Py)
     public:
-    
-    protected:
-        Canvas(const Project&);
-        Canvas(const DObjectCopyAPI&, const Canvas&);
-        virtual ~Canvas();
+        
+        Point(Project&);
+        Point(Project&, const Point&);
+        ~Point();
     };
+    
 }

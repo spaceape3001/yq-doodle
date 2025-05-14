@@ -29,7 +29,7 @@ namespace yq::doodle {
     {
     }
     
-    Py::Py(Project& prj, const Py&cp) : DObject(prj, cp)
+    Py::Py(CopyAPI& api, const Py&cp) : DObject(api, cp)
     {
     }
 

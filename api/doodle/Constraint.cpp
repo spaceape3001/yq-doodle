@@ -28,7 +28,7 @@ namespace yq::doodle {
     {
     }
     
-    Constraint::Constraint(Project& prj, const Constraint& cp) : DObject(prj, cp)
+    Constraint::Constraint(CopyAPI& api, const Constraint& cp) : DObject(api, cp)
     {
     }
     

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <doodle/bit/SFormat.hpp>
+#include <doodle/io/SFormat.hpp>
 
 namespace yq::doodle {
     struct b3_k {

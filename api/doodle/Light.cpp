@@ -28,7 +28,7 @@ namespace yq::doodle {
     {
     }
     
-    Light::Light(Project& prj, const Light& cp) : DObject(prj, cp)
+    Light::Light(CopyAPI& api, const Light& cp) : DObject(api, cp)
     {
     }
     

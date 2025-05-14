@@ -25,13 +25,15 @@ namespace yq::doodle {
         YQ_OBJECT_DECLARE(Py, DObject)
     public:
     
+        /*! \brief Measure of dimensionality to the object
+        */
         virtual uint8_t dimensions(count_k) const = 0;
     
         static void init_info();
     
     protected:
         Py(Project&);
-        Py(Project&, const Py&);
+        Py(CopyAPI&, const Py&);
         ~Py();
 
         //! Remap IDs/pointers appropriately

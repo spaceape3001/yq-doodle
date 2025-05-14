@@ -29,7 +29,7 @@ namespace yq::doodle {
     
     protected:
         Association(Project&);
-        Association(Project&, const Association&);
+        Association(CopyAPI&, const Association&);
         ~Association();
 
         //! Remap IDs/pointers appropriately

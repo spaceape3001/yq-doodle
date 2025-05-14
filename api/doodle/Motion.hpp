@@ -29,7 +29,7 @@ namespace yq::doodle {
     
     protected:
         Motion(Project&);
-        Motion(Project&, const Motion&);
+        Motion(CopyAPI&, const Motion&);
         ~Motion();
 
         //! Remap IDs/pointers appropriately

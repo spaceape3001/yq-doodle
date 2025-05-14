@@ -24,6 +24,7 @@ namespace yq::doodle {
     static constexpr const std::string_view szTitle             = "title";
     static constexpr const std::string_view szType              = "type";
     static constexpr const std::string_view szUID               = "uid";
+    static constexpr const std::string_view szValue             = "value";
     static constexpr const std::string_view szVariable          = "variable";
     static constexpr const std::string_view szW                 = "w";
     static constexpr const std::string_view szX                 = "x";

@@ -15,22 +15,37 @@ add_library(yq_doodle SHARED
     Association.cpp
     Camera.cpp
     Canvas.cpp
+    Canvas2D.cpp
     Constraint.cpp
     DObject.cpp
+    Drawing2D.cpp
+#    Evaluator.cpp
     Light.cpp
     Motion.cpp
+#    Point.cpp
     Project.cpp
     Py.cpp
+#    Py0D.cpp
+#    Py1D.cpp
+#    Py2D.cpp
+#    Py3D.cpp
+#    Py4D.cpp
     Space.cpp
+    Space2D.cpp
+#    Space2Z.cpp
+    Space3D.cpp
+    Space4D.cpp
+    
+    bit/ID.cpp
+    bit/SStringMap.cpp
+    
+    io/b3grammar.cpp
     
     #   Two letters are being assigned for dimension/coordinate systems
-    
     #   0D is zero dimensional (almost useless TBH)
-    0D/Py0D.cpp
 
     #   1D is pure one dimensional
-    1D/Py1D.cpp
-    
+   
     #   1Y is mainly 1D dimension with a second (minor) coordinate
     #   So 1D & 1D is supported
     
@@ -40,11 +55,6 @@ add_library(yq_doodle SHARED
     #   2C is three dimensional cylindrical coordinates, its z is considered minor (like 2Z)
     
     #   2D is pure two dimensions
-    2D/Canvas2D.cpp
-    2D/Drawing2D.cpp
-    2D/Py2D.cpp
-    2D/Space2D.cpp
-    
     #   2G is three dimensional geodetic coordinates where Z (altitude) is considered minor
     
     #   2P is pure two dimensions with polar coordinates
@@ -52,27 +62,14 @@ add_library(yq_doodle SHARED
     #   2S is spherical coordinates (z is either minor or not present)
     
     #   2Z is three dimensions with the z considered "minor" ... so think a plat map
-    2Z/Space2Z.cpp
     
     #   3C is three dimensional cylindrical coordinates
     
-    3D/Py3D.cpp
-    3D/Space3D.cpp
     
     #   3G  is three dimensional geodetic coordinates
     
     
     #   3S  is spherical coordinates
-    
-    
-    4D/Py4D.cpp
-    4D/Space4D.cpp
-    
-    bit/SStringMap.cpp
-    bit/ID.cpp
-    
-    io/b3grammar.cpp
-    
 )
 
 target_link_libraries(yq_doodle
@@ -80,6 +77,7 @@ target_link_libraries(yq_doodle
         yq_color
         yq_core
         yq_math
+        yq_userexpr
         yq_xml
 )
 

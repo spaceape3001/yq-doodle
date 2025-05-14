@@ -29,7 +29,7 @@ namespace yq::doodle {
     
     protected:
         Light(Project&);
-        Light(Project&, const Light&);
+        Light(CopyAPI&, const Light&);
         ~Light();
 
         //! Remap IDs/pointers appropriately

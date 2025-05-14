@@ -29,7 +29,7 @@ namespace yq::doodle {
     
     protected:
         Constraint(Project&);
-        Constraint(Project&, const Constraint&);
+        Constraint(CopyAPI&, const Constraint&);
         ~Constraint();
 
         //! Remap IDs/pointers appropriately
