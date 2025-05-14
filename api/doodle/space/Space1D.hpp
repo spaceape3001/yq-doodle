@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodle/space/Space.hpp>
+#include <doodle/Space.hpp>
 
 namespace yq::doodle {
     class Space1DInfo : public SpaceInfo {

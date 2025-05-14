@@ -25,7 +25,11 @@ namespace yq::doodle {
         YQ_OBJECT_DECLARE(Py, DObject)
     public:
     
+        virtual bool    supports(dimensions_k, uint8_t) const;
+    
         /*! \brief Measure of dimensionality to the object
+        
+            \note this may be expensive, so cache the result!
         */
         virtual uint8_t dimensions(count_k) const = 0;
     

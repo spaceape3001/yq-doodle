@@ -89,7 +89,10 @@ namespace yq::doodle {
     }
     
     DObject::DObject(CopyAPI& api, const DObject& cp) : 
-        m_prj(api.project), m_id(api.project.insert(this)), m_attributes(cp.m_attributes)
+        m_prj(api.project), 
+        m_id(api.project.insert(this)),
+        m_attributes(cp.m_attributes),
+        m_values(cp.m_values)
     {
         m_parent        = cp.m_parent;
         m_children      = cp.m_children;

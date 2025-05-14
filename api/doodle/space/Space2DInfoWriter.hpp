@@ -7,17 +7,17 @@
 #pragma once
 
 #include <doodle/SpaceInfoWriter.hpp>
-#include <doodle/Space3D.hpp>
+#include <doodle/space/Space2D.hpp>
 
 namespace yq::doodle {
     template <typename T>
-    class Space3DInfo::Writer : public SpaceInfo::Writer<T> {
+    class Space2DInfo::Writer : public SpaceInfo::Writer<T> {
     public:
-        Writer(Space3DInfo* mInfo) : SpaceInfo::Writer<T>(mInfo)
+        Writer(Space2DInfo* mInfo) : SpaceInfo::Writer<T>(mInfo)
         {
         }
         
-        Writer(Space3DInfo& mInfo) : Writer(&mInfo)
+        Writer(Space2DInfo& mInfo) : Writer(&mInfo)
         {
         }
     };

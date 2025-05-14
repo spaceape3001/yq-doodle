@@ -9,6 +9,8 @@
 #include <doodle/DObject.hpp>
 #include <yq/meta/ObjectInfoWriter.hpp>
 
+#define YQ_DOODLE_IMPLEMENT(cls) YQ_OBJECT_IMPLEMENT(cls)
+ 
 namespace yq::doodle {
     template <typename C>
     class DObjectInfo::Writer : public ObjectInfo::Writer<C> {

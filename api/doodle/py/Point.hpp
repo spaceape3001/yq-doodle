@@ -15,9 +15,12 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE(Point, Py)
     public:
         
+        static void init_info();
+        
+        virtual uint8_t dimensions(count_k) const override;
+                
         Point(Project&);
-        Point(Project&, const Point&);
+        Point(CopyAPI&, const Point&);
         ~Point();
     };
-    
 }

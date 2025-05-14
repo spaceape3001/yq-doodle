@@ -15,33 +15,33 @@ add_library(yq_doodle SHARED
     Association.cpp
     Camera.cpp
     Canvas.cpp
-    Canvas2D.cpp
     Constraint.cpp
     DObject.cpp
-    Drawing2D.cpp
 #    Evaluator.cpp
     Light.cpp
     Motion.cpp
-#    Point.cpp
     Project.cpp
     Py.cpp
-#    Py0D.cpp
-#    Py1D.cpp
-#    Py2D.cpp
-#    Py3D.cpp
-#    Py4D.cpp
+
     Space.cpp
-    Space2D.cpp
-#    Space2Z.cpp
-    Space3D.cpp
-    Space4D.cpp
-    
+ 
     bit/ID.cpp
     bit/SStringMap.cpp
     
-    io/b3grammar.cpp
+    canvas/Canvas2D.cpp
+    canvas/Drawing2D.cpp
     
-    #   Two letters are being assigned for dimension/coordinate systems
+    io/b3grammar.cpp
+
+    py/Point.cpp
+    
+    space/Space1D.cpp
+    space/Space2D.cpp
+#    Space2Z.cpp
+    space/Space3D.cpp
+    space/Space4D.cpp
+    
+        #   Two letters are being assigned for dimension/coordinate systems
     #   0D is zero dimensional (almost useless TBH)
 
     #   1D is pure one dimensional

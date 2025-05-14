@@ -9,7 +9,7 @@
 #include <QMenuBar>
 #include <QFileDialog>
 #include <doodleQt/Drawing2DWindow.hpp>
-#include <doodle/Drawing2D.hpp>
+#include <doodle/canvas/Drawing2D.hpp>
 #include <doodle/Project.hxx>
 #include <yq/core/Logging.hpp>
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodle/Space2D.hpp>
+#include <doodle/space/Space2D.hpp>
 #include <doodle/Canvas.hpp>
 #include <yq/units.hpp>
 #include <yq/shape/AxSide2.hpp>

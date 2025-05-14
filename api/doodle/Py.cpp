@@ -37,6 +37,11 @@ namespace yq::doodle {
     {
     }
 
+    bool    Py::supports(dimensions_k, uint8_t n) const
+    {
+        return n <= dimensions(COUNT);
+    }
+
     //! Remap IDs/pointers appropriately
     void        Py::remap(const Remapper&rMap)
     {
