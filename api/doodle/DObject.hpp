@@ -48,9 +48,15 @@ namespace yq::doodle {
         bool    is_6d() const;
 
         static const DObjectInfo*           lookup(std::string_view);
+        
+        //! TRUE if there's a default attribute
+        bool                has_default_attribute(std::string_view) const;
+        std::string_view    default_attribute(std::string_view) const;
 
     protected:
-        DimFlags                            m_supports;
+        DimFlags            m_supports;
+        string_view_map_t   m_attributes;
+        
     };
 
     #define YQ_DOODLE_DECLARE(cls, base)                    \
@@ -111,8 +117,8 @@ namespace yq::doodle {
         std::string_view        attribute(const std::string&, all_k) const;
         void                    attribute_erase(const std::string&);
         string_set_t            attribute_keys() const;
-        void                    attribute_set(const std::string&, const std::string&);
-        void                    attribute_set(const std::string&, std::string&&);
+        void                    attribute(set_k, const std::string&, const std::string&);
+        void                    attribute(set_k, const std::string&, std::string&&);
         const string_map_t&     attributes() const;
         
         std::span<const ID>     children() const { return m_children; }
@@ -181,6 +187,7 @@ namespace yq::doodle {
         DObject& operator=(const DObject&) = delete;
         DObject& operator=(DObject&&) = delete;
 
+    protected:
         Project&                m_prj;
         const ID                m_id;
         SStringMap              m_attributes;
@@ -191,6 +198,8 @@ namespace yq::doodle {
         std::string             m_description;
         std::string             m_uid;
         std::string             m_notes;
+    
+    private:
         AllLocal<revision_t>    m_revision  = {};
         
         ID::id_t        get_id() const { return m_id.id; }

@@ -22,6 +22,19 @@ namespace yq::doodle {
         DObject::repo().objects << this;
     }
 
+    std::string_view    DObjectInfo::default_attribute(std::string_view k) const
+    {
+        auto i = m_attributes.find(k);
+        if(i != m_attributes.end())
+            return i->second;
+        return {};
+    }
+
+    bool    DObjectInfo::has_default_attribute(std::string_view k) const
+    {
+        return m_attributes.contains(k);
+    }
+    
     bool    DObjectInfo::is_0d() const
     {
         return has(Flag::D0);
@@ -137,12 +150,12 @@ namespace yq::doodle {
         return m_attributes.keys();
     }
     
-    void                    DObject::attribute_set(const std::string&k, const std::string&v)
+    void                    DObject::attribute(set_k, const std::string&k, const std::string&v)
     {
         m_attributes.set(k, v);
     }
     
-    void                    DObject::attribute_set(const std::string&k, std::string&&v)
+    void                    DObject::attribute(set_k, const std::string&k, std::string&&v)
     {
         m_attributes.set(k, std::move(v));
     }
@@ -179,7 +192,7 @@ namespace yq::doodle {
         bump();
         return obj;
     }
-    
+
     bool                DObject::is_attribute(const std::string& k) const
     {
         return m_attributes.contains(k);

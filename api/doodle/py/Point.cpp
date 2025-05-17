@@ -31,6 +31,10 @@ namespace yq::doodle {
             n = std::min(n,(uint8_t) 3);
         if(is_attribute("w"))
             n = std::min(n,(uint8_t) 4);
+        if(is_attribute("ang"))
+            n = std::min(n,(uint8_t) 2);
+        if(is_attribute("a"))
+            n = std::min(n,(uint8_t) 2);
         if(is_attribute("az"))
             n = std::min(n,(uint8_t) 2);
         if(is_attribute("el"))
@@ -58,4 +62,88 @@ namespace yq::doodle {
     Point::~Point()
     {
     }
+
+    std::string_view  Point::w() const
+    {
+        if(m_values.size() >= 4)
+            return m_values[3];
+            
+        auto& data  = m_attributes.data();
+        
+        if(auto i = data.find("w"); i != data.end())
+            return i->second;
+
+        return "";
+    }
+
+    std::string_view  Point::x() const
+    {
+        if(m_values.size() >= 1)
+            return m_values[0];
+        
+        auto& data  = m_attributes.data();
+        if(auto i = data.find("x"); i != data.end())
+            return i->second;
+        
+        if(is_attribute("r")){
+            if(is_attribute("ang"))
+                return "r*cosd(ang)";
+            if(is_attribute("a"))
+                return "r*cosd(a)";
+            if(is_attribute("th"))
+                return "r*cos(th)";
+            if(is_attribute("az")){
+                if(is_attribute("el")){
+                    return "r*sind(az)*cosd(el)";
+                } else {
+                    return "r*sind(az)";
+                }
+            }
+        } 
+        return "";
+    }
+
+    std::string_view  Point::y() const
+    {
+        if(m_values.size() >= 2)
+            return m_values[1];
+
+        auto& data  = m_attributes.data();
+        if(auto i = data.find("y"); i != data.end())
+            return i->second;
+        
+        if(is_attribute("r")){
+            if(is_attribute("ang"))
+                return "r*sind(ang)";
+            if(is_attribute("a"))
+                return "r*sind(a)";
+            if(is_attribute("th"))
+                return "r*sin(th)";
+            if(is_attribute("az")){
+                if(is_attribute("el")){
+                    return "r*cosd(az)*cosd(el)";
+                } else {
+                    return "r*cosd(az)";
+                }
+            }
+        } 
+        return "";
+    }
+
+    std::string_view  Point::z() const
+    {
+        if(m_values.size() >= 3)
+            return m_values[2];
+        
+        auto& data  = m_attributes.data();
+        if(auto i = data.find("y"); i != data.end())
+            return i->second;
+
+        if(is_attribute("r") && is_attribute("el")){
+            return "r*sind(el)";
+        }
+        
+        return "";
+    }
+
 }

@@ -72,14 +72,16 @@ namespace yq::doodle {
         bool                    is_empty() const;
         
         bool                    is_attribute(const std::string&) const;
-        bool                    is_variable(const std::string&) const;
+        bool                    is_attribute(ID, const std::string&) const;
+ 
+        //bool                    is_variable(const std::string&) const;
 
-        std::string_view        variable(const std::string&) const;
-        void                    variable_erase(const std::string&);
-        string_set_t            variable_keys() const;
-        void                    variable_set(const std::string&, const std::string&);
-        void                    variable_set(const std::string&, std::string&&);
-        const string_map_t&     variables() const;
+        //std::string_view        variable(const std::string&) const;
+        //void                    variable_erase(const std::string&);
+        //string_set_t            variable_keys() const;
+        //void                    variable_set(const std::string&, const std::string&);
+        //void                    variable_set(const std::string&, std::string&&);
+        //const string_map_t&     variables() const;
     
         revision_t              revision() const { return m_revision; }
         
@@ -113,6 +115,12 @@ namespace yq::doodle {
         auto    foreach(Pred&&);
         template <SomeDObject S=DObject, typename Pred>
         auto    foreach(Pred&&) const;
+        
+        template <SomeDObject S=DObject, typename Pred>
+        auto    foreach(uid_k, const std::string&, Pred&&);
+        template <SomeDObject S=DObject, typename Pred>
+        auto    foreach(uid_k, const std::string&, Pred&&) const;
+        
 
     private:
         friend class DObject;

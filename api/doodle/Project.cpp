@@ -99,6 +99,14 @@ namespace yq::doodle {
     {
         return m_attributes.contains(k);
     }
+
+    bool                    Project::is_attribute(ID i, const std::string& k) const
+    {
+        const DObject* obj = object(i);
+        if(!obj)
+            return false;
+        return obj -> is_attribute(k) || obj->metaInfo().has_default_attribute(k);
+    }
     
     bool                    Project::is_empty() const
     {
@@ -106,10 +114,10 @@ namespace yq::doodle {
             m_description.empty() && m_notes.empty() && m_uidmap.empty();
     }
 
-    bool                    Project::is_variable(const std::string&k) const
-    {
-        return m_attributes.contains(k);
-    }
+    //bool                    Project::is_variable(const std::string&k) const
+    //{
+        //return m_variables.contains(k);
+    //}
 
     DObject*                Project::object(ID id)
     {
@@ -155,35 +163,35 @@ namespace yq::doodle {
         // TODO
     }
 
-    std::string_view        Project::variable(const std::string&k) const
-    {
-        return m_variables.get(k);
-    }
+    //std::string_view        Project::variable(const std::string&k) const
+    //{
+        //return m_variables.get(k);
+    //}
 
-    void                    Project::variable_erase(const std::string&k)
-    {
-        m_variables.erase(k);
-    }
+    //void                    Project::variable_erase(const std::string&k)
+    //{
+        //m_variables.erase(k);
+    //}
     
-    string_set_t            Project::variable_keys() const
-    {
-        return m_variables.keys();
-    }
+    //string_set_t            Project::variable_keys() const
+    //{
+        //return m_variables.keys();
+    //}
     
-    void                    Project::variable_set(const std::string&k, const std::string&v)
-    {
-        m_variables.set(k, v);
-    }
+    //void                    Project::variable_set(const std::string&k, const std::string&v)
+    //{
+        //m_variables.set(k, v);
+    //}
     
-    void                    Project::variable_set(const std::string&k, std::string&&v)
-    {
-        m_variables.set(k, std::move(v));
-    }
+    //void                    Project::variable_set(const std::string&k, std::string&&v)
+    //{
+        //m_variables.set(k, std::move(v));
+    //}
     
-    const string_map_t&     Project::variables() const
-    {
-        return m_variables.data();
-    }
+    //const string_map_t&     Project::variables() const
+    //{
+        //return m_variables.data();
+    //}
 
     ////////////////////////////////////////////////////////////////////////////
     //  B3
@@ -240,11 +248,11 @@ namespace yq::doodle {
             std::string v = x_string(*x);
             m_attributes.set(k,v);
         }
-        for(const XmlNode* x = root->first_node(szVariable); x; x = x->next_sibling(szVariable)){
-            std::string k = read_attribute(*x, szKey, x_string);
-            std::string v = x_string(*x);
-            m_variables.set(k,v);
-        }
+        //for(const XmlNode* x = root->first_node(szVariable); x; x = x->next_sibling(szVariable)){
+            //std::string k = read_attribute(*x, szKey, x_string);
+            //std::string v = x_string(*x);
+            //m_variables.set(k,v);
+        //}
         for(const XmlNode* x = root->first_node(szObject); x; x = x->next_sibling(szObject)){
             std::string cls = read_attribute(*x, szClass, x_string);
             if(cls.empty()){
@@ -368,11 +376,11 @@ namespace yq::doodle {
             write_attribute(x, szKey, i.first);
             write_x(x, i.second);
         }
-        for(auto& i : m_variables.data()){
-            XmlNode& x   = *root.create_element(szVariable);
-            write_attribute(x, szKey, i.first);
-            write_x(x, i.second);
-        }
+        //for(auto& i : m_variables.data()){
+            //XmlNode& x   = *root.create_element(szVariable);
+            //write_attribute(x, szKey, i.first);
+            //write_x(x, i.second);
+        //}
         for(auto& itr : m_objects){
             const DObject* obj  = itr.second;
             if(!obj)

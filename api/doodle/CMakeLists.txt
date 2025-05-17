@@ -17,7 +17,7 @@ add_library(yq_doodle SHARED
     Canvas.cpp
     Constraint.cpp
     DObject.cpp
-#    Evaluator.cpp
+    Evaluator.cpp
     Light.cpp
     Motion.cpp
     Project.cpp

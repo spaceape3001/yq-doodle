@@ -22,5 +22,17 @@ namespace yq::doodle {
         Point(Project&);
         Point(CopyAPI&, const Point&);
         ~Point();
+        
+        // Should always be valid (if defined), will default to empty otherwise
+        std::string_view  x() const;
+
+        // Should always be valid (if defined), will default to empty otherwise
+        std::string_view  y() const;
+
+        // Should always be valid (if defined), will default to empty otherwise
+        std::string_view  z() const;
+
+        // Should always be valid (if defined), will default to empty otherwise
+        std::string_view  w() const;
     };
 }

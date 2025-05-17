@@ -23,6 +23,14 @@ namespace yq::doodle {
         {
         }
         
+        //! Defines a default attribute
+        Writer& attribute(const char* k, const char* v)
+        {
+            if(m_meta)
+                m_meta -> m_attributes[k] = v;
+            return *this;
+        }
+        
         Writer& icon(uint16_t n, std::string_view v)
         {
             if(m_meta)
