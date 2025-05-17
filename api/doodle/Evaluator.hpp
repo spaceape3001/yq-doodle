@@ -62,7 +62,7 @@ namespace yq::doodle {
         bool    update(Ergo&);  //!< Updates ergo, returns TRUE if there's a change
         bool    update(Ergo&,std::set<uint64_t>&); //!< Updates ergo, returns TRUE if there's a change
         bool    needs_parsing(Ergo&) const;
-        bool    fetch(Ergo&) const;
+        //bool    fetch(Ergo&) const;
         bool    parse(Ergo&) const;
         bool    redep(Ergo&);
 

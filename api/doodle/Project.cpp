@@ -76,6 +76,12 @@ namespace yq::doodle {
         return (itr != m_objects.end()) && itr->second;
     }
 
+    size_t          Project::count(object_k, uid_k, const std::string& k) const
+    {
+        auto r = m_uidmap.equal_range(k);
+        return std::distance(r.first, r.second);
+    }
+
     DObject*                Project::create(const DObjectInfo& info)
     { 
         DObject* obj = info.create(*this);
@@ -153,14 +159,24 @@ namespace yq::doodle {
         bump();
     }
 
-    void    Project::uid_map(const std::string&s, ID )
+    void    Project::uid_map(const std::string&s, ID i)
     {
-        // TODO
+        m_uidmap.insert({s,i});
+        bump();
     }
     
-    void    Project::uid_umap(const std::string&s, ID)
+    void    Project::uid_umap(const std::string&s, ID i)
     {
-        // TODO
+        bool    changed = false;
+        auto r = m_uidmap.equal_range(s);
+        for(auto j = r.first; j!=r.second; ++j){
+            if(j->second == i){
+                j   = m_uidmap.erase(j);
+                changed = true;
+            }
+        }
+        if(changed)
+            bump();
     }
 
     //std::string_view        Project::variable(const std::string&k) const

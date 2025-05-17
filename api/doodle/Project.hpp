@@ -120,6 +120,9 @@ namespace yq::doodle {
         auto    foreach(uid_k, const std::string&, Pred&&);
         template <SomeDObject S=DObject, typename Pred>
         auto    foreach(uid_k, const std::string&, Pred&&) const;
+
+        size_t          count(object_k) const { return m_objects.size(); }
+        size_t          count(object_k, uid_k, const std::string&) const;
         
 
     private:

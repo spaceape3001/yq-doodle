@@ -11,3 +11,4 @@ macro(doodle_test name)
 endmacro()
 
 doodle_test(b3parse)
+doodle_test(evaluator)

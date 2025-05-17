@@ -22,14 +22,6 @@ namespace yq::doodle {
         DObject::repo().objects << this;
     }
 
-    std::string_view    DObjectInfo::default_attribute(std::string_view k) const
-    {
-        auto i = m_attributes.find(k);
-        if(i != m_attributes.end())
-            return i->second;
-        return {};
-    }
-
     bool    DObjectInfo::has_default_attribute(std::string_view k) const
     {
         return m_attributes.contains(k);
@@ -70,11 +62,22 @@ namespace yq::doodle {
         return has(Flag::D6);
     }
     
+    void    DObjectInfo::sweep_impl() 
+    {
+        ObjectInfo::sweep_impl();
+        const DObjectInfo* parent   = dynamic_cast<const DObjectInfo*>(base());
+        if(parent){
+            for(auto& i : parent->m_attributes)
+                m_attributes.insert(i);
+        }
+    }
+
     const DObjectInfo*       DObjectInfo::lookup(std::string_view ks)
     {
         auto& r = DObject::repo();
         return r.objects.find(ks);
     }
+
 
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -97,12 +100,12 @@ namespace yq::doodle {
         w.property("revision", &DObject::get_revision);
     }
 
-    DObject::DObject(Project& prj) : m_prj(prj), m_id(prj.insert(this))
+    DObject::DObject(Project& prj) : m_project(prj), m_id(prj.insert(this))
     {
     }
     
     DObject::DObject(CopyAPI& api, const DObject& cp) : 
-        m_prj(api.project), 
+        m_project(api.project), 
         m_id(api.project.insert(this)),
         m_attributes(cp.m_attributes),
         m_values(cp.m_values)
@@ -123,21 +126,38 @@ namespace yq::doodle {
 
     std::string_view        DObject::attribute(const std::string& k) const
     {
-        return m_attributes.get(k);
+        std::string_view    a;
+        
+        a   = attribute(LOCAL, k);
+        if(!a.empty())
+            return a;
+        a   = attribute(DEFAULT, k);
+        if(!a.empty())
+            return a;
+        return m_project.attribute(k);
     }
 
-    std::string_view        DObject::attribute(const std::string& k, all_k) const
+    std::string_view        DObject::attribute(default_k, const std::string& k) const
     {
-        auto& map   = m_attributes.data();
-        auto i = map.find(k);
-        if(i != map.end())
-            return i->second;
-        
-        if(const DObject*p = m_prj.object(m_parent)){
-            return p->attribute(k);
-        } else {
-            return m_prj.attribute(k);
-        }
+        const DObjectInfo& dinfo = metaInfo();
+        auto itr = dinfo.m_attributes.find(k);
+        if(itr == dinfo.m_attributes.end())
+            return {};
+        if(auto p = std::get_if<std::string_view>(&itr->second))
+            return *p;
+        if(auto p = std::get_if<DObjectInfo::function_attribute_t>(&itr->second))
+            return (*p)(this);
+        return {};
+    }
+
+    std::string_view        DObject::attribute(global_k, const std::string& k) const
+    {
+        return m_project.attribute(k);
+    }
+
+    std::string_view        DObject::attribute(local_k, const std::string& k) const
+    {
+        return m_attributes.get(k);
     }
     
     void                    DObject::attribute_erase(const std::string& k)
@@ -171,19 +191,19 @@ namespace yq::doodle {
         ++m_revision.all;
         
         for(ID i = m_parent; i;){
-            DObject*p   = m_prj.object(i);
+            DObject*p   = m_project.object(i);
             if(!p)
                 break;
             ++(p->m_revision.all);
             i   = p->m_parent;
         }
         
-        m_prj.bump();
+        m_project.bump();
     }
 
     DObject*    DObject::create(child_k, const DObjectInfo& sinfo)
     {
-        DObject* obj = sinfo.create(m_prj);
+        DObject* obj = sinfo.create(m_project);
         if(!obj)
             return nullptr;
         
@@ -195,17 +215,32 @@ namespace yq::doodle {
 
     bool                DObject::is_attribute(const std::string& k) const
     {
+        return is_attribute(LOCAL, k) || is_attribute(DEFAULT, k) || is_attribute(GLOBAL, k);
+    }
+
+    bool                DObject::is_attribute(default_k, const std::string&k) const
+    { 
+        return metaInfo().has_default_attribute(k);
+    }
+    
+    bool                DObject::is_attribute(local_k, const std::string&k) const
+    {
         return m_attributes.contains(k);
+    }
+
+    bool                DObject::is_attribute(global_k, const std::string&k) const
+    {
+        return m_project.is_attribute(k);
     }
 
     const DObject*      DObject::parent(pointer_k) const
     {
-        return m_prj.object(m_parent);
+        return m_project.object(m_parent);
     }
     
     DObject*            DObject::parent(pointer_k)
     {
-        return m_prj.object(m_parent);
+        return m_project.object(m_parent);
     }
 
     void     DObject::remap(const Remapper& theMap)
@@ -214,7 +249,7 @@ namespace yq::doodle {
         
         for(ID& i : m_children){
             i   = theMap(i);
-            DObject*    dob = m_prj.object(i);
+            DObject*    dob = m_project.object(i);
             if(dob)
                 dob -> remap(theMap);
         }
@@ -234,7 +269,13 @@ namespace yq::doodle {
     
     void    DObject::set_uid(const std::string&v)
     {
-        m_uid       = v;
+        if(m_uid != v){
+            if(!m_uid.empty())
+                m_project.uid_umap(v, id());
+            m_uid       = v;
+            if(!m_uid.empty())
+                m_project.uid_map(v, id());
+        }
         bump();
     }
     

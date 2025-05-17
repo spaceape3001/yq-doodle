@@ -51,11 +51,18 @@ namespace yq::doodle {
         
         //! TRUE if there's a default attribute
         bool                has_default_attribute(std::string_view) const;
-        std::string_view    default_attribute(std::string_view) const;
 
     protected:
-        DimFlags            m_supports;
-        string_view_map_t   m_attributes;
+        friend class DObject;
+        
+        virtual void    sweep_impl() override;
+
+        using function_attribute_t      = std::function<std::string_view(const DObject*)>;
+        using default_attribute_t       = std::variant<std::monostate, std::string_view, function_attribute_t>;
+        using default_attribute_map_t   = std::map<std::string_view, default_attribute_t, IgCase>;
+    
+        DimFlags                m_supports;
+        default_attribute_map_t m_attributes;
         
     };
 
@@ -111,10 +118,18 @@ namespace yq::doodle {
         */
     
 
-        //! Attribute on THIS object
+        //! Attribute for this object (either local, default, or global)
         std::string_view        attribute(const std::string&) const;
-        //! Attribute (either this object or parent or project)
-        std::string_view        attribute(const std::string&, all_k) const;
+        
+        //! Attribute that's a default
+        std::string_view        attribute(default_k, const std::string&) const;
+        
+        //! Attribute (ONLY) on this object
+        //! \note This excludes any "default"
+        std::string_view        attribute(local_k, const std::string&) const;
+
+        std::string_view        attribute(global_k, const std::string&) const;
+        
         void                    attribute_erase(const std::string&);
         string_set_t            attribute_keys() const;
         void                    attribute(set_k, const std::string&, const std::string&);
@@ -125,11 +140,20 @@ namespace yq::doodle {
         
         const std::string&      description() const { return m_description; }
         
-        Project&                project() { return m_prj; }
-        const Project&          project() const { return m_prj; }
+        Project&                project() { return m_project; }
+        const Project&          project() const { return m_project; }
 
-        //! TRUE if this is an attribute on THIS object
+        //! TRUE if this is a valid attribute (local, default, or global)
         bool                    is_attribute(const std::string&) const;
+        
+        //! TRUE if this is a valid "default" attribute
+        bool                    is_attribute(default_k, const std::string&) const;
+        
+        //! TRUE if this is a valid attribute on the global map
+        bool                    is_attribute(global_k, const std::string&) const;
+
+        //! TRUE if this is a valid attribute on our map
+        bool                    is_attribute(local_k, const std::string&) const;
 
         constexpr ID            id() const { return m_id; }
         ID                      parent() const { return m_parent; }
@@ -188,7 +212,7 @@ namespace yq::doodle {
         DObject& operator=(DObject&&) = delete;
 
     protected:
-        Project&                m_prj;
+        Project&                m_project;
         const ID                m_id;
         SStringMap              m_attributes;
         string_vector_t         m_values;           // positional data (depends on the object)

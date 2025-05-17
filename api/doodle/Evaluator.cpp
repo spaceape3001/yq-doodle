@@ -20,6 +20,10 @@
 
 namespace yq::doodle {
 
+    /*
+        TODO ... make this use parent lineage for variable resolution too...
+    */
+
     using UserExprCPtr = std::shared_ptr<const UserExpr>;
 
     bool Evaluator::StrIDLess::operator()(const StrIDKey& a, const StrIDKey& b)
@@ -151,20 +155,12 @@ namespace yq::doodle {
                 std::string_view    attr    = obj->attribute(e.name);
                 if(attr != e.definition){
                     e.definition    = attr;
-                    e.flags |= Ergo::F::Fetched;
+                    e.flags        |= Ergo::F::Fetched;
+                    e.revision      = obj->revision(LOCAL);
                     return true;
                 }
             }
-            
-            if(obj->metaInfo().has_default_attribute(e.name)){
-                std::string_view    attr    = obj->metaInfo().default_attribute(e.name);
-                if(attr != e.definition){
-                    e.definition    = attr;
-                    e.flags |= Ergo::F::Fetched;
-                    return true;
-                }
-            }
-            
+
             return false;
         } else {
             if(e.revision == m_project.revision())
@@ -174,6 +170,7 @@ namespace yq::doodle {
             if(attr != e.definition){
                 e.definition    = attr;
                 e.flags |= Ergo::F::Fetched;
+                e.revision  = m_project.revision();
                 return true;
             }
 
@@ -181,38 +178,36 @@ namespace yq::doodle {
         }
     }
     
-    bool    Evaluator::fetch(Ergo&e) const
-    {
-        if(e.flags(Ergo::F::Fetched))
-            return true;
+    //bool    Evaluator::fetch(Ergo&e) const
+    //{
+        //if(e.flags(Ergo::F::Fetched))
+            //return true;
         
-        if(e.dib){
-            const DObject* obj = m_project.object(e.dib);
-            if(!obj){
-                e.flags |= Ergo::F::Missing;
-                return false;
-            }
+        //if(e.dib){
+            //const DObject* obj = m_project.object(e.dib);
+            //if(!obj){
+                //e.flags |= Ergo::F::Missing;
+                //return false;
+            //}
             
-            e.definition    = obj->attribute(e.name);
-            e.revision      = obj->revision(LOCAL);
-        } else {
-            e.definition    = m_project.attribute(e.name);
-            e.revision      = m_project.revision();
-        }
+            //e.definition    = obj->attribute(e.name);
+            //e.revision      = obj->revision(LOCAL);
+        //} else {
+            //e.definition    = m_project.attribute(e.name);
+            //e.revision      = m_project.revision();
+        //}
         
-        e.flags      |= Ergo::F::Fetched;
-        return true;
-    }
+        //e.flags      |= Ergo::F::Fetched;
+        //return true;
+    //}
 
     bool    Evaluator::parse(Ergo&e) const
     {
         e.flags -= Ergo::F::Parsed;
         e.flags -= Ergo::F::ParseFail;
         
-        if(!e.flags(Ergo::F::Fetched)){
-            if(!fetch(e))
-                return false;
-        }
+        if(!e.flags(Ergo::F::Fetched))
+            return false;
         
         UserExprCPtr    ue  = std::make_shared<UserExpr>(e.definition);
         if(!ue->is_good()){
@@ -271,7 +266,7 @@ namespace yq::doodle {
             } else
                 attr    = var;
             
-            if(obj && (obj->is_attribute(attr) || obj->metaInfo().has_default_attribute(attr))){
+            if(obj && obj->is_attribute(attr)){
                 Dep  d;
                 d.var   = v32;
                 d.dib   = obj -> id();
@@ -310,8 +305,8 @@ namespace yq::doodle {
         bool    exec    = e.value.invalid() || !e.userexpr; // two guaranteed conditions for reevaluating
             
         if(needs_parsing(e)){
-            if(!fetch(e))
-                return true;
+            //if(!fetch(e))
+                //return true;
             if(!parse(e))
                 return true;
             if(!redep(e))

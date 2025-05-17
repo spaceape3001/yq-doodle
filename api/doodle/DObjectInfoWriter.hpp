@@ -31,6 +31,22 @@ namespace yq::doodle {
             return *this;
         }
         
+        Writer& attribute(const char* k, std::string_view (C::*fn)() const)
+        {
+            if(m_meta){
+                m_meta -> m_attributes[k] = [fn](const DObject* obj) -> std::string_view
+                {
+                    const C* c  = dynamic_cast<const C*>(obj);
+                    if(c){
+                        return (c->*fn)();
+                    } else {
+                        return {};
+                    }
+                };
+            }
+            return *this;
+        }
+        
         Writer& icon(uint16_t n, std::string_view v)
         {
             if(m_meta)

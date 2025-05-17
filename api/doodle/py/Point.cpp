@@ -15,6 +15,10 @@ namespace yq::doodle {
     {
         auto w = writer<Point>();
         w.description("Point");
+        w.attribute("x", &Point::x);
+        w.attribute("y", &Point::y);
+        w.attribute("z", &Point::z);
+        w.attribute("w", &Point::w);
     }
 
     uint8_t Point::dimensions(count_k) const
@@ -69,7 +73,6 @@ namespace yq::doodle {
             return m_values[3];
             
         auto& data  = m_attributes.data();
-        
         if(auto i = data.find("w"); i != data.end())
             return i->second;
 
