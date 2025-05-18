@@ -119,7 +119,7 @@ namespace yq::doodle {
     {
         Ergo* e = ergo(i, k);
         if(!e)
-            return errors::bad_argument();
+            return Any();
         update(*e);
         return e->value;
     }
@@ -130,7 +130,16 @@ namespace yq::doodle {
         if(!e)
             return errors::bad_argument();
         update(*e);
+        
         return e->value;
+    }
+
+    any_x   Evaluator::evaluate(uid_k, const std::string& uid, const std::string& k)
+    {
+        ID  id = m_project.foreach(UID, uid, [&](ID id) -> ID { return id; });
+        if(!id)
+            return errors::bad_argument();
+        return evaluate(id, k);
     }
 
     bool    Evaluator::needs_parsing(Ergo& e) const
@@ -178,36 +187,61 @@ namespace yq::doodle {
         }
     }
     
-    //bool    Evaluator::fetch(Ergo&e) const
-    //{
-        //if(e.flags(Ergo::F::Fetched))
-            //return true;
+    bool    Evaluator::fetch(Ergo&e) const
+    {
+        if(e.flags(Ergo::F::Fetched)){
+            return true;
+        }
         
-        //if(e.dib){
-            //const DObject* obj = m_project.object(e.dib);
-            //if(!obj){
-                //e.flags |= Ergo::F::Missing;
-                //return false;
-            //}
+        if(e.dib){
+            const DObject* obj = m_project.object(e.dib);
+            if(!obj){
+                e.flags |= Ergo::F::Missing;
+                return false;
+            }
             
-            //e.definition    = obj->attribute(e.name);
-            //e.revision      = obj->revision(LOCAL);
-        //} else {
-            //e.definition    = m_project.attribute(e.name);
-            //e.revision      = m_project.revision();
-        //}
+            e.definition    = obj->attribute(e.name);
+            e.revision      = obj->revision(LOCAL);
+        } else {
+            e.definition    = m_project.attribute(e.name);
+            e.revision      = m_project.revision();
+        }
         
-        //e.flags      |= Ergo::F::Fetched;
-        //return true;
-    //}
+        e.flags      |= Ergo::F::Fetched;
+        return true;
+    }
+
+    Any     Evaluator::get_override(std::string_view k) const
+    {
+        return get_override(to_u32string(k));
+    }
+    
+    Any     Evaluator::get_override(const std::u32string&k) const
+    {
+        auto itr = m_overrides.find(k);
+        if(itr != m_overrides.end())
+            return itr->second;
+        return Any();
+    }
+
+    bool    Evaluator::is_override(std::string_view k) const
+    {
+        return is_override(to_u32string(k));
+    }
+    
+    bool    Evaluator::is_override(const std::u32string&k) const
+    {
+        return m_overrides.contains(k);
+    }
 
     bool    Evaluator::parse(Ergo&e) const
     {
         e.flags -= Ergo::F::Parsed;
         e.flags -= Ergo::F::ParseFail;
         
-        if(!e.flags(Ergo::F::Fetched))
+        if(!e.flags(Ergo::F::Fetched)){
             return false;
+        }
         
         UserExprCPtr    ue  = std::make_shared<UserExpr>(e.definition);
         if(!ue->is_good()){
@@ -240,7 +274,7 @@ namespace yq::doodle {
             e.variables.clear();
             return true;
         }
-        
+
         for(auto& v32 : vars){
             std::string     var = to_string(v32);
             std::string     attr;
@@ -266,7 +300,7 @@ namespace yq::doodle {
             } else
                 attr    = var;
             
-            if(obj && obj->is_attribute(attr)){
+            if(obj && (obj->is_attribute(LOCAL, attr) || obj->is_attribute(DEFAULT,attr))){
                 Dep  d;
                 d.var   = v32;
                 d.dib   = obj -> id();
@@ -275,7 +309,7 @@ namespace yq::doodle {
                 continue;
             }
             
-            if(m_project.is_attribute(var) || m_overrides.contains(std::u32string(v32))){
+            if(m_project.is_attribute(var) || is_override(var)){
                 Dep d;
                 d.var   = v32;
                 d.attr  = var;
@@ -291,6 +325,16 @@ namespace yq::doodle {
         return true;
     }
 
+    void    Evaluator::set_override(std::string_view k, Any&&val)
+    {
+        set_override(to_u32string(k), std::move(val));
+    }
+    
+    void    Evaluator::set_override(std::u32string_view k, Any&& val)
+    {
+        m_overrides[std::u32string(k)] = std::move(val);
+    }
+
     bool    Evaluator::update(Ergo&e)
     {
         std::set<uint64_t> seen;
@@ -299,14 +343,14 @@ namespace yq::doodle {
     
     bool    Evaluator::update(Ergo&e, std::set<uint64_t>&seen)
     {
-        if(seen.insert(e.id()).second)  // break on cycle
+        if(!seen.insert(e.id()).second)  // break on cycle
             return false;
             
         bool    exec    = e.value.invalid() || !e.userexpr; // two guaranteed conditions for reevaluating
             
         if(needs_parsing(e)){
-            //if(!fetch(e))
-                //return true;
+            if(!fetch(e))
+                return true;
             if(!parse(e))
                 return true;
             if(!redep(e))
@@ -315,22 +359,21 @@ namespace yq::doodle {
         }
         
         for(auto& d : e.dependencies){
-            if(d.isGlobal){
-                auto itr = m_overrides.find(d.var);
-                if(itr != m_overrides.end()){
-                    auto jtr = e.variables.find(d.var);
-                    if((jtr == e.variables.end()) || (jtr->second != itr->second)){
-                        e.variables[d.var]  = itr->second;
-                        exec    = true;
-                    }
+            auto itr = m_overrides.find(d.var);
+            if(itr != m_overrides.end()){
+                auto jtr = e.variables.find(d.var);
+                if((jtr == e.variables.end()) || (jtr->second != itr->second)){
+                    e.variables[d.var]  = itr->second;
+                    exec    = true;
                 }
                 continue;
             }
             
             if(!d.ergo){
                 d.ergo  = ergo(d.dib, d.attr);
-                if(!d.ergo)
+                if(!d.ergo){
                     continue;
+                }
                 exec    = true;
             }
             
@@ -357,23 +400,12 @@ namespace yq::doodle {
                 << "." << e.name << " due to " << ec.message();
             return false;
         }
-        
+
         if(*val != e.value){
-            e.value = *val;
+            e.value = std::move(*val);
             return true;
         } else {
             return false;
         }
     }
-
-    void    Evaluator::set_override(std::string_view k, Any&&val)
-    {
-        set_override(to_u32string(k), std::move(val));
-    }
-    
-    void    Evaluator::set_override(std::u32string_view k, Any&& val)
-    {
-        m_overrides[std::u32string(k)] = std::move(val);
-    }
-
 }

@@ -217,6 +217,7 @@ namespace yq::doodle {
         } else if constexpr ( std::is_invocable_v<Pred, const S*> ){
             using return_t  = std::invoke_result_t<Pred, const S*>;
             static constexpr const bool is_void = std::is_same_v<return_t, void>;
+            static_assert(!is_void);
             auto r = m_uidmap.equal_range(k);
             for(auto itr = r.first; itr != r.second; ++itr){
                 const DObject *obj = object(itr->second);
@@ -240,6 +241,7 @@ namespace yq::doodle {
         } else if constexpr (std::is_invocable_v<Pred, ID> ){
             using return_t  = std::invoke_result_t<Pred, ID>;
             static constexpr const bool is_void = std::is_same_v<return_t, void>;
+            static_assert(!is_void);
             auto r = m_uidmap.equal_range(k);
             for(auto itr = r.first; itr != r.second; ++itr){
                 if constexpr (!is_void){
@@ -252,5 +254,17 @@ namespace yq::doodle {
             if constexpr (!is_void)
                 return return_t{};
         }
+    }
+
+    template <SomeDObject S>
+    S*              Project::object(uid_k, const std::string&k)
+    {
+        return foreach<S>(UID, k, [](S* obj) -> S* { return obj; });
+    }
+    
+    template <SomeDObject S>
+    const S*        Project::object(uid_k, const std::string&k) const
+    {
+        return foreach<S>(UID, k, [](const S* obj) -> const S* { return obj; });
     }
 }

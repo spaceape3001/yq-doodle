@@ -167,6 +167,9 @@ namespace yq::doodle {
         
         const string_vector_t&  values() const { return m_values; }
 
+        void                    value(push_k, std::string&&);
+        void                    value(push_k, const std::string&);
+
         void    set_description(const std::string&);
         void    set_notes(const std::string&);
         void    set_uid(const std::string&);

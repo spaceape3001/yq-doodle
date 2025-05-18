@@ -88,15 +88,15 @@ namespace yq::doodle {
         if(auto i = data.find("x"); i != data.end())
             return i->second;
         
-        if(is_attribute("r")){
+        if(is_attribute(LOCAL, "r")){
             if(is_attribute("ang"))
                 return "r*cosd(ang)";
-            if(is_attribute("a"))
+            if(is_attribute(LOCAL, "a"))
                 return "r*cosd(a)";
-            if(is_attribute("th"))
+            if(is_attribute(LOCAL, "th"))
                 return "r*cos(th)";
-            if(is_attribute("az")){
-                if(is_attribute("el")){
+            if(is_attribute(LOCAL, "az")){
+                if(is_attribute(LOCAL, "el")){
                     return "r*sind(az)*cosd(el)";
                 } else {
                     return "r*sind(az)";
@@ -115,15 +115,15 @@ namespace yq::doodle {
         if(auto i = data.find("y"); i != data.end())
             return i->second;
         
-        if(is_attribute("r")){
-            if(is_attribute("ang"))
+        if(is_attribute(LOCAL, "r")){
+            if(is_attribute(LOCAL, "ang"))
                 return "r*sind(ang)";
-            if(is_attribute("a"))
+            if(is_attribute(LOCAL, "a"))
                 return "r*sind(a)";
-            if(is_attribute("th"))
+            if(is_attribute(LOCAL, "th"))
                 return "r*sin(th)";
-            if(is_attribute("az")){
-                if(is_attribute("el")){
+            if(is_attribute(LOCAL, "az")){
+                if(is_attribute(LOCAL, "el")){
                     return "r*cosd(az)*cosd(el)";
                 } else {
                     return "r*cosd(az)";
@@ -139,10 +139,10 @@ namespace yq::doodle {
             return m_values[2];
         
         auto& data  = m_attributes.data();
-        if(auto i = data.find("y"); i != data.end())
+        if(auto i = data.find("z"); i != data.end())
             return i->second;
 
-        if(is_attribute("r") && is_attribute("el")){
+        if(is_attribute(LOCAL, "r") && is_attribute(LOCAL, "el")){
             return "r*sind(el)";
         }
         

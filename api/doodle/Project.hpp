@@ -51,6 +51,12 @@ namespace yq::doodle {
         
         static constexpr const char*    szExtB3     = "d3";
         static constexpr const char*    szExtXML    = "d3x";
+        
+        //! Returns the first object with UID
+        template <SomeDObject S=DObject>
+        S*                      object(uid_k, const std::string&);
+        template <SomeDObject S=DObject>
+        const S*                object(uid_k, const std::string&) const;
 
         static bool             census(Census&, const std::filesystem::path&, SFormat fmt=SFormat::AUTO);
         

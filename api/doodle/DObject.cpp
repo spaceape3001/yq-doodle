@@ -285,6 +285,18 @@ namespace yq::doodle {
         bump();
     }
 
+    void    DObject::value(push_k, std::string&&v)
+    {
+        m_values.push_back(std::move(v));
+        bump();
+    }
+    
+    void    DObject::value(push_k, const std::string&v)
+    {
+        m_values.push_back(v);
+        bump();
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////

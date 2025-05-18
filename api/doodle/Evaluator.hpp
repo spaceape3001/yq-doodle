@@ -9,6 +9,7 @@
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/expected.hpp>
 #include <doodle/typedef/revision.hpp>
+#include <doodle/keywords.hpp>
 #include <yq/text/IgCase.hpp>
 #include <set>
 #include <map>
@@ -34,9 +35,16 @@ namespace yq::doodle {
         
         any_x               evaluate(ID, const std::string&);
         any_x               evaluate(const std::string&);
+        any_x               evaluate(uid_k, const std::string&, const std::string&);
         
         void                set_override(std::string_view, Any&&);
         void                set_override(std::u32string_view, Any&&);
+        
+        Any                 get_override(std::string_view) const;
+        Any                 get_override(const std::u32string&) const;
+        
+        bool                is_override(std::string_view) const;
+        bool                is_override(const std::u32string&) const;
         
     private:
         struct Dep;
@@ -62,7 +70,7 @@ namespace yq::doodle {
         bool    update(Ergo&);  //!< Updates ergo, returns TRUE if there's a change
         bool    update(Ergo&,std::set<uint64_t>&); //!< Updates ergo, returns TRUE if there's a change
         bool    needs_parsing(Ergo&) const;
-        //bool    fetch(Ergo&) const;
+        bool    fetch(Ergo&) const;
         bool    parse(Ergo&) const;
         bool    redep(Ergo&);
 
