@@ -39,6 +39,9 @@ namespace yq::doodle {
         
         void                set_override(std::string_view, Any&&);
         void                set_override(std::u32string_view, Any&&);
+
+        void                set_override(ID, std::string_view, Any&&);
+        void                set_override(ID, std::u32string_view, Any&&);
         
         Any                 get_override(std::string_view) const;
         Any                 get_override(const std::u32string&) const;
@@ -51,20 +54,24 @@ namespace yq::doodle {
         struct Ergo;
         
         
-        using StrIDKey      = std::pair<std::string,ID>;
+        using StrIDKey          = std::pair<std::string,ID>;
+        using U32StrIDKey       = std::pair<std::u32string,ID>;
         
         struct StrIDLess {
             static bool operator()(const StrIDKey&, const StrIDKey&);
+            static bool operator()(const U32StrIDKey&, const U32StrIDKey&);
         };
         
         using ProjectAttrMap    = std::map<std::string,Ergo*,IgCase>;
         using DObjectAttrMap    = std::map<StrIDKey,Ergo*,StrIDLess>;
+        using DObjectVarMap     = std::map<U32StrIDKey,Any,StrIDLess>;
         
         const Project&              m_project;
         std::map<uint64_t,Ergo*>    m_ergos;        //!< Current ergos, all valid to destructor
         ProjectAttrMap              m_prjAttrs;
         DObjectAttrMap              m_objAttrs;
-        u32string_any_map_t         m_overrides;    //! Full override... 
+        u32string_any_map_t         m_overrides;    //! Full override...
+        DObjectVarMap               m_objVars;      //! Object overrides
         
         Ergo*   ergo(ID, const std::string&);
         bool    update(Ergo&);  //!< Updates ergo, returns TRUE if there's a change

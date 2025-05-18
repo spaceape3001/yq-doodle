@@ -13,6 +13,7 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/match.hpp>
+#include <yq/text/match32.hpp>
 #include <yq/userexpr/Context.hpp>
 #include <yq/userexpr/UserExpr.hpp>
 #include <doodle/logging.hpp>
@@ -27,6 +28,18 @@ namespace yq::doodle {
     using UserExprCPtr = std::shared_ptr<const UserExpr>;
 
     bool Evaluator::StrIDLess::operator()(const StrIDKey& a, const StrIDKey& b)
+    {
+        switch(compare_igCase(a.first, b.first)){
+        case Compare::LESSER:
+            return true;
+        case Compare::GREATER:
+            return false;
+        default:
+            return a.second < b.second;
+        }
+    }
+
+    bool Evaluator::StrIDLess::operator()(const U32StrIDKey& a, const U32StrIDKey& b)
     {
         switch(compare_igCase(a.first, b.first)){
         case Compare::LESSER:
@@ -57,16 +70,17 @@ namespace yq::doodle {
             DepScanned
         };
     
-        const std::string   name;           //!< Attribute name
-        const ID            dib;            //!< Doodle Object ID (invalid if project)
-        Any                 value;          //!< Last computed value
-        std::string         definition;     //!< The current/old definition
-        revision_t          revision;       //!< Revision of object/project
-        UserExprCPtr        userexpr;       //!< User expression (if any)
-        Flags<F>            flags;
-        std::vector<Dep>    dependencies;
+        const std::string       name;           //!< Attribute name
+        const std::u32string    name32;         //!< Attribute name in UTF-32
+        const ID                dib;            //!< Doodle Object ID (invalid if project)
+        Any                     value;          //!< Last computed value
+        std::string             definition;     //!< The current/old definition
+        revision_t              revision;       //!< Revision of object/project
+        UserExprCPtr            userexpr;       //!< User expression (if any)
+        Flags<F>                flags;
+        std::vector<Dep>        dependencies;
         
-        Ergo(std::string_view k, ID i={}) : name(k), dib(i) {}
+        Ergo(std::string_view k, ID i={}) : name(k), name32(to_u32string(k)), dib(i) {}
     };
 
     Evaluator::Evaluator(const Project& prj, const u32string_any_map_t& overrides) : m_project(prj), m_overrides(overrides)
@@ -327,12 +341,22 @@ namespace yq::doodle {
 
     void    Evaluator::set_override(std::string_view k, Any&&val)
     {
-        set_override(to_u32string(k), std::move(val));
+        m_overrides[to_u32string(k)] = std::move(val);
     }
     
     void    Evaluator::set_override(std::u32string_view k, Any&& val)
     {
         m_overrides[std::u32string(k)] = std::move(val);
+    }
+
+    void    Evaluator::set_override(ID i, std::string_view k, Any&& val)
+    {
+        m_objVars[{to_u32string(k), i}] = std::move(val);
+    }
+    
+    void    Evaluator::set_override(ID i, std::u32string_view k, Any&& val)
+    {
+        m_objVars[{std::u32string(k),i}] = std::move(val);
     }
 
     bool    Evaluator::update(Ergo&e)
@@ -346,6 +370,17 @@ namespace yq::doodle {
         if(!seen.insert(e.id()).second)  // break on cycle
             return false;
             
+            // Our value is overriden... set it
+        auto ktr = m_objVars.find({e.name32, e.dib});
+        if(ktr != m_objVars.end()){
+            if(ktr->second != e.value){
+                e.value = ktr->second;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         bool    exec    = e.value.invalid() || !e.userexpr; // two guaranteed conditions for reevaluating
             
         if(needs_parsing(e)){
@@ -359,6 +394,19 @@ namespace yq::doodle {
         }
         
         for(auto& d : e.dependencies){
+            if(d.dib){
+                auto ktr = m_objVars.find({d.var, d.dib});
+                if(ktr != m_objVars.end()){
+                    // A very specific override
+                    auto jtr = e.variables.find(d.var);
+                    if((jtr == e.variables.end()) || (jtr->second != ktr->second)){
+                        e.variables[d.var]  = ktr->second;
+                        exec    = true;
+                    }
+                    continue;
+                }
+            }
+        
             auto itr = m_overrides.find(d.var);
             if(itr != m_overrides.end()){
                 auto jtr = e.variables.find(d.var);
