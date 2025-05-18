@@ -298,12 +298,18 @@ namespace yq::doodle {
             if(n != std::string::npos){
                 std::string uid     = var.substr(0,n);
                 attr    = var.substr(n+1);
-                obj     =  m_project.foreach(
-                    UID, uid, [&](const DObject* obj2) -> const DObject* {
-                    if(obj2->is_attribute(attr))
-                        return obj2;
-                    return nullptr;
-                });
+                if(e.dib && is_similar("_parent_", uid)){
+                    obj = m_project.object(e.dib);
+                    if(obj)
+                        obj = m_project.object(obj->parent());
+                } else {
+                    obj     =  m_project.foreach(
+                        UID, uid, [&](const DObject* obj2) -> const DObject* {
+                        if(obj2->is_attribute(attr))
+                            return obj2;
+                        return nullptr;
+                    });
+                }
             } else if(e.dib){
                 attr    = var;
                 obj     = m_project.object(e.dib);

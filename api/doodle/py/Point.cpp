@@ -14,17 +14,8 @@ namespace yq::doodle {
     void Point::init_info()
     {
         auto w = writer<Point>();
-        w.description("Point");
-        w.attribute("a", "atan2d(y,x)");
-        w.attribute("ang", "atan2d(y,x)");
-        w.attribute("az", "atan2d(x,y)");
-        w.attribute("el", "atan2d(z,sqrt(x^2+y^2))");
-        w.attribute("r", &Point::r);
-        w.attribute("th", "atan2(y,x)");
-        w.attribute("x", &Point::x);
-        w.attribute("y", &Point::y);
-        w.attribute("z", &Point::z);
-        w.attribute("w", &Point::w);
+        w.description("Doodle Point");
+        //w.attribute("w", &Point::w);
     }
 
     uint8_t Point::dimensions(count_k) const
@@ -72,105 +63,4 @@ namespace yq::doodle {
     Point::~Point()
     {
     }
-
-    std::string_view  Point::r() const
-    {
-        switch(dimensions(COUNT)){
-        case 0:
-            return "0";
-        case 1:
-            return "abs(x)";
-        case 2:
-            return "sqrt(x^2+y^2)";
-        case 3:
-            return "sqrt(x^2+y^2+z^2)";
-        case 4:
-            return "sqrt(x^2+y^2+z^2+w^2)";
-        default:
-            return "0";
-        }
-    }
-
-    std::string_view  Point::w() const
-    {
-        if(m_values.size() >= 4)
-            return m_values[3];
-            
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("w"); i != data.end())
-            return i->second;
-
-        return "";
-    }
-
-    std::string_view  Point::x() const
-    {
-        if(m_values.size() >= 1)
-            return m_values[0];
-        
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("x"); i != data.end())
-            return i->second;
-        
-        if(is_attribute(LOCAL, "r")){
-            if(is_attribute(LOCAL, "ang"))
-                return "r*cosd(ang)";
-            if(is_attribute(LOCAL, "a"))
-                return "r*cosd(a)";
-            if(is_attribute(LOCAL, "th"))
-                return "r*cos(th)";
-            if(is_attribute(LOCAL, "az")){
-                if(is_attribute(LOCAL, "el")){
-                    return "r*sind(az)*cosd(el)";
-                } else {
-                    return "r*sind(az)";
-                }
-            }
-        } 
-        return "";
-    }
-
-    std::string_view  Point::y() const
-    {
-        if(m_values.size() >= 2)
-            return m_values[1];
-
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("y"); i != data.end())
-            return i->second;
-        
-        if(is_attribute(LOCAL, "r")){
-            if(is_attribute(LOCAL, "ang"))
-                return "r*sind(ang)";
-            if(is_attribute(LOCAL, "a"))
-                return "r*sind(a)";
-            if(is_attribute(LOCAL, "th"))
-                return "r*sin(th)";
-            if(is_attribute(LOCAL, "az")){
-                if(is_attribute(LOCAL, "el")){
-                    return "r*cosd(az)*cosd(el)";
-                } else {
-                    return "r*cosd(az)";
-                }
-            }
-        } 
-        return "";
-    }
-
-    std::string_view  Point::z() const
-    {
-        if(m_values.size() >= 3)
-            return m_values[2];
-        
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("z"); i != data.end())
-            return i->second;
-
-        if(is_attribute(LOCAL, "r") && is_attribute(LOCAL, "el")){
-            return "r*sind(el)";
-        }
-        
-        return "";
-    }
-
 }

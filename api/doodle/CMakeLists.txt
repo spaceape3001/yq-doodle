@@ -9,6 +9,8 @@
 
 #   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ʰ ᵖ ⁿ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ
 #   Numbers ① ② ③ ④
+#   Greek Δ δ
+
 
 add_library(yq_doodle SHARED
 
