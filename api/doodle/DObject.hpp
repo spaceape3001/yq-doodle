@@ -52,14 +52,16 @@ namespace yq::doodle {
         //! TRUE if there's a default attribute
         bool                has_default_attribute(std::string_view) const;
 
+        string_view_set_t           default_attribute_keys() const;
+
     protected:
         friend class DObject;
         
         virtual void    sweep_impl() override;
 
         using function_attribute_t      = std::function<std::string_view(const DObject*)>;
-        using function2_attribute_t     = std::function<std::string(const DObject*)>;
-        using default_attribute_t       = std::variant<std::monostate, std::string_view, function_attribute_t, function2_attribute_t>;
+        //using function2_attribute_t     = std::function<std::string(const DObject*)>;
+        using default_attribute_t       = std::variant<std::monostate, std::string_view, function_attribute_t>;
         using default_attribute_map_t   = std::map<std::string_view, default_attribute_t, IgCase>;
     
         DimFlags                m_supports;

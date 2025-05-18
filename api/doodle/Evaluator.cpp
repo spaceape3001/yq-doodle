@@ -451,7 +451,7 @@ namespace yq::doodle {
             // evaluation failed, abort (old value, if any, is used)
             std::error_code ec  = val.error();
             doodleFirstWarning(e.dib, e.name) << "Failed to evaluate on object " << e.dib.id 
-                << "." << e.name << " due to " << ec.message();
+                << ".  " << e.name << " due to " << ec.message();
             return false;
         }
 

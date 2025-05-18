@@ -8,6 +8,7 @@
 #include <doodle/logging.hpp>
 #include <doodle/Project.hpp>
 #include <doodle/Evaluator.hpp>
+#include <doodle/py/Curve.hpp>
 #include <doodle/py/Point.hpp>
 #include <doodle/Project.hxx>
 #include <yq/core/Any.hpp>
@@ -31,7 +32,7 @@ Project&    project()
         a->attribute(SET, "b", "f");
         a->attribute(SET, "c", "f+b");
         a->attribute(SET, "d", "t");
-        a->attribute(SET, "r", "1");
+        a->attribute(SET, "rz", "1");
         a->attribute(SET, "az", "t");
         
         Point* b    = s_project.create<Point>();
@@ -59,7 +60,7 @@ bool    sdouble(const Any& valx, double val, double ep=1e-14)
 int main(){
     log_to_std_output();
     Meta::init();
-    
+
     "project"_test = []{
         Project& prj    = project();
         expect(prj.count(OBJECT) == 2);
@@ -123,6 +124,10 @@ int main(){
         
         eval.set_override("t", Any(90.));
         expect(sdouble(eval.get_override("t"), 90.0) == true);
+        
+        Project&    p   = project();
+        const DObject* obj  = p.object(UID, "a");
+        expect(obj != nullptr);
         
         any_x   x = eval.evaluate(UID, "a", "x");
         any_x   y = eval.evaluate(UID, "a", "y");

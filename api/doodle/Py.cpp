@@ -7,7 +7,7 @@
 #include "Py.hpp"
 #include "PyInfoWriter.hpp"
 
-YQ_OBJECT_IMPLEMENT(yq::doodle::Py)
+YQ_DOODLE_IMPLEMENT(yq::doodle::Py)
 
 namespace yq::doodle {
     PyInfo::PyInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : 

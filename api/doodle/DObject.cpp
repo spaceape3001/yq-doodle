@@ -22,6 +22,14 @@ namespace yq::doodle {
         DObject::repo().objects << this;
     }
 
+    string_view_set_t           DObjectInfo::default_attribute_keys() const
+    {
+        string_view_set_t   ret;
+        for(auto& i : m_attributes)
+            ret.insert(i.first);
+        return ret;
+    }
+
     bool    DObjectInfo::has_default_attribute(std::string_view k) const
     {
         return m_attributes.contains(k);
