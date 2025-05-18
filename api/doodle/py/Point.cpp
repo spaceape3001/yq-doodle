@@ -15,6 +15,12 @@ namespace yq::doodle {
     {
         auto w = writer<Point>();
         w.description("Point");
+        w.attribute("a", "atan2d(y,x)");
+        w.attribute("ang", "atan2d(y,x)");
+        w.attribute("az", "atan2d(x,y)");
+        w.attribute("el", "atan2d(z,sqrt(x^2+y^2))");
+        w.attribute("r", &Point::r);
+        w.attribute("th", "atan2(y,x)");
         w.attribute("x", &Point::x);
         w.attribute("y", &Point::y);
         w.attribute("z", &Point::z);
@@ -67,6 +73,24 @@ namespace yq::doodle {
     {
     }
 
+    std::string_view  Point::r() const
+    {
+        switch(dimensions(COUNT)){
+        case 0:
+            return "0";
+        case 1:
+            return "abs(x)";
+        case 2:
+            return "sqrt(x^2+y^2)";
+        case 3:
+            return "sqrt(x^2+y^2+z^2)";
+        case 4:
+            return "sqrt(x^2+y^2+z^2+w^2)";
+        default:
+            return "0";
+        }
+    }
+
     std::string_view  Point::w() const
     {
         if(m_values.size() >= 4)
@@ -89,7 +113,7 @@ namespace yq::doodle {
             return i->second;
         
         if(is_attribute(LOCAL, "r")){
-            if(is_attribute("ang"))
+            if(is_attribute(LOCAL, "ang"))
                 return "r*cosd(ang)";
             if(is_attribute(LOCAL, "a"))
                 return "r*cosd(a)";
