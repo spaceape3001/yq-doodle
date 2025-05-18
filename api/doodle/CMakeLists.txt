@@ -33,6 +33,7 @@ add_library(yq_doodle SHARED
     
     io/b3grammar.cpp
 
+    py/Curve.cpp
     py/Point.cpp
     
     space/Space1D.cpp
