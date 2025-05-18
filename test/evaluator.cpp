@@ -33,6 +33,11 @@ Project&    project()
         a->attribute(SET, "d", "t");
         a->attribute(SET, "r", "1");
         a->attribute(SET, "az", "t");
+        
+        Point* b    = s_project.create<Point>();
+        b->set_uid("b");
+        b->attribute(SET, "x", "a.x+3");
+        b->attribute(SET, "y", "a.y+6");
     }
     
     return s_project;
@@ -57,11 +62,13 @@ int main(){
     
     "project"_test = []{
         Project& prj    = project();
-        expect(prj.count(OBJECT) == 1);
+        expect(prj.count(OBJECT) == 2);
         expect(prj.count(OBJECT, UID, "a") == 1);
         expect(prj.count(OBJECT, UID, "A") == 1);
-        expect(prj.count(OBJECT, UID, "b") == 0);
-        expect(prj.count(OBJECT, UID, "B") == 0);
+        expect(prj.count(OBJECT, UID, "b") == 1);
+        expect(prj.count(OBJECT, UID, "B") == 1);
+        expect(prj.count(OBJECT, UID, "c") == 0);
+        expect(prj.count(OBJECT, UID, "C") == 0);
     };
     
     "attribute"_test = []{
@@ -129,6 +136,23 @@ int main(){
         expect(sdouble(*x, 1.0) == true);
         expect(sdouble(*y, 0.0) == true);
     };
-
+    
+    "evaluate6"_test = []{
+        Evaluator       eval(project());
+        
+        eval.set_override("t", Any(90.));
+        any_x   x = eval.evaluate(UID, "b", "x");
+        any_x   y = eval.evaluate(UID, "b", "y");
+        expect((bool) x == true);
+        expect((bool) y == true);
+        if(!x)
+            return ;
+        if(!y)
+            return ;
+        
+        expect(sdouble(*x, 4.0) == true);
+        expect(sdouble(*y, 6.0) == true);
+    };
+    
     return ut::cfg<>.run();
 };
