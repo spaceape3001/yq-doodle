@@ -4,6 +4,8 @@
 ##
 ################################################################################
 
+project(yq_doodle)
+
 #   Spatial is meant to be a fast doodle relation capability, so rather than 
 #   focusing on lines/rectangles, we focus on objects, like chairs, rooms, windows, etc.
 
@@ -12,7 +14,7 @@
 #   Greek Δ δ
 
 
-add_library(yq_doodle SHARED
+add_library(${PROJECT_NAME} SHARED
 
     Association.cpp
     Camera.cpp
@@ -75,7 +77,7 @@ add_library(yq_doodle SHARED
     #   3S  is spherical coordinates
 )
 
-target_link_libraries(yq_doodle
+target_link_libraries(${PROJECT_NAME}
     PUBLIC
         yq_color
         yq_core
@@ -84,15 +86,15 @@ target_link_libraries(yq_doodle
         yq_xml
 )
 
-target_include_directories(yq_doodle
+target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${YQ_DOODLE_API_DIR}
 )
 
-target_compile_definitions(yq_doodle
+target_compile_definitions(${PROJECT_NAME}
     PRIVATE 
         "-DYQ_DOODLE_DATA_DIR=\"${YQ_DOODLE_DATA_DIR}\"" 
 )
 
-LinkTest(yq_doodle)
+LinkTest(${PROJECT_NAME})
 

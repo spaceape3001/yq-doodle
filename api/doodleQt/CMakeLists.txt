@@ -4,10 +4,12 @@
 ##
 ################################################################################
 
+project(yq_doodleQt)
+
 find_package(Qt6 COMPONENTS Core Gui Widgets)
 set(CMAKE_AUTOMOC ON)
 
-add_library(yq_doodleQt SHARED
+add_library(${PROJECT_NAME} SHARED
     Drawing2DWindow.hpp
     Drawing2DWindow.cpp
     DObjectTableModel.hpp
@@ -25,7 +27,7 @@ add_library(yq_doodleQt SHARED
     canvas/Canvas2DWindow.cpp
 )
 
-target_link_libraries(yq_doodleQt
+target_link_libraries(${PROJECT_NAME}
     PUBLIC
         yq_gluon
         yq_doodle
@@ -33,3 +35,5 @@ target_link_libraries(yq_doodleQt
         Qt6::Gui
         Qt6::Widgets
 )
+
+LinkTest(${PROJECT_NAME})
