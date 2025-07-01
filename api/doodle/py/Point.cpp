@@ -11,7 +11,7 @@
 YQ_DOODLE_IMPLEMENT(yq::doodle::Point)
 
 namespace yq::doodle {
-    void Point::init_info()
+    void Point::init_meta()
     {
         auto w = writer<Point>();
         w.description("Doodle Point");

@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::doodle::Canvas2D)
 
 namespace yq::doodle {
-    void Canvas2D::init_info()
+    void Canvas2D::init_meta()
     {
         auto w = writer<Canvas2D>();
         w.description("2D Canvas");

@@ -23,7 +23,7 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE(Camera, DObject)
     public:
     
-        static void init_info();
+        static void init_meta();
     
     protected:
         Camera(Project&);

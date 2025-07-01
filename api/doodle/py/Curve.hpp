@@ -24,7 +24,7 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE(Curve, Py)
     public:
         
-        static void init_info();
+        static void init_meta();
         
         virtual uint8_t dimensions(count_k) const override;
 

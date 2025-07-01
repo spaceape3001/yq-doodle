@@ -178,7 +178,7 @@ namespace yq::doodle {
         void    set_uid(const std::string&);
         void    set_title(const std::string&);
 
-        static void init_info();
+        static void init_meta();
         
         
         //! Marks this item as having changed

@@ -25,7 +25,7 @@ namespace yq::doodle {
         YQ_OBJECT_DECLARE(Motion, DObject)
     public:
 
-        static void init_info();
+        static void init_meta();
     
     protected:
         Motion(Project&);

@@ -11,7 +11,7 @@
 #include <tachyon/ui/UIWriters.hxx>
 #include <yq/core/Logging.hpp>
 
-void DoodleMW::init_info()
+void DoodleMW::init_meta()
 {
     auto w          = writer<DoodleMW>();
     

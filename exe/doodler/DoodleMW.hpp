@@ -20,7 +20,7 @@ public:
     DoodleMW(ProjectSPtr);
     ~DoodleMW();
     
-    static void init_info();
+    static void init_meta();
     
     void    imgui(ViContext&) override;
     

@@ -18,7 +18,7 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE(Canvas2D, Space2D)
     public:
     
-        static void init_info();
+        static void init_meta();
         
         unit::Millimeter        margin_east() const { return m_margins.hx; }
         unit::Millimeter        margin_north() const { return m_margins.hy; }

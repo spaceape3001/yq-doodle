@@ -25,7 +25,7 @@ namespace yq::doodle {
         YQ_OBJECT_DECLARE(Light, DObject)
     public:
     
-        static void init_info();
+        static void init_meta();
     
     protected:
         Light(Project&);

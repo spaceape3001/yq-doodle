@@ -25,7 +25,7 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE(Constraint, DObject)
     public:
     
-        static void init_info();
+        static void init_meta();
     
     protected:
         Constraint(Project&);

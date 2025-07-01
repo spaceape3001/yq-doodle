@@ -25,7 +25,7 @@ namespace yq::doodle {
         YQ_DOODLE_DECLARE(Association, DObject)
     public:
 
-        static void init_info();
+        static void init_meta();
     
     protected:
         Association(Project&);

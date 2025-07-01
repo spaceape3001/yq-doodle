@@ -96,7 +96,7 @@ namespace yq::doodle {
         return s_repo;
     }
 
-    void DObject::init_info()
+    void DObject::init_meta()
     {
         auto w = writer<DObject>();
         w.description("Spatial Object");

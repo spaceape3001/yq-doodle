@@ -11,7 +11,7 @@
 YQ_DOODLE_IMPLEMENT(yq::doodle::Curve)
 
 namespace yq::doodle {
-    void Curve::init_info()
+    void Curve::init_meta()
     {
         auto w = writer<Curve>();
         w.description("Curve");

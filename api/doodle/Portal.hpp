@@ -25,7 +25,7 @@ namespace yq::doodle {
         YQ_OBJECT_DECLARE(Portal, DObject)
     public:
     
-        static void init_info();
+        static void init_meta();
     
         virtual bool        supports_1D() const { return false; }
         virtual bool        supports_2D() const { return false; }

@@ -28,7 +28,7 @@ namespace yq::doodle {
         YQ_OBJECT_DECLARE(Space2Z, Space2D)
     public:
     
-        static void init_info();
+        static void init_meta();
 
         virtual bool    supports_2D() const override { return true; }
         virtual bool    supports_3D() const override { return true; }

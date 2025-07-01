@@ -25,7 +25,7 @@ namespace yq::doodle {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void DoodleCommand::init_info()
+    void DoodleCommand::init_meta()
     {
         auto w = writer<DoodleCommand>();
         w.description("Doodle command base class");

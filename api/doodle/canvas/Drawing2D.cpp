@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::doodle::Drawing2D)
 
 namespace yq::doodle {
-    void Drawing2D::init_info()
+    void Drawing2D::init_meta()
     {
         auto w = writer<Drawing2D>();
         w.description("2D Drawing");

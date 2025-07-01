@@ -56,7 +56,7 @@ namespace yq::doodle {
         */
         virtual uint8_t dimensions(count_k) const = 0;
     
-        static void init_info();
+        static void init_meta();
 
         // Should always be valid (if defined), will default to empty otherwise
         std::string_view  rz() const;
