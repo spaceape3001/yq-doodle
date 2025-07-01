@@ -85,7 +85,7 @@ namespace yq::doodle {
         (with advanced capabilities to decode)
     */
     class DObject : public Object {
-        YQ_OBJECT_INFO(DObjectMeta)
+        YQ_OBJECT_META(DObjectMeta)
         YQ_OBJECT_FIXER(DObjectFixer)
         YQ_DOODLE_DECLARE_ABSTRACT(DObject, Object)
         friend class Project;

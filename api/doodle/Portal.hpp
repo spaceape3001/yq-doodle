@@ -21,7 +21,7 @@ namespace yq::doodle {
         A portal is how to bring one space into another...???? (TBD, putting this here for reminder)
     */
     class Portal : public DObject {
-        YQ_OBJECT_INFO(PortalMeta)
+        YQ_OBJECT_META(PortalMeta)
         YQ_OBJECT_DECLARE(Portal, DObject)
     public:
     

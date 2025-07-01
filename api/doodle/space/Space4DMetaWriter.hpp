@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <doodle/Space2DInfoWriter.hpp>
-#include <doodle/Space2Z.hpp>
+#include <doodle/SpaceMetaWriter.hpp>
+#include <doodle/space/Space4D.hpp>
 
 namespace yq::doodle {
     template <typename T>
-    class Space2ZInfo::Writer : public Space2DInfo::Writer<T> {
+    class Space4DMeta::Writer : public SpaceMeta::Writer<T> {
     public:
-        Writer(Space2ZInfo* mInfo) : Space2DInfo::Writer<T>(mInfo)
+        Writer(Space4DMeta* mMeta) : SpaceMeta::Writer<T>(mMeta)
         {
         }
         
-        Writer(Space2ZInfo& mInfo) : Writer(&mInfo)
+        Writer(Space4DMeta& mMeta) : Writer(&mMeta)
         {
         }
     };

@@ -9,10 +9,10 @@
 #include <doodle/Space.hpp>
 
 namespace yq::doodle {
-    class Space1DInfo : public SpaceMeta {
+    class Space1DMeta : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space1DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
+        Space1DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -21,7 +21,7 @@ namespace yq::doodle {
         Defines a 1D space in one dimension (strict)
     */
     class Space1D : public Space {
-        YQ_OBJECT_INFO(Space1DInfo)
+        YQ_OBJECT_META(Space1DMeta)
         YQ_OBJECT_DECLARE(Space1D, Space)
     public:
     

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Drawing2D.hpp"
-#include <doodle/space/Space2DInfoWriter.hpp>
+#include <doodle/space/Space2DMetaWriter.hpp>
 #include <doodle/Project.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Drawing2D)

@@ -22,7 +22,7 @@ namespace yq::doodle {
         Common coordinate transforms may be set here.
     */
     class Space : public DObject {
-        YQ_OBJECT_INFO(SpaceMeta)
+        YQ_OBJECT_META(SpaceMeta)
         YQ_DOODLE_DECLARE_ABSTRACT(Space, DObject)
     public:
     

@@ -6,13 +6,13 @@
 
 #include "Space2D.hpp"
 #include "Space2D.hxx"
-#include "Space2DInfoWriter.hpp"
+#include "Space2DMetaWriter.hpp"
 #include <doodle/utility.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space2D)
 
 namespace yq::doodle {
-    Space2DInfo::Space2DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
+    Space2DMeta::Space2DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
     {
         set(Flag::SPACE);
     }

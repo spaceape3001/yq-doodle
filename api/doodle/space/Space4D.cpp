@@ -6,7 +6,7 @@
 
 #include "Space4D.hpp"
 #include "Space4D.hxx"
-#include "Space4DInfoWriter.hpp"
+#include "Space4DMetaWriter.hpp"
 #include <yq/math/Range.hpp>
 #include <yq/shape/AxBox4.hpp>
 #include <yq/shape/AxBox4.hxx>
@@ -15,7 +15,7 @@
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space4D)
 
 namespace yq::doodle {
-    Space4DInfo::Space4DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
+    Space4DMeta::Space4DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
     {
         set(Flag::SPACE);
     }

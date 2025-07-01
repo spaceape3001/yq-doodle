@@ -11,13 +11,13 @@
 
 namespace yq::doodle {
     template <typename T>
-    class Space3DInfo::Writer : public SpaceMeta::Writer<T> {
+    class Space3DMeta::Writer : public SpaceMeta::Writer<T> {
     public:
-        Writer(Space3DInfo* mInfo) : SpaceMeta::Writer<T>(mInfo)
+        Writer(Space3DMeta* mMeta) : SpaceMeta::Writer<T>(mMeta)
         {
         }
         
-        Writer(Space3DInfo& mInfo) : Writer(&mInfo)
+        Writer(Space3DMeta& mMeta) : Writer(&mMeta)
         {
         }
     };

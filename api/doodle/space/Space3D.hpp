@@ -16,10 +16,10 @@
 #endif
 
 namespace yq::doodle {
-    class Space3DInfo : public SpaceMeta {
+    class Space3DMeta : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space3DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
+        Space3DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -28,7 +28,7 @@ namespace yq::doodle {
         Defines a 3D space in three dimensions (strict)
     */
     class Space3D : public Space {
-        YQ_OBJECT_INFO(Space3DInfo)
+        YQ_OBJECT_META(Space3DMeta)
         YQ_DOODLE_DECLARE(Space3D, Space)
     public:
     

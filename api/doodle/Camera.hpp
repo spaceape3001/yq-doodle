@@ -19,7 +19,7 @@ namespace yq::doodle {
     /*! \brief A camera
     */
     class Camera : public DObject {
-        YQ_OBJECT_INFO(CameraMeta)
+        YQ_OBJECT_META(CameraMeta)
         YQ_DOODLE_DECLARE(Camera, DObject)
     public:
     

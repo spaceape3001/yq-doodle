@@ -21,7 +21,7 @@ namespace yq::doodle {
         Motion is dynamic changes to properties.
     */
     class Motion : public DObject {
-        YQ_OBJECT_INFO(MotionMeta)
+        YQ_OBJECT_META(MotionMeta)
         YQ_OBJECT_DECLARE(Motion, DObject)
     public:
 

@@ -17,10 +17,10 @@
 #endif
 
 namespace yq::doodle {
-    class Space2DInfo : public SpaceMeta {
+    class Space2DMeta : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space2DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
+        Space2DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -29,7 +29,7 @@ namespace yq::doodle {
         Defines a 2D space in two dimensions (strict)
     */
     class Space2D : public Space {
-        YQ_OBJECT_INFO(Space2DInfo)
+        YQ_OBJECT_META(Space2DMeta)
         YQ_DOODLE_DECLARE(Space2D, Space)
     public:
     

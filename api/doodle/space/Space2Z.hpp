@@ -9,10 +9,10 @@
 #include <doodle/space/Space2D.hpp>
 
 namespace yq::doodle {
-    class Space2ZInfo : public Space2DInfo {
+    class Space2ZMeta : public Space2DMeta {
     public:
         template <typename T> class Writer;
-        Space2ZInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
+        Space2ZMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -24,7 +24,7 @@ namespace yq::doodle {
         aligators, etc).
     */
     class Space2Z : public Space2D {
-        YQ_OBJECT_INFO(Space2ZInfo)
+        YQ_OBJECT_META(Space2ZMeta)
         YQ_OBJECT_DECLARE(Space2Z, Space2D)
     public:
     

@@ -44,7 +44,7 @@ namespace yq::doodle {
         attributes.
     */
     class Py : public DObject {
-        YQ_OBJECT_INFO(PyMeta)
+        YQ_OBJECT_META(PyMeta)
         YQ_OBJECT_DECLARE(Py, DObject)
     public:
     

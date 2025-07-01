@@ -6,7 +6,7 @@
 
 #include "Space3D.hpp"
 #include "Space3D.hxx"
-#include "Space3DInfoWriter.hpp"
+#include "Space3DMetaWriter.hpp"
 #include <doodle/utility.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space3D)
@@ -16,7 +16,7 @@ YQ_OBJECT_IMPLEMENT(yq::doodle::Space3D)
 #endif
 
 namespace yq::doodle {
-    Space3DInfo::Space3DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
+    Space3DMeta::Space3DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
     {
         set(Flag::SPACE);
     }

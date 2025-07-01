@@ -21,7 +21,7 @@ namespace yq::doodle {
         A constraint is something that spaces... could be distance, organization, etc.
     */
     class Constraint : public DObject {
-        YQ_OBJECT_INFO(ConstraintMeta)
+        YQ_OBJECT_META(ConstraintMeta)
         YQ_DOODLE_DECLARE(Constraint, DObject)
     public:
     

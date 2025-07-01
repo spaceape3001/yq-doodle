@@ -21,7 +21,7 @@ namespace yq::doodle {
         An association is basically notes/link to something else.
     */
     class Association : public DObject {
-        YQ_OBJECT_INFO(AssociationMeta)
+        YQ_OBJECT_META(AssociationMeta)
         YQ_DOODLE_DECLARE(Association, DObject)
     public:
 

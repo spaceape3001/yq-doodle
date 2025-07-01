@@ -17,10 +17,10 @@
 
 
 namespace yq::doodle {
-    class Space4DInfo : public SpaceMeta {
+    class Space4DMeta : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space4DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
+        Space4DMeta(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -29,7 +29,7 @@ namespace yq::doodle {
         Defines a 4D space in four dimensions (strict)
     */
     class Space4D : public Space {
-        YQ_OBJECT_INFO(Space4DInfo)
+        YQ_OBJECT_META(Space4DMeta)
         YQ_DOODLE_DECLARE(Space4D, Space)
     public:
     
