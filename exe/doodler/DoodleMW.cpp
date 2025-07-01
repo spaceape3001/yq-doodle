@@ -7,7 +7,7 @@
 #include "DoodleMW.hpp"
 #include <doodle/Project.hpp>
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/ui/UIWriters.hxx>
 #include <yq/core/Logging.hpp>
 
