@@ -27,11 +27,11 @@ namespace yq::doodle {
     
     struct DObjectCopyAPI;
     
-    class DObjectInfo : public ObjectInfo {
+    class DObjectMeta : public ObjectMeta {
     public:
         template <typename C> class Writer;
         
-        DObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        DObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
 
         Object* create() const override { return nullptr; }
         virtual DObject* create(Project&) const = 0;
@@ -47,7 +47,7 @@ namespace yq::doodle {
         bool    is_5d() const;
         bool    is_6d() const;
 
-        static const DObjectInfo*           lookup(std::string_view);
+        static const DObjectMeta*           lookup(std::string_view);
         
         //! TRUE if there's a default attribute
         bool                has_default_attribute(std::string_view) const;
@@ -85,7 +85,7 @@ namespace yq::doodle {
         (with advanced capabilities to decode)
     */
     class DObject : public Object {
-        YQ_OBJECT_INFO(DObjectInfo)
+        YQ_OBJECT_INFO(DObjectMeta)
         YQ_OBJECT_FIXER(DObjectFixer)
         YQ_DOODLE_DECLARE_ABSTRACT(DObject, Object)
         friend class Project;
@@ -187,7 +187,7 @@ namespace yq::doodle {
         revision_t  revision(all_k) const { return m_revision[ALL]; }
         revision_t  revision(local_k) const { return m_revision[LOCAL]; }
         
-        DObject*    create(child_k, const DObjectInfo&);
+        DObject*    create(child_k, const DObjectMeta&);
         
         template <SomeDObject S>
         S*          create(child_k)
@@ -210,7 +210,7 @@ namespace yq::doodle {
         virtual bool            load(const XmlNode&) { return true; }
 
     private:
-        friend class DObjectInfo;
+        friend class DObjectMeta;
         
         DObject(const DObject&) = delete;
         DObject(DObject&&) = delete;

@@ -9,10 +9,10 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class ConstraintInfo : public DObjectInfo {
+    class ConstraintMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        ConstraintInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        ConstraintMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -21,7 +21,7 @@ namespace yq::doodle {
         A constraint is something that spaces... could be distance, organization, etc.
     */
     class Constraint : public DObject {
-        YQ_OBJECT_INFO(ConstraintInfo)
+        YQ_OBJECT_INFO(ConstraintMeta)
         YQ_DOODLE_DECLARE(Constraint, DObject)
     public:
     

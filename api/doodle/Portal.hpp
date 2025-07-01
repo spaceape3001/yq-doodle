@@ -9,10 +9,10 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class PortalInfo : public DObjectInfo {
+    class PortalMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        PortalInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        PortalMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -21,7 +21,7 @@ namespace yq::doodle {
         A portal is how to bring one space into another...???? (TBD, putting this here for reminder)
     */
     class Portal : public DObject {
-        YQ_OBJECT_INFO(PortalInfo)
+        YQ_OBJECT_INFO(PortalMeta)
         YQ_OBJECT_DECLARE(Portal, DObject)
     public:
     

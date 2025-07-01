@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <doodle/DObjectInfoWriter.hpp>
-#include <doodle/Portal.hpp>
+#include <doodle/DObjectMetaWriter.hpp>
+#include <doodle/Camera.hpp>
 
 namespace yq::doodle {
     template <typename T>
-    class PortalInfo::Writer : public DObjectInfo::Writer<T> {
+    class CameraMeta::Writer : public DObjectMeta::Writer<T> {
     public:
-        Writer(PortalInfo* mInfo) : DObjectInfo::Writer<T>(mInfo)
+        Writer(CameraMeta* cInfo) : DObjectMeta::Writer<T>(cInfo)
         {
         }
         
-        Writer(PortalInfo& mInfo) : Writer(&mInfo)
+        Writer(CameraMeta& cInfo) : Writer(&cInfo)
         {
         }
     };

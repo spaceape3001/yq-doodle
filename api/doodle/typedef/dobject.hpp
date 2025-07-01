@@ -9,6 +9,6 @@
 
 namespace yq::doodle {
     class DObject;
-    class DObjectInfo;
+    class DObjectMeta;
     template <typename T> concept SomeDObject = std::derived_from<T,DObject>;
 }

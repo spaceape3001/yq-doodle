@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space1D)
 
 namespace yq::doodle {
-    Space1DInfo::Space1DInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl) : SpaceInfo(zName, base, sl)
+    Space1DInfo::Space1DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
     {
         set(Flag::SPACE);
     }

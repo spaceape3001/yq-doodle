@@ -6,20 +6,19 @@
 
 #pragma once
 
-#include <doodle/DObjectInfoWriter.hpp>
-#include <doodle/Association.hpp>
+#include <doodle/DObjectMetaWriter.hpp>
+#include <doodle/Constraint.hpp>
 
 namespace yq::doodle {
     template <typename T>
-    class AssociationInfo::Writer : public DObjectInfo::Writer<T> {
+    class ConstraintMeta::Writer : public DObjectMeta::Writer<T> {
     public:
-        Writer(AssociationInfo* aInfo) : DObjectInfo::Writer<T>(aInfo)
+        Writer(ConstraintMeta* cInfo) : DObjectMeta::Writer<T>(cInfo)
         {
         }
         
-        Writer(AssociationInfo& aInfo) : Writer(&aInfo)
+        Writer(ConstraintMeta& cInfo) : Writer(&cInfo)
         {
         }
     };
-
 }

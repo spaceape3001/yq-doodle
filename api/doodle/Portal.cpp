@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Portal.hpp"
-#include "PortalInfoWriter.hpp"
+#include "PortalMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Portal)
 
 namespace yq::doodle {
-    PortalInfo::PortalInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : DObjectInfo(zName, base, sl)
+    PortalMeta::PortalMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : DObjectMeta(zName, base, sl)
     {
         set(Flag::D2);
     }

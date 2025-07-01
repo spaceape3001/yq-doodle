@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Py.hpp"
-#include "PyInfoWriter.hpp"
+#include "PyMetaWriter.hpp"
 
 YQ_DOODLE_IMPLEMENT(yq::doodle::Py)
 
 namespace yq::doodle {
-    PyInfo::PyInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : 
-        DObjectInfo(zName, base, sl)
+    PyMeta::PyMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : 
+        DObjectMeta(zName, base, sl)
     {
         set(Flag::PHYSICAL);
     }

@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Motion.hpp"
-#include "MotionInfoWriter.hpp"
+#include "MotionMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Motion)
 
 namespace yq::doodle {
-    MotionInfo::MotionInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : DObjectInfo(zName, base, sl)
+    MotionMeta::MotionMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : DObjectMeta(zName, base, sl)
     {
         set(Flag::MOTION);
     }

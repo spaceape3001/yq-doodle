@@ -6,18 +6,19 @@
 
 #pragma once
 
-#include <doodle/DObjectInfoWriter.hpp>
-#include <doodle/Camera.hpp>
+#include <doodle/DObjectMetaWriter.hpp>
+#include <doodle/Py.hpp>
 
 namespace yq::doodle {
+
     template <typename T>
-    class CameraInfo::Writer : public DObjectInfo::Writer<T> {
+    class PyMeta::Writer : public DObjectMeta::Writer<T> {
     public:
-        Writer(CameraInfo* cInfo) : DObjectInfo::Writer<T>(cInfo)
+        Writer(PyMeta* pInfo) : DObjectMeta::Writer<T>(pInfo)
         {
         }
         
-        Writer(CameraInfo& cInfo) : Writer(&cInfo)
+        Writer(PyMeta& pInfo) : Writer(&pInfo)
         {
         }
     };

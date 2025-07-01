@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Association.hpp"
-#include "AssociationInfoWriter.hpp"
+#include "AssociationMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Association)
 
 namespace yq::doodle {
-    AssociationInfo::AssociationInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : DObjectInfo(zName, base, sl)
+    AssociationMeta::AssociationMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : DObjectMeta(zName, base, sl)
     {
         set(Flag::ASSOCIATION);
     }

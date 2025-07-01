@@ -9,10 +9,10 @@
 #include <doodle/Space.hpp>
 
 namespace yq::doodle {
-    class Space1DInfo : public SpaceInfo {
+    class Space1DInfo : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space1DInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl=std::source_location::current());
+        Space1DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 

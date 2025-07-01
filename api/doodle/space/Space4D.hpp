@@ -17,10 +17,10 @@
 
 
 namespace yq::doodle {
-    class Space4DInfo : public SpaceInfo {
+    class Space4DInfo : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space4DInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl=std::source_location::current());
+        Space4DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 

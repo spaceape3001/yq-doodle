@@ -9,10 +9,10 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class AssociationInfo : public DObjectInfo {
+    class AssociationMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        AssociationInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        AssociationMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -21,7 +21,7 @@ namespace yq::doodle {
         An association is basically notes/link to something else.
     */
     class Association : public DObject {
-        YQ_OBJECT_INFO(AssociationInfo)
+        YQ_OBJECT_INFO(AssociationMeta)
         YQ_DOODLE_DECLARE(Association, DObject)
     public:
 

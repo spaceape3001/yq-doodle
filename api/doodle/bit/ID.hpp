@@ -7,7 +7,7 @@
 #pragma once
 
 #include <cstdint>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <doodle/typedef/id.hpp>
 
 namespace yq::doodle {

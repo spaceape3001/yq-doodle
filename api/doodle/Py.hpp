@@ -9,10 +9,10 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class PyInfo : public DObjectInfo {
+    class PyMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        PyInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        PyMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -44,7 +44,7 @@ namespace yq::doodle {
         attributes.
     */
     class Py : public DObject {
-        YQ_OBJECT_INFO(PyInfo)
+        YQ_OBJECT_INFO(PyMeta)
         YQ_OBJECT_DECLARE(Py, DObject)
     public:
     

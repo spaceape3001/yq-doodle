@@ -10,7 +10,7 @@
 #include <yq/typedef/vector2.hpp>
 #include <yq/typedef/vector3.hpp>
 #include <yq/typedef/vector4.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 
 #include <variant>
 

@@ -9,10 +9,10 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class SpaceInfo : public DObjectInfo {
+    class SpaceMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        SpaceInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        SpaceMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -22,7 +22,7 @@ namespace yq::doodle {
         Common coordinate transforms may be set here.
     */
     class Space : public DObject {
-        YQ_OBJECT_INFO(SpaceInfo)
+        YQ_OBJECT_INFO(SpaceMeta)
         YQ_DOODLE_DECLARE_ABSTRACT(Space, DObject)
     public:
     

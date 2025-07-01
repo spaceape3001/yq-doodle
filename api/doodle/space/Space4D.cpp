@@ -15,7 +15,7 @@
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space4D)
 
 namespace yq::doodle {
-    Space4DInfo::Space4DInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl) : SpaceInfo(zName, base, sl)
+    Space4DInfo::Space4DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
     {
         set(Flag::SPACE);
     }

@@ -12,7 +12,7 @@ namespace yq::doodle {
     class Space2ZInfo : public Space2DInfo {
     public:
         template <typename T> class Writer;
-        Space2ZInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl=std::source_location::current());
+        Space2ZInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 

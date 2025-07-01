@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <doodle/SpaceInfoWriter.hpp>
+#include <doodle/SpaceMetaWriter.hpp>
 #include <doodle/space/Space2D.hpp>
 
 namespace yq::doodle {
     template <typename T>
-    class Space2DInfo::Writer : public SpaceInfo::Writer<T> {
+    class Space2DInfo::Writer : public SpaceMeta::Writer<T> {
     public:
-        Writer(Space2DInfo* mInfo) : SpaceInfo::Writer<T>(mInfo)
+        Writer(Space2DInfo* mInfo) : SpaceMeta::Writer<T>(mInfo)
         {
         }
         

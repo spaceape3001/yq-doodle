@@ -28,7 +28,7 @@ namespace yq {
 
 namespace yq::doodle {
     class DObject;
-    class DObjectInfo;
+    class DObjectMeta;
     struct ID;
 
     struct Census {
@@ -101,7 +101,7 @@ namespace yq::doodle {
 
         void                    bump();
         
-        DObject*                create(const DObjectInfo&);
+        DObject*                create(const DObjectMeta&);
         
         const object_map_t&     objects() const { return m_objects; }
         

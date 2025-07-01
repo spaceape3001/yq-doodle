@@ -9,10 +9,10 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class MotionInfo : public DObjectInfo {
+    class MotionMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        MotionInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        MotionMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
@@ -21,7 +21,7 @@ namespace yq::doodle {
         Motion is dynamic changes to properties.
     */
     class Motion : public DObject {
-        YQ_OBJECT_INFO(MotionInfo)
+        YQ_OBJECT_INFO(MotionMeta)
         YQ_OBJECT_DECLARE(Motion, DObject)
     public:
 

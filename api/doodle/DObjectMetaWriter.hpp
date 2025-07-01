@@ -7,19 +7,19 @@
 #pragma once
 
 #include <doodle/DObject.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 #define YQ_DOODLE_IMPLEMENT(cls) YQ_OBJECT_IMPLEMENT(cls)
  
 namespace yq::doodle {
     template <typename C>
-    class DObjectInfo::Writer : public ObjectInfo::Writer<C> {
+    class DObjectMeta::Writer : public ObjectMeta::Writer<C> {
     public:
-        Writer(DObjectInfo* dInfo) : ObjectInfo::Writer<C>(dInfo), m_meta(dInfo)
+        Writer(DObjectMeta* dInfo) : ObjectMeta::Writer<C>(dInfo), m_meta(dInfo)
         {
         }
         
-        Writer(DObjectInfo& dInfo) : Writer(&dInfo)
+        Writer(DObjectMeta& dInfo) : Writer(&dInfo)
         {
         }
         
@@ -103,7 +103,7 @@ namespace yq::doodle {
             return *this;
         }
     private:
-        DObjectInfo*    m_meta;
+        DObjectMeta*    m_meta;
     };
     
     template <typename Obj>
@@ -123,7 +123,7 @@ namespace yq::doodle {
             //  PUBLIC constructors & destructors, which we do *NOT* want here.  Instead, we 
             //  have to do the macro trick with abstract, and mark appropriately.
             if constexpr (!Obj::kAbstract && !std::is_abstract_v<Obj>) {
-                if(ObjectInfo::is_abstract()){
+                if(ObjectMeta::is_abstract()){
                     return nullptr;
                 }
                 return new Obj(prj);
@@ -135,7 +135,7 @@ namespace yq::doodle {
         virtual DObject* copy(DObjectCopyAPI& api, const DObject&obj) const override
         {
             if constexpr (!Obj::kAbstract && !std::is_abstract_v<Obj>) {
-                if(ObjectInfo::is_abstract())
+                if(ObjectMeta::is_abstract())
                     return nullptr;
                 return new Obj(api, static_cast<const Obj&>(obj));
             } else

@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Space.hpp"
-#include "SpaceInfoWriter.hpp"
+#include "SpaceMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space)
 
 namespace yq::doodle {
-    SpaceInfo::SpaceInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : DObjectInfo(zName, base, sl)
+    SpaceMeta::SpaceMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : DObjectMeta(zName, base, sl)
     {
         set(Flag::D2);
     }

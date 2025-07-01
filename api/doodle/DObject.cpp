@@ -5,24 +5,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DObject.hpp"
-#include "DObjectInfoWriter.hpp"
+#include "DObjectMetaWriter.hpp"
 
 #include <doodle/Project.hpp>
 
 namespace yq::doodle {
     struct DObject::Repo {
-        MetaLookup<DObjectInfo>     objects;
+        MetaLookup<DObjectMeta>     objects;
     };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    DObjectInfo::DObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    DObjectMeta::DObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, base, sl)
     {
         DObject::repo().objects << this;
     }
 
-    string_view_set_t           DObjectInfo::default_attribute_keys() const
+    string_view_set_t           DObjectMeta::default_attribute_keys() const
     {
         string_view_set_t   ret;
         for(auto& i : m_attributes)
@@ -30,57 +30,57 @@ namespace yq::doodle {
         return ret;
     }
 
-    bool    DObjectInfo::has_default_attribute(std::string_view k) const
+    bool    DObjectMeta::has_default_attribute(std::string_view k) const
     {
         return m_attributes.contains(k);
     }
     
-    bool    DObjectInfo::is_0d() const
+    bool    DObjectMeta::is_0d() const
     {
         return has(Flag::D0);
     }
     
-    bool    DObjectInfo::is_1d() const
+    bool    DObjectMeta::is_1d() const
     {
         return has(Flag::D1);
     }
     
-    bool    DObjectInfo::is_2d() const
+    bool    DObjectMeta::is_2d() const
     {
         return has(Flag::D2);
     }
     
-    bool    DObjectInfo::is_3d() const
+    bool    DObjectMeta::is_3d() const
     {
         return has(Flag::D3);
     }
     
-    bool    DObjectInfo::is_4d() const
+    bool    DObjectMeta::is_4d() const
     {
         return has(Flag::D4);
     }
     
-    bool    DObjectInfo::is_5d() const
+    bool    DObjectMeta::is_5d() const
     {
         return has(Flag::D5);
     }
     
-    bool    DObjectInfo::is_6d() const
+    bool    DObjectMeta::is_6d() const
     {
         return has(Flag::D6);
     }
     
-    void    DObjectInfo::sweep_impl() 
+    void    DObjectMeta::sweep_impl() 
     {
-        ObjectInfo::sweep_impl();
-        const DObjectInfo* parent   = dynamic_cast<const DObjectInfo*>(base());
+        ObjectMeta::sweep_impl();
+        const DObjectMeta* parent   = dynamic_cast<const DObjectMeta*>(base());
         if(parent){
             for(auto& i : parent->m_attributes)
                 m_attributes.insert(i);
         }
     }
 
-    const DObjectInfo*       DObjectInfo::lookup(std::string_view ks)
+    const DObjectMeta*       DObjectMeta::lookup(std::string_view ks)
     {
         auto& r = DObject::repo();
         return r.objects.find(ks);
@@ -147,13 +147,13 @@ namespace yq::doodle {
 
     std::string_view        DObject::attribute(default_k, const std::string& k) const
     {
-        const DObjectInfo& dinfo = metaInfo();
+        const DObjectMeta& dinfo = metaInfo();
         auto itr = dinfo.m_attributes.find(k);
         if(itr == dinfo.m_attributes.end())
             return {};
         if(auto p = std::get_if<std::string_view>(&itr->second))
             return *p;
-        if(auto p = std::get_if<DObjectInfo::function_attribute_t>(&itr->second))
+        if(auto p = std::get_if<DObjectMeta::function_attribute_t>(&itr->second))
             return (*p)(this);
         return {};
     }
@@ -209,7 +209,7 @@ namespace yq::doodle {
         m_project.bump();
     }
 
-    DObject*    DObject::create(child_k, const DObjectInfo& sinfo)
+    DObject*    DObject::create(child_k, const DObjectMeta& sinfo)
     {
         DObject* obj = sinfo.create(m_project);
         if(!obj)

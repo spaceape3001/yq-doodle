@@ -6,21 +6,19 @@
 
 #pragma once
 
-#include <doodle/DObjectInfoWriter.hpp>
-#include <doodle/Light.hpp>
+#include <doodle/DObjectMetaWriter.hpp>
+#include <doodle/Motion.hpp>
 
 namespace yq::doodle {
-
     template <typename T>
-    class LightInfo::Writer : public DObjectInfo::Writer<T> {
+    class MotionMeta::Writer : public DObjectMeta::Writer<T> {
     public:
-        Writer(LightInfo* lInfo) : DObjectInfo::Writer<T>(lInfo)
+        Writer(MotionMeta* mInfo) : DObjectMeta::Writer<T>(mInfo)
         {
         }
         
-        Writer(LightInfo& lInfo) : Writer(&lInfo)
+        Writer(MotionMeta& mInfo) : Writer(&mInfo)
         {
         }
     };
-
 }

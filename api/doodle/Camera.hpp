@@ -9,17 +9,17 @@
 #include <doodle/DObject.hpp>
 
 namespace yq::doodle {
-    class CameraInfo : public DObjectInfo {
+    class CameraMeta : public DObjectMeta {
     public:
         template <typename T> class Writer;
-        CameraInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        CameraMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 
     /*! \brief A camera
     */
     class Camera : public DObject {
-        YQ_OBJECT_INFO(CameraInfo)
+        YQ_OBJECT_INFO(CameraMeta)
         YQ_DOODLE_DECLARE(Camera, DObject)
     public:
     

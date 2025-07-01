@@ -7,7 +7,7 @@
 #include "ID.hpp"
 
 #include <yq/core/DelayInit.hpp>
-#include <yq/meta/TypeInfoWriter.hpp>
+#include <yq/meta/TypeMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::doodle {

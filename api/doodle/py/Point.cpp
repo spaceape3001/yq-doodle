@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Point.hpp"
-#include <doodle/PyInfoWriter.hpp>
+#include <doodle/PyMetaWriter.hpp>
 #include <algorithm>
 
 YQ_DOODLE_IMPLEMENT(yq::doodle::Point)

@@ -6,19 +6,18 @@
 
 #pragma once
 
-#include <doodle/DObjectInfoWriter.hpp>
-#include <doodle/Py.hpp>
+#include <doodle/DObjectMetaWriter.hpp>
+#include <doodle/Space.hpp>
 
 namespace yq::doodle {
-
     template <typename T>
-    class PyInfo::Writer : public DObjectInfo::Writer<T> {
+    class SpaceMeta::Writer : public DObjectMeta::Writer<T> {
     public:
-        Writer(PyInfo* pInfo) : DObjectInfo::Writer<T>(pInfo)
+        Writer(SpaceMeta* mInfo) : DObjectMeta::Writer<T>(mInfo)
         {
         }
         
-        Writer(PyInfo& pInfo) : Writer(&pInfo)
+        Writer(SpaceMeta& mInfo) : Writer(&mInfo)
         {
         }
     };

@@ -82,7 +82,7 @@ namespace yq::doodle {
         return std::distance(r.first, r.second);
     }
 
-    DObject*                Project::create(const DObjectInfo& info)
+    DObject*                Project::create(const DObjectMeta& info)
     { 
         DObject* obj = info.create(*this);
         if(!obj)
@@ -281,7 +281,7 @@ namespace yq::doodle {
                 continue;
             }
             
-            const DObjectInfo*   dinfo  = DObjectInfo::lookup(cls);
+            const DObjectMeta*   dinfo  = DObjectMeta::lookup(cls);
             if(!dinfo){
                 doodleWarning << "unable to find an object type " << cls;
                 continue;
@@ -322,23 +322,23 @@ namespace yq::doodle {
             
             for(const XmlNode* p = x->first_node(szProperty); p; p = p->next_sibling(szProperty)){
                 std::string k = read_attribute(*p, szKey, x_string);
-                const PropertyInfo* pi  = dinfo->properties(ALL).find(k);
+                const PropertyMeta* pi  = dinfo->properties(ALL).find(k);
                 if(!pi){
                     doodleWarning << "unable to find property (" << k << ") on type " << cls;
                     continue;
                 }
                 
                 std::string t = read_attribute(*p, szType, x_string);
-                const TypeInfo* ti  = nullptr;
+                const TypeMeta* ti  = nullptr;
                 if(!t.empty()){
-                    ti  = TypeInfo::find(t);
+                    ti  = TypeMeta::find(t);
                     if(!ti){
                         doodleWarning << "Unable to find type info for " << t;
                         continue;
                     }
                 }
 
-                const TypeInfo& type = ti ? *ti : pi->type();
+                const TypeMeta& type = ti ? *ti : pi->type();
                 Any value;
 
                 if(type.can_write_and_parse()){
@@ -425,7 +425,7 @@ namespace yq::doodle {
                 XmlNode& v = *x.create_element(szValue);
                 write_x(v, i);
             }
-            for(const PropertyInfo* p : obj->metaInfo().properties(ALL).all){
+            for(const PropertyMeta* p : obj->metaInfo().properties(ALL).all){
                 if(!p->tagged(kTag_Save))
                     continue;
                 
@@ -437,7 +437,7 @@ namespace yq::doodle {
                 XmlNode& prop = *x.create_element(szProperty);
                 write_attribute(prop, szKey, p->name());
                 
-                const TypeInfo& type    = (*value).type();
+                const TypeMeta& type    = (*value).type();
                 if(type.id() != p->type().id())
                     write_attribute(prop, szType, type.name());
                 

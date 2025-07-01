@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Camera.hpp"
-#include "CameraInfoWriter.hpp"
+#include "CameraMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Camera)
 
 namespace yq::doodle {
-    CameraInfo::CameraInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : DObjectInfo(zName, base, sl)
+    CameraMeta::CameraMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : DObjectMeta(zName, base, sl)
     {
         set(Flag::CAMERA);
     }

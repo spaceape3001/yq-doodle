@@ -17,10 +17,10 @@
 #endif
 
 namespace yq::doodle {
-    class Space2DInfo : public SpaceInfo {
+    class Space2DInfo : public SpaceMeta {
     public:
         template <typename T> class Writer;
-        Space2DInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl=std::source_location::current());
+        Space2DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
 

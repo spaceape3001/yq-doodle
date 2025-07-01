@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Constraint.hpp"
-#include "ConstraintInfoWriter.hpp"
+#include "ConstraintMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Constraint)
 
 namespace yq::doodle {
-    ConstraintInfo::ConstraintInfo(std::string_view zName, DObjectInfo& base, const std::source_location& sl) : DObjectInfo(zName, base, sl)
+    ConstraintMeta::ConstraintMeta(std::string_view zName, DObjectMeta& base, const std::source_location& sl) : DObjectMeta(zName, base, sl)
     {
         set(Flag::CONSTRAINT);
     }

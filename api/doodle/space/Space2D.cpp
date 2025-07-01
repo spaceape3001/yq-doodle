@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space2D)
 
 namespace yq::doodle {
-    Space2DInfo::Space2DInfo(std::string_view zName, SpaceInfo& base, const std::source_location& sl) : SpaceInfo(zName, base, sl)
+    Space2DInfo::Space2DInfo(std::string_view zName, SpaceMeta& base, const std::source_location& sl) : SpaceMeta(zName, base, sl)
     {
         set(Flag::SPACE);
     }
