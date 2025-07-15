@@ -109,7 +109,7 @@ namespace yq::doodle {
     template <typename Obj>
     class DObjectFixer : public ObjectFixer<Obj> {
     public:
-        DObjectFixer(std::string_view szName, typename Obj::MyBase::MyInfo& myBase, std::source_location sl=std::source_location::current()) : 
+        DObjectFixer(std::string_view szName, typename Obj::MyBase::MyMeta& myBase, std::source_location sl=std::source_location::current()) : 
             ObjectFixer<Obj>(szName, myBase, sl) 
         {
         }
