@@ -10,7 +10,7 @@
 
 int main(int argc, char* argv[])
 {
-    configure_standand_asset_path();
+    configure_standand_resource_path();
 
     AppCreateInfo        aci;
     aci.thread.sim        = true;
