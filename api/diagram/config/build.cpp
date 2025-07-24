@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include <diagram/config/build.hpp>
+
+namespace yq::diagram {
+    //! The share path to the one inside the build directory;
+    const char*     default_data_directory()
+    {
+        return YQ_DIAGRAM_DATA_DIR;
+    }
+}
