@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/typedef/string.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/expected.hpp>
 #include <doodle/typedef/revision.hpp>

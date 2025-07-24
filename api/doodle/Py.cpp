@@ -80,8 +80,7 @@ namespace yq::doodle {
         if(m_values.size() >= 1)
             return m_values[0];
         
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("x"); i != data.end())
+        if(auto i = m_attributes.find("x"); i != m_attributes.end())
             return i->second;
         if(is_attribute(LOCAL, "Δx"))
             return "_parent_.x+Δx";
@@ -109,8 +108,7 @@ namespace yq::doodle {
         if(m_values.size() >= 2)
             return m_values[1];
 
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("y"); i != data.end())
+        if(auto i = m_attributes.find("y"); i != m_attributes.end())
             return i->second;
         if(is_attribute(LOCAL, "Δy"))
             return "_parent_.y+Δy";
@@ -138,8 +136,7 @@ namespace yq::doodle {
         if(m_values.size() >= 3)
             return m_values[2];
         
-        auto& data  = m_attributes.data();
-        if(auto i = data.find("z"); i != data.end())
+        if(auto i = m_attributes.find("z"); i != m_attributes.end())
             return i->second;
 
         if(is_attribute(LOCAL, "Δz"))

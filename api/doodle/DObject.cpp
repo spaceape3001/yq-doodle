@@ -165,7 +165,7 @@ namespace yq::doodle {
 
     std::string_view        DObject::attribute(local_k, const std::string& k) const
     {
-        return m_attributes.get(k);
+        return m_attributes.get_view(k);
     }
     
     void                    DObject::attribute_erase(const std::string& k)
@@ -175,7 +175,7 @@ namespace yq::doodle {
     
     string_set_t            DObject::attribute_keys() const
     {
-        return m_attributes.keys();
+        return m_attributes.key_set();
     }
     
     void                    DObject::attribute(set_k, const std::string&k, const std::string&v)
@@ -190,7 +190,7 @@ namespace yq::doodle {
     
     const string_map_t&     DObject::attributes() const
     {
-        return m_attributes.data();
+        return m_attributes;
     }
     
     void    DObject::bump()

@@ -7,7 +7,6 @@
 #pragma once
 
 #include <doodle/keywords.hpp>
-#include <doodle/bit/SStringMap.hpp>
 #include <doodle/bit/ID.hpp>
 #include <doodle/io/SFormat.hpp>
 #include <doodle/typedef/project.hpp>
@@ -16,6 +15,7 @@
 #include <doodle/typedef/revision.hpp>
 #include <filesystem>
 #include <vector>
+#include <yq/container/Map.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/string_sets.hpp>
 #include <yq/typedef/xml.hpp>
@@ -138,8 +138,8 @@ namespace yq::doodle {
         Project& operator=(const Project&) = delete;
         Project& operator=(Project&&) = delete;
 
-        SStringMap                              m_attributes;
-        SStringMap                              m_variables;
+        StringMap                               m_attributes;
+        StringMap                               m_variables;
         std::string                             m_title;
         std::string                             m_description;
         std::string                             m_notes;

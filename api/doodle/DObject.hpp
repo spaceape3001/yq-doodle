@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include <yq/typedef/string.hpp>
 #include <yq/core/AllLocal.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/container/Map.hpp>
 #include <doodle/bit/Dim.hpp>
 #include <doodle/bit/ID.hpp>
-#include <doodle/bit/SStringMap.hpp>
 #include <doodle/typedef/revision.hpp>
 #include <doodle/typedef/dobject.hpp>
 #include <doodle/keywords.hpp>
@@ -220,14 +221,16 @@ namespace yq::doodle {
     protected:
         Project&                m_project;
         const ID                m_id;
-        SStringMap              m_attributes;
-        string_vector_t         m_values;           // positional data (depends on the object)
+        StringMap               m_attributes;       // key/value
+        Vector<std::string>     m_values;           // positional
         ID                      m_parent;
         std::vector<ID>         m_children;
         std::string             m_title;
         std::string             m_description;
         std::string             m_uid;
         std::string             m_notes;
+        
+        //  Add evaluated/binary version of attributes
     
     private:
         AllLocal<revision_t>    m_revision  = {};

@@ -78,7 +78,6 @@ namespace yq::doodle {
         //! Remap IDs/pointers appropriately
         virtual void        remap(const Remapper&);
         
-        
     private:
         Py(const Py&) = delete;
         Py(Py&&) = delete;

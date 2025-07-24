@@ -30,7 +30,6 @@ add_library(${PROJECT_NAME} SHARED
     Space.cpp
  
     bit/ID.cpp
-    bit/SStringMap.cpp
     
     canvas/Canvas2D.cpp
     canvas/Drawing2D.cpp

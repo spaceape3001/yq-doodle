@@ -7,6 +7,7 @@
 #include "Project.hxx"
 #include "Project.hpp"
 #include "DObject.hpp"
+#include <yq/xml/XmlAny.hpp>
 #include <yq/xml/XmlFile.hpp>
 #include <yq/xml/XmlUtils.hpp>
 #include <yq/file/FileUtils.hpp>
@@ -37,7 +38,7 @@ namespace yq::doodle {
 
     std::string_view        Project::attribute(const std::string&k) const
     {
-        return m_attributes.get(k);
+        return m_attributes.get_view(k);
     }
 
     void                    Project::attribute_erase(const std::string&k)
@@ -47,7 +48,7 @@ namespace yq::doodle {
     
     string_set_t            Project::attribute_keys() const
     {
-        return m_attributes.keys();
+        return m_attributes.key_set();
     }
     
     void                    Project::attribute_set(const std::string& k, const std::string& v)
@@ -62,7 +63,7 @@ namespace yq::doodle {
 
     const string_map_t&     Project::attributes() const
     {
-        return m_attributes.data();
+        return m_attributes;
     }
 
     void                    Project::bump()
@@ -338,16 +339,10 @@ namespace yq::doodle {
                     }
                 }
 
-                const TypeMeta& type = ti ? *ti : pi->type();
-                Any value;
-
-                if(type.can_write_and_parse()){
-                    if(!value.parse(type, x_string(*p)))
-                        continue;
-                } else {
-                    //  non write/parse.... TODO
+                Any value(ti ? *ti : pi->type());
+                std::error_code ec   = read_xml_any(*p, value);
+                if(ec != std::error_code())
                     continue;
-                }
                 pi->set(obj, value);
             }
             
@@ -387,7 +382,7 @@ namespace yq::doodle {
             write_child(root, szDescription, m_description);
         if(!m_notes.empty())
             write_child(root, szNotes, m_notes);
-        for(auto& i : m_attributes.data()){
+        for(auto& i : m_attributes){
             XmlNode& x   = *root.create_element(szAttribute);
             write_attribute(x, szKey, i.first);
             write_x(x, i.second);
@@ -432,21 +427,10 @@ namespace yq::doodle {
                 any_x   value   = p->get(obj);
                 if(!value)  
                     continue;
-                    
             
                 XmlNode& prop = *x.create_element(szProperty);
                 write_attribute(prop, szKey, p->name());
-                
-                const TypeMeta& type    = (*value).type();
-                if(type.id() != p->type().id())
-                    write_attribute(prop, szType, type.name());
-                
-                if(type.can_write_and_parse()){
-                    write_x(prop, (*value).writable());
-                    continue;
-                }
-
-                //  non write/parse.... TBD
+                write_xml_any(prop, *value);
             }
             obj->save(x);
         }
