@@ -32,7 +32,7 @@ Project&    project()
         a->attribute(SET, "b", "f");
         a->attribute(SET, "c", "f+b");
         a->attribute(SET, "d", "t");
-        a->attribute(SET, "rz", "1");
+        a->attribute(SET, "r", "1");
         a->attribute(SET, "az", "t");
         
         Point* b    = s_project.create<Point>();

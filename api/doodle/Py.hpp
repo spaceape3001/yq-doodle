@@ -35,7 +35,7 @@ namespace yq::doodle {
         | y   | Y-value (this will OVERRIDE the trig)   | ...                       |
         | z   | Z-value (this will OVERRIDE the trig)   | ...                       |
         
-        For radius, the default assesses the number of dimensions, returns the 
+        For range, the default assesses the number of dimensions, returns the 
         relevant geometric mean of x, y, and z.
         
         For x, y, z; the values are checked first and used.  
@@ -59,7 +59,7 @@ namespace yq::doodle {
         static void init_meta();
 
         // Should always be valid (if defined), will default to empty otherwise
-        std::string_view  rz() const;
+        std::string_view  r() const;
 
         // Should always be valid (if defined), will default to empty otherwise
         std::string_view  x() const;

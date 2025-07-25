@@ -97,16 +97,28 @@ namespace yq::doodle {
             Attributes are how things are defined on the objects...
             generally reserved attributes are
             
-            a       dimension (so for circles, radius)
             
+            a       dimension (for circles)
+            ang     angle (in degrees) in the x-y plane
             az      angle (in degrees) in the x-y plane
             th      angle (in radians) in the x-y plane
             r       distance from origin
             el      elevation angle (in degrees) from the x-y plane      
             
-            la      latitude (in degrees)
-            lo      longitude (in degrees)
+            lat     latitude (in degrees)
+            lon     longitude (in degrees)
+            alt     altitude
+
             h       height
+            
+            hdg     heading  (ie things can be rotated/pitched/etc)
+            pitch   pitch
+            roll    roll
+
+            l       dimension (so for circles, radius)
+            lx      dimension in x
+            ly      dimension in y
+            lz      dimension in z
             
             s       parametric attribute (can be a range for curves, or singular)
             s0      starting S-value (for curves)
@@ -119,6 +131,10 @@ namespace yq::doodle {
             x       position in x (these take precedence, if defined)
             y       position in y (these take precedence, if defined)
             z       position in z (these take precedence, if defined)
+
+            dx      offset in x
+            dy      offset in y
+            dz      offset in z
         */
     
 
