@@ -10,5 +10,5 @@ macro(doodle_test name)
     add_test(NAME ${name} COMMAND test_${name} ${ARGN})
 endmacro()
 
-doodle_test(b3parse)
-doodle_test(evaluator)
+#doodle_test(b3parse)
+#doodle_test(evaluator)

@@ -15,7 +15,6 @@ namespace yq::doodle {
     {
         auto w = writer<Point>();
         w.description("Doodle Point");
-        //w.attribute("w", &Point::w);
     }
 
     uint8_t Point::dimensions(count_k) const

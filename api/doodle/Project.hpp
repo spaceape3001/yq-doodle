@@ -8,7 +8,6 @@
 
 #include <doodle/keywords.hpp>
 #include <doodle/bit/ID.hpp>
-#include <doodle/io/SFormat.hpp>
 #include <doodle/typedef/project.hpp>
 #include <doodle/typedef/dobject.hpp>
 #include <doodle/typedef/id.hpp>
@@ -46,10 +45,9 @@ namespace yq::doodle {
         Project();
         virtual ~Project();
     
-        DObject*            object(ID);
-        const DObject*      object(ID) const;
+        DObject*                object(ID);
+        const DObject*          object(ID) const;
         
-        static constexpr const char*    szExtB3     = "d3";
         static constexpr const char*    szExtXML    = "d3x";
         
         //! Returns the first object with UID
@@ -58,20 +56,20 @@ namespace yq::doodle {
         template <SomeDObject S=DObject>
         const S*                object(uid_k, const std::string&) const;
 
-        static bool             census(Census&, const std::filesystem::path&, SFormat fmt=SFormat::AUTO);
+        static bool             census(Census&, const std::filesystem::path&);
         
-        static ProjectSPtr      load(shared_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
-        static ProjectUPtr      load(unique_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
-        static Project*         load(raw_k, const std::filesystem::path&, SFormat sf=SFormat::AUTO);
+        static ProjectSPtr      load(shared_k, const std::filesystem::path&);
+        static ProjectUPtr      load(unique_k, const std::filesystem::path&);
+        static Project*         load(raw_k, const std::filesystem::path&);
     
-        virtual bool            save(const std::filesystem::path&, SFormat sf=SFormat::AUTO) const;
+        bool                    save(const std::filesystem::path&) const;
         
-        std::string_view        attribute(const std::string&) const;
+        const Any&              attribute(const std::string&) const;
         void                    attribute_erase(const std::string&);
         string_set_t            attribute_keys() const;
-        void                    attribute_set(const std::string&, const std::string&);
-        void                    attribute_set(const std::string&, std::string&&);
-        const string_map_t&     attributes() const;
+        void                    attribute_set(const std::string&, const Any&);
+        void                    attribute_set(const std::string&, Any&&);
+        const auto&             attributes() const { return m_attributes; }
         
         bool                    contains(ID) const;
         
@@ -111,7 +109,7 @@ namespace yq::doodle {
         const std::vector<ID>&  roots() const { return m_roots; }
     
         using generator_fn  = std::function<Project*()>;
-        static bool     load(const std::filesystem::path&, SFormat, generator_fn&&);
+        static bool     load(const std::filesystem::path&, generator_fn&&);
         
         #ifdef foreach
         #undef foreach
@@ -138,7 +136,7 @@ namespace yq::doodle {
         Project& operator=(const Project&) = delete;
         Project& operator=(Project&&) = delete;
 
-        StringMap                               m_attributes;
+        StringAnyMap                            m_attributes;
         StringMap                               m_variables;
         std::string                             m_title;
         std::string                             m_description;
@@ -155,16 +153,9 @@ namespace yq::doodle {
         void    uid_map(const std::string&, ID);
         void    uid_umap(const std::string&, ID);
         
-        static bool     load_b3(ByteArray&, generator_fn&&);
-        static bool     load_xml(ByteArray&, generator_fn&&);
-        
         bool            read(const XmlDocument&);
         void            write(XmlDocument&) const;
         
-        bool            save_xml(const std::filesystem::path&) const;
-        bool            save_b3(const std::filesystem::path&) const;
-
-        static bool     census_xml(Census&, const std::filesystem::path&);
-        static bool     census_b3(Census&, const std::filesystem::path&);
+        static bool     load_xml(ByteArray& bytes, generator_fn&& fn);
     };
 }

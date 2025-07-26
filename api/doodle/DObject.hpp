@@ -8,6 +8,7 @@
 
 #include <yq/typedef/string.hpp>
 #include <yq/core/AllLocal.hpp>
+#include <yq/core/Any.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/container/Map.hpp>
 #include <doodle/bit/Dim.hpp>
@@ -60,9 +61,9 @@ namespace yq::doodle {
         
         virtual void    sweep_impl() override;
 
-        using function_attribute_t      = std::function<std::string_view(const DObject*)>;
+        using function_attribute_t      = std::function<Any(const DObject*)>;
         //using function2_attribute_t     = std::function<std::string(const DObject*)>;
-        using default_attribute_t       = std::variant<std::monostate, std::string_view, function_attribute_t>;
+        using default_attribute_t       = std::variant<std::monostate, Any, function_attribute_t>;
         using default_attribute_map_t   = std::map<std::string_view, default_attribute_t, IgCase>;
     
         DimFlags                m_supports;
@@ -138,23 +139,25 @@ namespace yq::doodle {
         */
     
 
+        const auto&             aspects() const { return m_aspects; }
+
         //! Attribute for this object (either local, default, or global)
-        std::string_view        attribute(const std::string&) const;
+        const Any&              attribute(const std::string&) const;
         
         //! Attribute that's a default
-        std::string_view        attribute(default_k, const std::string&) const;
+        const Any&              attribute(default_k, const std::string&) const;
         
         //! Attribute (ONLY) on this object
         //! \note This excludes any "default"
-        std::string_view        attribute(local_k, const std::string&) const;
+        const Any&              attribute(local_k, const std::string&) const;
 
-        std::string_view        attribute(global_k, const std::string&) const;
+        const Any&              attribute(global_k, const std::string&) const;
         
         void                    attribute_erase(const std::string&);
         string_set_t            attribute_keys() const;
-        void                    attribute(set_k, const std::string&, const std::string&);
-        void                    attribute(set_k, const std::string&, std::string&&);
-        const string_map_t&     attributes() const;
+        void                    attribute(set_k, const std::string&, const Any&);
+        void                    attribute(set_k, const std::string&, Any&&);
+        const auto&             attributes() const { return m_attributes; }
         
         std::span<const ID>     children() const { return m_children; }
         
@@ -183,17 +186,19 @@ namespace yq::doodle {
         const std::string&      title() const { return m_title; }
         const std::string&      uid() const { return m_uid; }
 
+        // Was debating... but values are good where you want to list a group of tightly related things
+
         size_t                  values(count_k) const { return m_values.size(); }
+        const auto&             values() const { return m_values; }
+        void                    value(push_k, Any&&);
+        void                    value(push_k, const Any&);
         
-        const string_vector_t&  values() const { return m_values; }
+        const Any&              value(size_t) const;
 
-        void                    value(push_k, std::string&&);
-        void                    value(push_k, const std::string&);
-
-        void    set_description(const std::string&);
-        void    set_notes(const std::string&);
-        void    set_uid(const std::string&);
-        void    set_title(const std::string&);
+        void                    set_description(const std::string&);
+        void                    set_notes(const std::string&);
+        void                    set_uid(const std::string&);
+        void                    set_title(const std::string&);
 
         static void init_meta();
         
@@ -235,16 +240,21 @@ namespace yq::doodle {
         DObject& operator=(DObject&&) = delete;
 
     protected:
+        using StringIDMap   = Map<std::string,ID,IgCase>;
+    
         Project&                m_project;
         const ID                m_id;
-        StringMap               m_attributes;       // key/value
-        Vector<std::string>     m_values;           // positional
+        StringAnyMap            m_attributes;       // key/value
+        Vector<Any>             m_values;           // positional
         ID                      m_parent;
         std::vector<ID>         m_children;
+        StringIDMap             m_aspects;          // (for positions, colors, etc)
         std::string             m_title;
         std::string             m_description;
         std::string             m_uid;
         std::string             m_notes;
+        
+        //Map<unsigned,BogieSPtr> m_bogie;    // TODO....
         
         //  Add evaluated/binary version of attributes
     

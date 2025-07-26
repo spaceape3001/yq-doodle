@@ -12,10 +12,10 @@
 using namespace yq::gluon;
 
 namespace yq::doodle {
-    ProjectQPtr  ProjectQ::load(const QString& fp, SFormat fmt)
+    ProjectQPtr  ProjectQ::load(const QString& fp)
     {
         ProjectQPtr     qpp;
-        if(!Project::load(yFilePath(fp), fmt, 
+        if(!Project::load(yFilePath(fp), 
             [&]() -> Project* {
                 qpp = new ProjectQ;
                 return &(qpp->m_project);

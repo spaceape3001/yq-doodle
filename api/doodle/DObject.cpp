@@ -114,12 +114,13 @@ namespace yq::doodle {
     
     DObject::DObject(CopyAPI& api, const DObject& cp) : 
         m_project(api.project), 
-        m_id(api.project.insert(this)),
-        m_attributes(cp.m_attributes),
-        m_values(cp.m_values)
+        m_id(api.project.insert(this))
     {
+        m_attributes    = cp.m_attributes;
+        m_values        = cp.m_values;
         m_parent        = cp.m_parent;
         m_children      = cp.m_children;
+        m_aspects       = cp.m_aspects;
         m_title         = cp.m_title;
         m_notes         = cp.m_notes;
         
@@ -132,45 +133,54 @@ namespace yq::doodle {
         m_parent    = {};
     }
 
-    std::string_view        DObject::attribute(const std::string& k) const
+    const Any&        DObject::attribute(const std::string& k) const
     {
-        std::string_view    a;
-        
-        a   = attribute(LOCAL, k);
-        if(!a.empty())
-            return a;
-        a   = attribute(DEFAULT, k);
-        if(!a.empty())
-            return a;
+        const Any&  a1  = attribute(LOCAL, k);
+        if(a1.valid())
+            return a1;
+        const Any&  a2  = attribute(DEFAULT, k);
+        if(a2.valid())
+            return a2;
         return m_project.attribute(k);
     }
 
-    std::string_view        DObject::attribute(default_k, const std::string& k) const
+    const Any&        DObject::attribute(default_k, const std::string& k) const
     {
+        static const Any    s_empty;
+
         const DObjectMeta& dinfo = metaInfo();
         auto itr = dinfo.m_attributes.find(k);
         if(itr == dinfo.m_attributes.end())
-            return {};
-        if(auto p = std::get_if<std::string_view>(&itr->second))
+            return s_empty;
+            
+        if(auto p = std::get_if<Any>(&itr->second))
             return *p;
-        if(auto p = std::get_if<DObjectMeta::function_attribute_t>(&itr->second))
-            return (*p)(this);
-        return {};
+        if(auto p = std::get_if<DObjectMeta::function_attribute_t>(&itr->second)){
+            static thread_local Any a   = (*p)(this);
+            return a;
+        }
+        
+        return s_empty; 
     }
 
-    std::string_view        DObject::attribute(global_k, const std::string& k) const
+    const Any&        DObject::attribute(global_k, const std::string& k) const
     {
         return m_project.attribute(k);
     }
 
-    std::string_view        DObject::attribute(local_k, const std::string& k) const
+    const Any&        DObject::attribute(local_k, const std::string& k) const
     {
-        return m_attributes.get_view(k);
+        static const Any    s_empty;
+        auto i = m_attributes.find(k);
+        if(i == m_attributes.end())
+            return s_empty;
+        return i->second;
     }
     
     void                    DObject::attribute_erase(const std::string& k)
     {
         m_attributes.erase(k);
+        bump();
     }
     
     string_set_t            DObject::attribute_keys() const
@@ -178,19 +188,16 @@ namespace yq::doodle {
         return m_attributes.key_set();
     }
     
-    void                    DObject::attribute(set_k, const std::string&k, const std::string&v)
+    void                    DObject::attribute(set_k, const std::string&k, const Any&v)
     {
-        m_attributes.set(k, v);
+        m_attributes[k] = v;
+        bump();
     }
     
-    void                    DObject::attribute(set_k, const std::string&k, std::string&&v)
+    void                    DObject::attribute(set_k, const std::string&k, Any&&v)
     {
-        m_attributes.set(k, std::move(v));
-    }
-    
-    const string_map_t&     DObject::attributes() const
-    {
-        return m_attributes;
+        m_attributes[k] = std::move(v);
+        bump();
     }
     
     void    DObject::bump()
@@ -261,6 +268,9 @@ namespace yq::doodle {
             if(dob)
                 dob -> remap(theMap);
         }
+        
+        for(auto& i : m_aspects)
+            i.second    = theMap(i.second);
     }
 
     void    DObject::set_description(const std::string&v)
@@ -293,18 +303,25 @@ namespace yq::doodle {
         bump();
     }
 
-    void    DObject::value(push_k, std::string&&v)
+    const Any& DObject::value(size_t i) const
+    {
+        static const Any s_empty;
+        if(i>=m_values.size())
+            return s_empty;
+        return m_values[i];
+    }
+    
+    void    DObject::value(push_k, Any&&v)
     {
         m_values.push_back(std::move(v));
         bump();
     }
     
-    void    DObject::value(push_k, const std::string&v)
+    void    DObject::value(push_k, const Any&v)
     {
         m_values.push_back(v);
         bump();
     }
-
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////

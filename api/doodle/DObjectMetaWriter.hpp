@@ -8,6 +8,7 @@
 
 #include <doodle/DObject.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
+#include <yq/core/Any.hpp>
 
 #define YQ_DOODLE_IMPLEMENT(cls) YQ_OBJECT_IMPLEMENT(cls)
  
@@ -24,14 +25,14 @@ namespace yq::doodle {
         }
         
         //! Defines a default attribute
-        Writer& attribute(const char* k, const char* v)
+        Writer& attribute(const char* k, const Any& v)
         {
             if(m_meta)
                 m_meta -> m_attributes[k] = v;
             return *this;
         }
         
-        Writer& attribute(const char* k, std::string_view (C::*fn)() const)
+        Writer& attribute(const char* k, Any (C::*fn)() const)
         {
             if(m_meta){
                 m_meta -> m_attributes[k] = [fn](const DObject* obj) -> std::string_view

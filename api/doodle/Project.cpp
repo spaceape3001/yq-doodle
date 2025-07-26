@@ -36,14 +36,19 @@ namespace yq::doodle {
     }
 
 
-    std::string_view        Project::attribute(const std::string&k) const
+    const Any&       Project::attribute(const std::string&k) const
     {
-        return m_attributes.get_view(k);
+        static const Any s_empty;
+        auto i = m_attributes.find(k);
+        if(i == m_attributes.end())
+            return s_empty;
+        return i->second;
     }
 
     void                    Project::attribute_erase(const std::string&k)
     {
         m_attributes.erase(k);
+        bump();
     }
     
     string_set_t            Project::attribute_keys() const
@@ -51,19 +56,16 @@ namespace yq::doodle {
         return m_attributes.key_set();
     }
     
-    void                    Project::attribute_set(const std::string& k, const std::string& v)
+    void                    Project::attribute_set(const std::string& k, const Any& v)
     {
-        m_attributes.set(k,v);
+        m_attributes[k] = v;
+        bump();
     }
     
-    void                    Project::attribute_set(const std::string& k, std::string&&v)
+    void                    Project::attribute_set(const std::string& k, Any&&v)
     {
-        m_attributes.set(k, std::move(v));
-    }
-
-    const string_map_t&     Project::attributes() const
-    {
-        return m_attributes;
+        m_attributes[k] = std::move(v);
+        bump();
     }
 
     void                    Project::bump()
@@ -210,32 +212,11 @@ namespace yq::doodle {
         //return m_variables.data();
     //}
 
-    ////////////////////////////////////////////////////////////////////////////
-    //  B3
-    
-
-    bool     Project::census_b3(Census&, const std::filesystem::path&)
-    {   
-        doodleError << "B3 reading not yet implemented";
-        return false;
-    }
-
-    bool         Project::load_b3(ByteArray& bytes, generator_fn&& pred)
-    {
-        doodleError << "B3 reading not yet implemented";
-        return false;
-    }
-    
-    bool         Project::save_b3(const std::filesystem::path&) const
-    {
-        doodleError << "B3 saving not yet implemented";
-        return false;
-    }
 
     ////////////////////////////////////////////////////////////////////////////
     //  XML
 
-    bool     Project::census_xml(Census&, const std::filesystem::path& fp)
+    bool     Project::census(Census&, const std::filesystem::path& fp)
     {
         XmlDocument prj;
         std::error_code ec  = read_file(prj, fp);
@@ -262,9 +243,21 @@ namespace yq::doodle {
         m_notes         = read_child(*root, szNotes, x_string);
         for(const XmlNode* x = root->first_node(szAttribute); x; x = x->next_sibling(szAttribute)){
             std::string k = read_attribute(*x, szKey, x_string);
-            std::string v = x_string(*x);
-            m_attributes.set(k,v);
+            std::string t = read_attribute(*x, szType, x_string);
+            
+            const TypeMeta* ti  = t.empty() ? &meta<std::string>() : TypeMeta::find(t);
+            if(!ti){
+                doodleWarning << "unable to resolve attribute type " << t;
+                continue;
+            }
+            
+            Any value(*ti);
+            std::error_code ec  = read_xml_any(*x, value);
+            if(ec == std::error_code())
+                continue;
+            m_attributes[k] = std::move(value);
         }
+        
         //for(const XmlNode* x = root->first_node(szVariable); x; x = x->next_sibling(szVariable)){
             //std::string k = read_attribute(*x, szKey, x_string);
             //std::string v = x_string(*x);
@@ -313,12 +306,34 @@ namespace yq::doodle {
             
             for(const XmlNode* a = x->first_node(szAttribute); a; a = a->next_sibling(szAttribute)){
                 std::string k = read_attribute(*a, szKey, x_string);
-                std::string v = x_string(*a);
-                obj->m_attributes.set(k,v);
+                std::string t = read_attribute(*a, szType, x_string);
+                
+                const TypeMeta* ti  = t.empty() ? &meta<std::string>() : TypeMeta::find(t);
+                if(!ti){
+                    doodleWarning << "unable to resolve attribute type " << t;
+                    continue;
+                }
+                
+                Any value(*ti);
+                std::error_code ec  = read_xml_any(*a, value);
+                if(ec == std::error_code())
+                    continue;
+                obj->m_attributes[k] = std::move(value);
             }
             
             for(const XmlNode* v = x->first_node(szValue); v; v = v->next_sibling(szValue)){
-                obj->m_values.push_back(x_string(*v));
+                std::string t = read_attribute(*v, szType, x_string);
+                const TypeMeta* ti  = t.empty() ? &meta<std::string>() : TypeMeta::find(t);
+                if(!ti){
+                    doodleWarning << "unable to resolve value type " << t;
+                    continue;
+                }
+                
+                Any value(*ti);
+                std::error_code ec  = read_xml_any(*v, value);
+                if(ec == std::error_code())
+                    continue;
+                obj->m_values.push_back(std::move(value));
             }
             
             for(const XmlNode* p = x->first_node(szProperty); p; p = p->next_sibling(szProperty)){
@@ -385,7 +400,9 @@ namespace yq::doodle {
         for(auto& i : m_attributes){
             XmlNode& x   = *root.create_element(szAttribute);
             write_attribute(x, szKey, i.first);
-            write_x(x, i.second);
+            if(i.second.type().id() != meta<std::string>().id())
+                write_attribute(x, szType, i.second.type().name());
+            write_xml_any(x, i.second);
         }
         //for(auto& i : m_variables.data()){
             //XmlNode& x   = *root.create_element(szVariable);
@@ -414,11 +431,15 @@ namespace yq::doodle {
             for(auto& i : obj->attributes()){
                 XmlNode& a = *x.create_element(szAttribute);
                 write_attribute(a, szKey, i.first);
-                write_x(a, i.second);
+                if(i.second.type().id() != meta<std::string>().id())
+                    write_attribute(a, szType, i.second.type().name());
+                write_xml_any(a, i.second);
             }
             for(auto& i : obj->values()){
                 XmlNode& v = *x.create_element(szValue);
-                write_x(v, i);
+                if(i.type().id() != meta<std::string>().id())
+                    write_attribute(v, szType, i.type().name());
+                write_xml_any(v, i);
             }
             for(const PropertyMeta* p : obj->metaInfo().properties(ALL).all){
                 if(!p->tagged(kTag_Save))
@@ -436,7 +457,7 @@ namespace yq::doodle {
         }
     }
 
-    bool         Project::save_xml(const std::filesystem::path& fp) const
+    bool         Project::save(const std::filesystem::path& fp) const
     {
         XmlDocument prj;
         xml_start(prj);
@@ -447,35 +468,8 @@ namespace yq::doodle {
     ////////////////////////////////////////////////////////////////////////////
     //  IO (High Level)
 
-    static SFormat  guess_format(const std::filesystem::path& fp)
-    {
-        std::string sfx = fp.extension().string();
-        if(sfx.empty())
-            return SFormat::AUTO;
-        sfx = sfx.substr(1);
-        if(is_similar(sfx, Project::szExtB3))
-            return B3;
-        if(is_similar(sfx, Project::szExtXML))
-            return XML;
-        return SFormat::AUTO;
-    }
 
-    bool   Project::census(Census&ret, const std::filesystem::path&fp, SFormat fmt)
-    {
-        if(fmt == SFormat::AUTO)
-            fmt = guess_format(fp);
-        switch(fmt){
-        case SFormat::XML:
-            return census_xml(ret, fp);
-        case SFormat::B3:
-            return census_b3(ret, fp);
-        default:
-            doodleError << "Unable to determine format for " << fp.string();
-            return false;
-        }
-    }
-
-    bool    Project::load(const std::filesystem::path& fp, SFormat fmt, generator_fn&& fn)
+    bool    Project::load(const std::filesystem::path& fp, generator_fn&& fn)
     {
         if(!file_exists(fp)){
             doodleError << "File does not exist.  " << fp.string();
@@ -486,14 +480,6 @@ namespace yq::doodle {
             doodleError << "File is not readable.  " << fp.string();
             return false;
         }
-
-        if(fmt == SFormat::AUTO)
-            fmt = guess_format(fp);
-
-        if(fmt == SFormat::AUTO){
-            doodleError << "Unable to determine format for " << fp.string();
-            return false;
-        }
         
         ByteArray   bytes   = file_bytes(fp);
         if(bytes.empty()){
@@ -501,21 +487,14 @@ namespace yq::doodle {
             return false;
         }
         
-        switch(fmt){
-        case SFormat::B3:
-            return load_b3(bytes, std::move(fn));
-        case SFormat::XML:
-            return load_xml(bytes, std::move(fn));
-        default:
-            return false;
-        }
+        return load_xml(bytes, std::move(fn));
     }
 
-    ProjectSPtr    Project::load(shared_k, const std::filesystem::path&fp, SFormat sf)
+    ProjectSPtr    Project::load(shared_k, const std::filesystem::path&fp)
     {
         ProjectSPtr   ret;
         
-        bool    loaded  = load(fp, sf, [&]() -> Project* {
+        bool    loaded  = load(fp, [&]() -> Project* {
             ret = std::make_shared<Project>();
             return ret.get();
         });
@@ -525,10 +504,10 @@ namespace yq::doodle {
         return {};
     }
     
-    ProjectUPtr    Project::load(unique_k, const std::filesystem::path&fp, SFormat sf)
+    ProjectUPtr    Project::load(unique_k, const std::filesystem::path&fp)
     {
         ProjectUPtr   ret;
-        bool    loaded  = load(fp, sf, [&]() -> Project* {
+        bool    loaded  = load(fp, [&]() -> Project* {
             ret = std::make_unique<Project>();
             return ret.get();
         });
@@ -538,10 +517,10 @@ namespace yq::doodle {
         return {};
     }
     
-    Project*       Project::load(raw_k, const std::filesystem::path&fp, SFormat sf)
+    Project*       Project::load(raw_k, const std::filesystem::path&fp)
     {
         Project*  ret = nullptr;
-        bool    loaded  = load(fp, sf, [&]() -> Project* {
+        bool    loaded  = load(fp, [&]() -> Project* {
             ret = new Project;
             return ret;
         });
@@ -552,18 +531,4 @@ namespace yq::doodle {
         return nullptr;
     }
 
-    bool             Project::save(const std::filesystem::path&fp, SFormat fmt) const
-    {
-        if(fmt == SFormat::AUTO)
-            fmt = guess_format(fp);
-        switch(fmt){
-        case SFormat::B3:
-            return save_b3(fp);
-        case SFormat::XML:
-            return save_xml(fp);
-        default:
-            doodleError << "Unable to determine format for " << fp.string();
-            return false;
-        }
-    }
 }

@@ -17,33 +17,33 @@ project(yq_doodle)
 add_library(${PROJECT_NAME} SHARED
 
     Association.cpp
-    Camera.cpp
-    Canvas.cpp
+    #Camera.cpp
+    #Canvas.cpp
     Constraint.cpp
     DObject.cpp
-    Evaluator.cpp
-    Light.cpp
-    Motion.cpp
+    #Evaluator.cpp
+    #Light.cpp
+    #Motion.cpp
     Project.cpp
-    Py.cpp
+    #Py.cpp
 
-    Space.cpp
+    #Space.cpp
  
-    bit/ID.cpp
+    #bit/ID.cpp
     
-    canvas/Canvas2D.cpp
-    canvas/Drawing2D.cpp
+    #canvas/Canvas2D.cpp
+    #canvas/Drawing2D.cpp
     
-    io/b3grammar.cpp
+    #io/b3grammar.cpp
 
-    py/Curve.cpp
-    py/Point.cpp
+    #py/Curve.cpp
+    #py/Point.cpp
     
-    space/Space1D.cpp
-    space/Space2D.cpp
+    #space/Space1D.cpp
+    #space/Space2D.cpp
 #    Space2Z.cpp
-    space/Space3D.cpp
-    space/Space4D.cpp
+    #space/Space3D.cpp
+    #space/Space4D.cpp
     
         #   Two letters are being assigned for dimension/coordinate systems
     #   0D is zero dimensional (almost useless TBH)

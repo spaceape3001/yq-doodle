@@ -22,7 +22,7 @@ namespace yq::doodle {
         Q_OBJECT
     public:
     
-        static ProjectQPtr  load(const QString&, SFormat sf=SFormat::AUTO);
+        static ProjectQPtr  load(const QString&);
 
         ProjectQ(QObject*parent=nullptr);
         virtual ~ProjectQ();
