@@ -1,0 +1,299 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "DObject.hpp"
+#include "DObjectMetaWriter.hpp"
+
+#include <sdl/Project.hpp>
+
+namespace yq::sdl {
+    struct DObject::Repo {
+        MetaLookup<DObjectMeta>     objects;
+    };
+
+////////////////////////////////////////////////////////////////////////////////
+
+    DObjectMeta::DObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, base, sl)
+    {
+        DObject::repo().objects << this;
+    }
+
+    string_view_set_t           DObjectMeta::default_attribute_keys() const
+    {
+        string_view_set_t   ret;
+        for(auto& i : m_attributes)
+            ret.insert(i.first);
+        return ret;
+    }
+
+    bool    DObjectMeta::has_default_attribute(std::string_view k) const
+    {
+        return m_attributes.contains(k);
+    }
+    
+    void    DObjectMeta::sweep_impl() 
+    {
+        ObjectMeta::sweep_impl();
+        const DObjectMeta* parent   = dynamic_cast<const DObjectMeta*>(base());
+        if(parent){
+            for(auto& i : parent->m_attributes)
+                m_attributes.insert(i);
+        }
+    }
+
+    const DObjectMeta*       DObjectMeta::lookup(std::string_view ks)
+    {
+        auto& r = DObject::repo();
+        return r.objects.find(ks);
+    }
+
+
+    
+////////////////////////////////////////////////////////////////////////////////
+
+    DObject::Repo& DObject::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+    void DObject::init_meta()
+    {
+        auto w = writer<DObject>();
+        w.description("Spatial Object");
+        w.property("description", &DObject::description).setter(&DObject::set_description);
+        w.property("uid", &DObject::uid).setter(&DObject::set_uid);
+        w.property("notes", &DObject::notes).setter(&DObject::set_notes);
+        w.property("title", &DObject::title).setter(&DObject::set_title);
+        w.property("id", &DObject::get_id);
+        w.property("revision", &DObject::get_revision);
+    }
+
+    DObject::DObject(Project& prj) : m_project(prj), m_id(prj.insert(this))
+    {
+    }
+    
+    DObject::DObject(CopyAPI& api, const DObject& cp) : 
+        m_project(api.project), 
+        m_id(api.project.insert(this))
+    {
+        m_attributes    = cp.m_attributes;
+        m_values        = cp.m_values;
+        m_parent        = cp.m_parent;
+        m_children      = cp.m_children;
+        m_title         = cp.m_title;
+        m_notes         = cp.m_notes;
+        
+        api.mapper.data[cp.id()] = id();
+    }
+    
+    DObject::~DObject()
+    {
+        m_children.clear();
+        m_parent    = {};
+    }
+
+    const Any&        DObject::attribute(const std::string& k) const
+    {
+        const Any&  a1  = attribute(LOCAL, k);
+        if(a1.valid())
+            return a1;
+        const Any&  a2  = attribute(DEFAULT, k);
+        if(a2.valid())
+            return a2;
+        return m_project.attribute(k);
+    }
+
+    const Any&        DObject::attribute(default_k, const std::string& k) const
+    {
+        static const Any    s_empty;
+
+        const DObjectMeta& dinfo = metaInfo();
+        auto itr = dinfo.m_attributes.find(k);
+        if(itr == dinfo.m_attributes.end())
+            return s_empty;
+            
+        if(auto p = std::get_if<Any>(&itr->second))
+            return *p;
+        if(auto p = std::get_if<DObjectMeta::function_attribute_t>(&itr->second)){
+            static thread_local Any a   = (*p)(this);
+            return a;
+        }
+        
+        return s_empty; 
+    }
+
+    const Any&        DObject::attribute(global_k, const std::string& k) const
+    {
+        return m_project.attribute(k);
+    }
+
+    const Any&        DObject::attribute(local_k, const std::string& k) const
+    {
+        static const Any    s_empty;
+        auto i = m_attributes.find(k);
+        if(i == m_attributes.end())
+            return s_empty;
+        return i->second;
+    }
+    
+    void                    DObject::attribute_erase(const std::string& k)
+    {
+        m_attributes.erase(k);
+        bump();
+    }
+    
+    string_set_t            DObject::attribute_keys() const
+    {
+        return m_attributes.key_set();
+    }
+    
+    void                    DObject::attribute(set_k, const std::string&k, const Any&v)
+    {
+        m_attributes[k] = v;
+        bump();
+    }
+    
+    void                    DObject::attribute(set_k, const std::string&k, Any&&v)
+    {
+        m_attributes[k] = std::move(v);
+        bump();
+    }
+    
+    void    DObject::bump()
+    {
+        ++m_revision.local;
+        ++m_revision.all;
+        
+        for(ID i = m_parent; i;){
+            DObject*p   = m_project.object(i);
+            if(!p)
+                break;
+            ++(p->m_revision.all);
+            i   = p->m_parent;
+        }
+        
+        m_project.bump();
+    }
+
+    DObject*    DObject::create(child_k, const DObjectMeta& sinfo)
+    {
+        DObject* obj = sinfo.create(m_project);
+        if(!obj)
+            return nullptr;
+        
+        obj->m_parent   = id();
+        m_children.push_back(obj->id());
+        bump();
+        return obj;
+    }
+
+    bool                DObject::is_attribute(const std::string& k) const
+    {
+        return is_attribute(LOCAL, k) || is_attribute(DEFAULT, k) || is_attribute(GLOBAL, k);
+    }
+
+    bool                DObject::is_attribute(default_k, const std::string&k) const
+    { 
+        return metaInfo().has_default_attribute(k);
+    }
+    
+    bool                DObject::is_attribute(local_k, const std::string&k) const
+    {
+        return m_attributes.contains(k);
+    }
+
+    bool                DObject::is_attribute(global_k, const std::string&k) const
+    {
+        return m_project.is_attribute(k);
+    }
+
+    const DObject*      DObject::parent(pointer_k) const
+    {
+        return m_project.object(m_parent);
+    }
+    
+    DObject*            DObject::parent(pointer_k)
+    {
+        return m_project.object(m_parent);
+    }
+
+    void     DObject::remap(const Remapper& theMap)
+    {
+        m_parent    = theMap(m_parent);
+        
+        for(ID& i : m_children){
+            i   = theMap(i);
+            DObject*    dob = m_project.object(i);
+            if(dob)
+                dob -> remap(theMap);
+        }
+    }
+
+    void    DObject::set_description(const std::string&v)
+    {
+        m_description   = v;
+        bump();
+    }
+    
+    void    DObject::set_notes(const std::string&v)
+    {
+        m_notes     = v;
+        bump();
+    }
+    
+    void    DObject::set_uid(const std::string&v)
+    {
+        if(m_uid != v){
+            if(!m_uid.empty())
+                m_project.uid_umap(v, id());
+            m_uid       = v;
+            if(!m_uid.empty())
+                m_project.uid_map(v, id());
+        }
+        bump();
+    }
+    
+    void    DObject::set_title(const std::string&v)
+    {
+        m_title     = v;
+        bump();
+    }
+
+    const Any& DObject::value(size_t i) const
+    {
+        static const Any s_empty;
+        if(i>=m_values.size())
+            return s_empty;
+        return m_values[i];
+    }
+    
+    void    DObject::value(push_k, Any&&v)
+    {
+        m_values.push_back(std::move(v));
+        bump();
+    }
+    
+    void    DObject::value(push_k, const Any&v)
+    {
+        m_values.push_back(v);
+        bump();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    
+    ID Remapper::operator()(ID i) const
+    {
+        auto j = data.find(i.id);
+        if(j != data.end())
+            return { j->second };
+        return i;
+    }
+}
+
+YQ_OBJECT_IMPLEMENT(yq::sdl::DObject)
