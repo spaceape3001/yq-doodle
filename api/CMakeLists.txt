@@ -6,6 +6,7 @@
 
 set(YQ_DOODLE_API_DIR ${CMAKE_CURRENT_LIST_DIR})
 
+add_subdirectory(b3)
 add_subdirectory(doodle)
 
 if(Build_Qt6)
