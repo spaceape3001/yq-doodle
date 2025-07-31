@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <b3/Frame.hpp>
+
+namespace yq::b3 {
+    class TileGroup : public Frame {
+        YQ_OBJECT_DECLARE(TileGroup, Frame)
+    public:
+        TileGroup(const Param &);
+        virtual ~TileGroup();
+    };
+}

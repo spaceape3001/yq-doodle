@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Terrain.hpp"
+#include <b3/ObjMetaWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::b3::Terrain)
+
+namespace yq::b3 {
+    Terrain::Terrain(const Param& p) : Frame(p)
+    {
+    }
+    
+    Terrain::~Terrain()
+    {
+    }
+}

@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Style.hpp"
+#include <b3/ObjMetaWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::b3::Style)
+
+namespace yq::b3 {
+    Style::Style(const Param&p) : Obj(p)
+    {
+    }
+    
+    Style::~Style()
+    {
+    }
+}

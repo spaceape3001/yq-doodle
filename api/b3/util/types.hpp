@@ -8,6 +8,7 @@
 
 #include <b3/typedef.hpp>
 #include <yq/color/RGBA.hpp>
+#include <yq/container/Vector.hpp>
 #include <yq/coord/Coord1.hpp>
 #include <yq/coord/Coord2.hpp>
 #include <yq/coord/Coord3.hpp>
@@ -28,15 +29,19 @@ namespace yq::b3 {
 
     struct Color {
         std::string def;
+        
+        auto operator<=>(const Color&) const = default;
     };
 
     struct Brush {
         Color       color;
         Color       bgcolor;
+        
+        bool operator==(const Brush&) const = default;
     };
 
     struct CoordN {
-        std::vector<int>  indices;
+        Vector<int>  indices;
         
         operator Coord1I() const;
         operator Coord2I() const;
@@ -47,7 +52,7 @@ namespace yq::b3 {
     };
 
     struct CountN {
-        std::vector<int> axes;
+        Vector<int> axes;
         
         operator Size1I() const;
         operator Size2I() const;
@@ -58,16 +63,20 @@ namespace yq::b3 {
     struct Font {
         std::string family;
         double      size    = 0.;
+        
+        bool operator==(const Font&) const = default;
     };
 
     struct Pen {
         Color       color;
         double      width   = 0.;
         PenStyle    style   = PenStyle::Solid;
+        
+        bool operator==(const Pen&) const = default;
     };
 
     struct PointN {
-        std::vector<double> axes;
+        Vector<double> axes;
         
         operator Vector1D() const;
         operator Vector2D() const;
@@ -76,7 +85,7 @@ namespace yq::b3 {
     };
     
     struct SizeN {
-        std::vector<double> axes;
+        Vector<double> axes;
         
         operator Size1D() const;
         operator Size2D() const;
@@ -85,7 +94,7 @@ namespace yq::b3 {
     };
     
     struct VectorN {
-        std::vector<double> axes;
+        Vector<double> axes;
         
         operator Vector1D() const;
         operator Vector2D() const;

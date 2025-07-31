@@ -7,16 +7,32 @@
 project(yq_b3)
 
 add_library(${PROJECT_NAME} SHARED
-    args.cpp
-    context.cpp
-    obj.cpp
-    types.cpp
-    parse.cpp
+    #style.cpp
+    
+    Context.cpp
+    Doc.cpp
+    Frame.cpp
+    Obj.cpp
+    Parser.cpp
+    
+    annotate/Style.cpp
+    
+    spatial/Lineal.cpp
+    spatial/Point.cpp
+    
+    terrain/Terrain.cpp
+    terrain/TileGroup.cpp
+    
+    util/ArgList.cpp
+    util/ArgMap.cpp
+    util/parse.cpp
+    util/types.cpp
 )
 
 target_link_libraries( ${PROJECT_NAME} 
     PUBLIC 
-        yq_color 
+        yq_core 
+        yq_math 
 )
 
 target_include_directories(${PROJECT_NAME}

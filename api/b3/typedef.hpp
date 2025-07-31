@@ -7,6 +7,14 @@
 #pragma once
 
 #include <yq/container/forward.hpp>
+#include <yq/text/IgCase.hpp>
+#include <yq/typedef/vector2.hpp>
+#include <yq/typedef/vector3.hpp>
+
+namespace yq {
+    template <typename> struct AxCorners2;
+    template <typename> struct AxCorners3;
+}
 
 namespace yq::b3 {
     enum class PenStyle {
@@ -18,7 +26,6 @@ namespace yq::b3 {
 
     using IntegerSet    = Set<int>;
 
-    struct Context;
     struct Color;
 
     struct CoordN;
@@ -29,4 +36,26 @@ namespace yq::b3 {
     struct PointN;
     struct SizeN;
     struct VectorN;
+    
+    class Style;
+    
+    struct Doc;
+    struct Frame;
+    struct Obj;
+    struct Point;
+    struct Terrain;
+    
+    using ObjMap    = Map<std::string,Obj*,IgCase>;
+    using ObjMMap   = MultiMap<std::string,Obj*,IgCase>;
+    using DoubleMap = Map<std::string,double,IgCase>;
+    using StyleMap  = Map<std::string,Style*,IgCase>;
+    
+    class Context;
+    extern thread_local Context*    g_context;
+    
+    using AxCorners23D          = AxCorners2<Vector3D>;
+    using AxCorners33D          = AxCorners3<Vector3D>;
 }
+
+#define YQ_B3_INTERNAL_CMD_NAME2(a)    reg_##a
+#define YQ_B3_INTERNAL_CMD_NAME(a)    YQ_B3_INTERNAL_CMD_NAME2(a)
