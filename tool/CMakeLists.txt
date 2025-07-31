@@ -4,10 +4,6 @@
 ##
 ################################################################################
 
-if(Build_Qt6)
-    # temporarily disabled
-    #add_subdirectory(doodlerQt)
-endif()
-if(Build_Vulkan)
-    add_subdirectory(doodler)
-endif()
+include(b3.cmake)
+
+

@@ -6,10 +6,13 @@
 
 #include "Doc.hpp"
 #include "Frame.hxx"
+
+#include <b3/logging.hpp>
 #include <b3/ObjMetaWriter.hpp>
 #include <b3/spatial/Point.hpp>
 #include <b3/terrain/Terrain.hpp>
 
+#include <yq/file/FileUtils.hpp>
 #include <yq/shape/AxBox2.hxx>
 #include <yq/vector/Vector3.hxx>
 
@@ -88,7 +91,7 @@ namespace yq::b3 {
     ////////////////////////////////////////////////////////////////////////////
 
 
-    Doc::Doc(const Param& p) : Frame(p)
+    Doc::Doc(const Param& p) : Frame(p), m_args(p.args)
     {
         m_doc = this;
     }
@@ -126,6 +129,21 @@ namespace yq::b3 {
     {
         return any_terrain(this);
     }
+
+    std::filesystem::path   Doc::output_reextension(all_k, std::string_view sfx) const
+    {
+        return remap_extension(m_file, ALL, sfx);
+    }
     
+    std::filesystem::path   Doc::output_reextension(last_k, std::string_view  sfx) const
+    {
+        return remap_extension(m_file, LAST, sfx);
+    }
+    
+    bool    Doc::parse_file(const std::filesystem::path& file)
+    {
+        b3Error << "Parsing is not yet implemented";
+        return false;
+    }
 }
 

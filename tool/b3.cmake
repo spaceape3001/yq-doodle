@@ -7,7 +7,10 @@
 #   3X is meant to be a fast command line processor for graphics processing
 #   (STL generation, SVG generation, etc)  Might split into separate executables
 
-add_executable(3x main.cpp)
-
-target_link_libraries(3x PRIVATE yq_doodle)
-
+add_executable(b3 b3.cpp)
+target_link_libraries(b3 
+    PUBLIC 
+        yq_b3
+        yq_file
+        yq_process
+)

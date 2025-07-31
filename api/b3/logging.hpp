@@ -8,8 +8,6 @@
 
 #include <yq/core/Logging.hpp>
 #include <yq/core/LogFilter.hpp>
-#include <yq/text/format.hpp>
-#include <yq/trait/is_pointer.hpp>
 
 #define b3Alert                    yAlert("b3")
 #define b3Critical                 yCritical("b3")
