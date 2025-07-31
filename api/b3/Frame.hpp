@@ -64,7 +64,7 @@ namespace yq::b3 {
         const Obj*              find(std::string_view) const;
         Obj*                    find(std::string_view) override;
 
-        virtual void            frame_popped(){}    // used for end-of-frame considerations.....
+        virtual void            end_frame() {}    // used for end-of-frame considerations.....
 
         Point*                  point(const std::string&);
         const Point*            point(const std::string&) const;

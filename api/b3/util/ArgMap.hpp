@@ -26,9 +26,11 @@ namespace yq::b3 {
 
         std::string_view        operator[](const std::string&) const;
         std::string_view        attr(const std::string&) const;
-        
+
+        bool            empty() const { return attrs.empty(); }
         void            erase(const std::string&);
         bool            has(const std::string&) const;
+        size_t          size() const { return attrs.size(); }
 
         unit::Degree    angle(const std::string&, unit::Degree def={0.}) const;
         bool            boolean(const std::string&, bool def=false) const;

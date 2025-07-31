@@ -21,6 +21,10 @@ namespace yq::b3 {
         
         std::string_view        operator[](size_t) const;
         std::string_view        value(size_t) const;
+        
+        bool            empty() const { return values.empty(); }
+        size_t          size() const { return values.size(); }
+        ArgList         subarg(size_t pos, size_t n=SIZE_MAX) const;
 
         unit::Degree    angle(size_t, unit::Degree def={0.}) const;
         bool            boolean(size_t, bool def=false) const;

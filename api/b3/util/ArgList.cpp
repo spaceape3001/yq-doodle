@@ -12,6 +12,21 @@ namespace yq::b3 {
     {
         return value(i);
     }
+
+    ArgList         ArgList::subarg(size_t pos, size_t n) const
+    {
+        if(pos >= values.size())
+            return {};
+        if(n > values.size())
+            n   = values.size();
+        size_t  m   = std::min(values.size(), pos+n);
+        
+        auto    b   = values.begin() + pos;
+        auto    e   = values.begin() + m;
+        std::vector<std::string>    res(b,e);
+        
+        return ArgList{.values=std::move(res)};
+    }
     
     std::string_view        ArgList::value(size_t i) const
     {

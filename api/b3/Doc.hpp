@@ -65,7 +65,7 @@ namespace yq::b3 {
         AxBox2D                             m_edges = NAN;
         AxBox2D                             m_bounds = NAN;
         std::filesystem::path               m_file;
-        std::set<std::filesystem::path>     m_files;
+        Set<std::filesystem::path>          m_files;
         
         static bool any_terrain(const Obj*);
     };

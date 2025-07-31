@@ -6,6 +6,7 @@
 
 #include "Doc.hpp"
 #include "Frame.hxx"
+#include "Parser.hpp"
 
 #include <b3/logging.hpp>
 #include <b3/ObjMetaWriter.hpp>
@@ -142,8 +143,14 @@ namespace yq::b3 {
     
     bool    Doc::parse_file(const std::filesystem::path& file)
     {
-        b3Error << "Parsing is not yet implemented";
-        return false;
+        Parser  parse(this);
+        bool    f   = parse.read_file(file, false);
+        if(f){
+            m_file      = file;
+            m_files     = std::move(parse.m_included);
+            calc_points();
+        }
+        return f;
     }
 }
 
