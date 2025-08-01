@@ -92,7 +92,7 @@ namespace yq::b3 {
     ////////////////////////////////////////////////////////////////////////////
 
 
-    Doc::Doc(const Param& p) : Frame(p), m_args(p.args)
+    Doc::Doc(const Param& p) : Frame(p)
     {
         m_doc = this;
     }

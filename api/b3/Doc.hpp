@@ -15,13 +15,13 @@
 #endif
 
 namespace yq::b3 {
+    class Point;
+    
     class Doc : public Frame, public Context {
         YQ_OBJECT_DECLARE(Doc, Frame)
     public:
         Doc(const Param&);
         virtual ~Doc();
-        
-        const ArgList&  args() const { return m_args; }
         
         virtual void    calc_points() override;
         
@@ -59,7 +59,8 @@ namespace yq::b3 {
         
         static Repo& repo();
     
-        ArgList                             m_args;
+        friend class Point;
+    
         Vector<Object*>                     m_objects;
         Vector<Point*>                      m_points;
         AxBox2D                             m_edges = NAN;

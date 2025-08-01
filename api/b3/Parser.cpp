@@ -9,6 +9,7 @@
 #include <b3/logging.hpp>
 #include <b3/Doc.hpp>
 #include <b3/Frame.hpp>
+#include <b3/spatial/PointType.hpp>
 #include <b3/util/parse.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Set.hpp>
@@ -136,6 +137,22 @@ namespace yq::b3 {
         FNProc                  proc  = nullptr;
         std::source_location    sl;
     };
+    
+    struct Parser::Points {
+        Map<Frame*,PointType>   ptype;
+        
+        Points(){}
+            
+        PointType           curType(Frame* f) const
+        {
+            PointType   pt = PointType::Unknown;
+            do {
+                pt  = ptype.get(f, PointType::Unknown);
+                f = f->frame();
+            } while(f && (pt == PointType::Unknown));
+            return (pt == PointType::Unknown) ? PointType::D3 : pt;
+        }
+    };
 
 
     struct Parser::Repo {
@@ -169,6 +186,10 @@ namespace yq::b3 {
     ///////////////////////////////////////
 
     Parser::Parser(Doc* _doc) : m_doc(_doc)
+    {
+    }
+
+    Parser::~Parser()
     {
     }
     
@@ -256,6 +277,13 @@ namespace yq::b3 {
         } else {
             b3Error << "Error: " << msg;
         }
+    }
+
+    Parser::Points&         Parser::points()
+    {
+        if(!m_points)
+            m_points    = std::make_unique<Points>();
+        return *m_points;
     }
 
     bool            Parser::read_file(const std::filesystem::path& cand, bool fSkipIfAlreadyDone)
@@ -389,6 +417,13 @@ namespace yq::b3 {
             return false;
         }
         return success;
+    }
+
+    void       Parser::set_frame_point_type(Frame*f, PointType pt)
+    {
+        if(f){
+            points().ptype[f]   = pt;
+        }
     }
 
     Parser::File*           Parser::top() 

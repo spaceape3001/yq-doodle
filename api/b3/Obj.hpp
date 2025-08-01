@@ -51,8 +51,8 @@ namespace yq::b3 {
         struct Param {
             ArgList         args;               //!< positional arguments to the command
             ArgMap          attrs;              //!< named arguments to the command
+            Frame*          frame   = nullptr;  //!< containing frame (root will be null)
             std::string     name;               //!< object name
-            Frame*          parent  = nullptr;  //!< containing frame (root will be null)
         };
     
         Obj(const Param&);
@@ -66,11 +66,15 @@ namespace yq::b3 {
         std::string_view    attr(const std::string&, std::string_view def={}) const;
         void                attr(const std::string&, set_k, std::string_view def={});
         const ArgMap&       attrs() const { return m_attrs; }
+        
+        const ArgList&      args() const { return m_args; }
 
 
         virtual void        calc_points(){}
         void                collect_args(DoubleMap&, std::span<const std::string>) const;
 
+        Doc*                doc() { return m_doc; }
+        const Doc*          doc() const { return m_doc; }
         Doc*                document() { return m_doc; }
         const Doc*          document() const { return m_doc; }
         virtual Obj*        find(std::string_view);
@@ -102,6 +106,7 @@ namespace yq::b3 {
         friend class Doc;
         friend class Frame;
 
+        ArgList             m_args;
         ArgMap              m_attrs;
         Doc*                m_doc       = nullptr;
         Flags<F>            m_flags;

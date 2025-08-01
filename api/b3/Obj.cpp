@@ -29,8 +29,9 @@ namespace yq::b3 {
     {
     }
 
-    Obj::Obj(const Param& p) : m_frame(p.parent), m_name(p.name)
+    Obj::Obj(const Param& p) : m_frame(p.frame), m_name(p.name)
     {
+        m_args  = p.args;
         if(p.attrs.boolean("$ter"))
             m_flags |= F::Terrain;
         if(p.attrs.boolean("$hide"))

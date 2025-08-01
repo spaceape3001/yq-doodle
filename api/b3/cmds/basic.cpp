@@ -153,6 +153,24 @@ YQ_B3_COMMAND("set?", ifNone, 0, cmdSetIfNotPresent);
 
 ////////////////////////////////////////////////////////////////////////////////
 
+static bool cmdUnit(Parser& p, const ArgList& pArgs, const ArgMap&)
+{
+    if(pArgs.size() < 2){
+        p.gripe("Needs two arguments unit <symbol> <value>");
+        return false;
+    }
+    double  v   = pArgs.real(1., NAN);
+    if(is_nan(v))
+        return false;
+    
+    p.doc()->unit(pArgs.values[0], v);
+    return true;
+}
+
+YQ_B3_COMMAND("unit", ifNone, 0, cmdUnit);
+
+////////////////////////////////////////////////////////////////////////////////
+
 
 static bool cmdVar(Parser& p, const ArgList&pArgs, const ArgMap&)
 {

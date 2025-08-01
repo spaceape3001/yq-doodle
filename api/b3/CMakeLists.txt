@@ -17,11 +17,17 @@ add_library(${PROJECT_NAME} SHARED
     
     cmds/basic.cpp
     cmds/frame.cpp
+    cmds/point.cpp
+    cmds/style.cpp
     
     annotate/Style.cpp
     
+    spatial/Areal.cpp
     spatial/Linear.cpp
     spatial/Point.cpp
+    spatial/PointLine.cpp
+    spatial/PointType.cpp
+    spatial/Vertical.cpp
     
     terrain/Terrain.cpp
     terrain/TileGroup.cpp

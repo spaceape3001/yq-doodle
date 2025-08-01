@@ -6,10 +6,12 @@
 
 #pragma once
 
+#include <b3/typedef.hpp>
+#include <b3/spatial/PointType.hpp>
+
 #include <yq/container/Stack.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/typedef/string_sets.hpp>
-#include <b3/typedef.hpp>
 #include <filesystem>
 #include <memory>
 //#include <source_location>
@@ -45,7 +47,7 @@ namespace yq::b3 {
         const Doc*      operator->() const { return m_doc; }
         
         Parser(Doc* _doc);
-        
+        ~Parser();
         
         Doc*            doc() { return m_doc; }
         const Doc*      doc() const { return m_doc; }
@@ -75,7 +77,7 @@ namespace yq::b3 {
 
         Obj*            last() { return m_last; }
 
-        Points&         point_repo();
+        Points&         points();
 
         bool            read_file(const std::filesystem::path&, bool fSkipIfAlreadyDone);
 
@@ -94,6 +96,8 @@ namespace yq::b3 {
         
     //    static Instruction      s_kITable[];
     
+        void            set_frame_point_type(Frame*, PointType);
+    
     
     private:
         struct Repo;
@@ -108,7 +112,7 @@ namespace yq::b3 {
         Stack<Frame*>               m_frames;
         Set<std::filesystem::path>  m_included;
         Obj*                        m_last      = nullptr;
-        Points*                     m_points    = nullptr;    
+        std::unique_ptr<Points>     m_points;    
     };
 }
 

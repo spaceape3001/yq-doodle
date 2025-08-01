@@ -19,20 +19,21 @@ namespace yq::b3 {
         YQ_OBJECT_DECLARE(Linear, Frame)
     public:
     
-    #if 0
         Linear(const Param&);
         ~Linear();
         
         virtual void calc_points() override;
-    #endif
+
+        virtual Vector3D        to_frame(const Vector3D&) const override;
+        virtual Vector3D        to_parent(const Vector3D&) const override;
     
     protected:
-        Vector3D        m_focus = NAN;
+        Vector3D        m_focus     = NAN;
         
     private:
         Tensor33D       m_matrix    = NAN;
         Tensor33D       m_inverse   = NAN;
         Vector3D        m_shift     = NAN;
-        Point*          m_orign     = nullptr;
+        Point*          m_origin    = nullptr;
     };
 }

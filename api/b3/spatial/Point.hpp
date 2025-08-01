@@ -7,18 +7,11 @@
 #pragma once
 
 #include <b3/Obj.hpp>
+#include <b3/spatial/PointType.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 
 namespace yq::b3 {
-    enum class PointType {
-        Unknown,
-        D1,
-        D2,
-        D3,
-        AGL,
-        MSL
-    };
     
     class Parser;
     class PointLine;
@@ -31,7 +24,7 @@ namespace yq::b3 {
         Point(const Vector3D&, const Param&);
         
         virtual ~Point();
-        void calcPoints();
+        void calc_points() override;
         
         const Vector3D&     define() const { return m_define; }
         const Vector3D&     global() const { return m_global; }
@@ -42,12 +35,18 @@ namespace yq::b3 {
         double              y() const { return m_global.y; }
         double              z() const { return m_global.z; }
         
+        PointType           type() const { return m_type; }
+        
     private:
         PointType           m_type;
         Vector3D            m_define = {};
         Vector3D            m_global = {};
         Vector<PointLine*>  m_attached;
+        
+        bool    _use();
+        bool    _map();
+        bool    _list();
     };
 
-    bool    addBoxPoints(Parser&, const Obj::Param&);
+    bool    add_box_points(Parser&, Frame* parent, const ArgList& pArgs, const ArgMap&, const std::string& id ={});
 }
