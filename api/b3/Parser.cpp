@@ -9,6 +9,7 @@
 #include <b3/logging.hpp>
 #include <b3/Doc.hpp>
 #include <b3/Frame.hpp>
+#include <b3/util/parse.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/text/chars.hpp>
@@ -128,10 +129,12 @@ namespace yq::b3 {
     };
     
     struct Parser::Instruction {
-        std::string     ins;
-        uint64_t        flags = 0;
-        size_t          args  = 0;   //!< minimum  number of arguments (unless ifArgExact is set)
-        FNProc          proc  = nullptr;
+        std::string             ins;
+        std::string             desc;
+        uint64_t                flags = 0;
+        size_t                  args  = 0;   //!< minimum  number of arguments (unless ifArgExact is set)
+        FNProc                  proc  = nullptr;
+        std::source_location    sl;
     };
 
 
@@ -182,6 +185,11 @@ namespace yq::b3 {
         return std::string(m_last->attr(v, def));
     }
 
+    bool    Parser::eval_bool(std::string_view x, bool def) const
+    {
+        auto y  = eval_value(std::string(x));
+        return parse::boolean(y, def);
+    }
 
     bool    Parser::execute(const ArgList&pArgs, const ArgMap&nArgs)
     {

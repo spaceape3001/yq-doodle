@@ -12,6 +12,7 @@
 #include <b3/typedef.hpp>
 #include <filesystem>
 #include <memory>
+//#include <source_location>
 
 namespace yq::b3 {
     #ifdef IF
@@ -40,7 +41,6 @@ namespace yq::b3 {
         static const StringSet& command_list();
         static int              add_instruction(const std::string&, uint64_t flags, size_t args, FNProc);
 
-
         Doc*            operator->() { return m_doc; }
         const Doc*      operator->() const { return m_doc; }
         
@@ -53,6 +53,8 @@ namespace yq::b3 {
         //void            gripe(const std::string& message);
 
         std::string     eval_value(const std::string&, const std::string& def={}) const;
+        
+        bool            eval_bool(std::string_view, bool def=false) const;
         
         bool            execute(const ArgList&, const ArgMap&);
 

@@ -15,9 +15,12 @@ add_library(${PROJECT_NAME} SHARED
     Obj.cpp
     Parser.cpp
     
+    cmds/basic.cpp
+    cmds/frame.cpp
+    
     annotate/Style.cpp
     
-    spatial/Lineal.cpp
+    spatial/Linear.cpp
     spatial/Point.cpp
     
     terrain/Terrain.cpp

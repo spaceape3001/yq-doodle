@@ -143,8 +143,10 @@ namespace yq::b3 {
     
     bool    Doc::parse_file(const std::filesystem::path& file)
     {
-        Parser  parse(this);
-        bool    f   = parse.read_file(file, false);
+        Parser          parse(this);
+        g_context       = this;
+        bool    f       = parse.read_file(file, false);
+        g_context       = nullptr;
         if(f){
             m_file      = file;
             m_files     = std::move(parse.m_included);

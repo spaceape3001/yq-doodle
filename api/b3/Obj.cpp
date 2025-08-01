@@ -72,6 +72,11 @@ namespace yq::b3 {
         return def;
     }
 
+    void        Obj::attr(const std::string&k, set_k, std::string_view v)
+    {
+        m_attrs[k] = std::string(v);
+    }
+
     void        Obj::collect_args(DoubleMap& vars, std::span<const std::string> args) const
     {
         if(m_frame)
@@ -111,6 +116,16 @@ namespace yq::b3 {
             //  TODO
             
         return {};
+    }
+
+    bool            Obj::has_local_attribute(const std::string& k) const
+    {
+        return m_attrs.attrs.has(k);
+    }
+
+    void            Obj::hide()
+    {
+        m_flags |= F::Hide;
     }
 
     bool            Obj::is_terrain() const

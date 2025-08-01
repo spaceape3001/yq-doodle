@@ -64,7 +64,9 @@ namespace yq::b3 {
         const O*            ancestor_as() const;
 
         std::string_view    attr(const std::string&, std::string_view def={}) const;
+        void                attr(const std::string&, set_k, std::string_view def={});
         const ArgMap&       attrs() const { return m_attrs; }
+
 
         virtual void        calc_points(){}
         void                collect_args(DoubleMap&, std::span<const std::string>) const;
@@ -77,6 +79,8 @@ namespace yq::b3 {
         Frame*              frame() { return m_frame; }
         const Frame*        frame() const { return m_frame; }
         std::string         full_name() const;
+        bool                has_local_attribute(const std::string&) const;
+        void                hide();
         bool                is_terrain() const;
         bool                is_hidden() const;
         std::string_view    name() const { return m_name; }

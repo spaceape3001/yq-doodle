@@ -15,10 +15,16 @@
 #endif
 
 namespace yq::b3 {
-    class Lineal : public Frame {
-        YQ_OBJECT_DECLARE(Lineal, Frame)
+    class Linear : public Frame {
+        YQ_OBJECT_DECLARE(Linear, Frame)
     public:
     
+    #if 0
+        Linear(const Param&);
+        ~Linear();
+        
+        virtual void calc_points() override;
+    #endif
     
     protected:
         Vector3D        m_focus = NAN;

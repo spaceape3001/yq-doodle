@@ -54,7 +54,7 @@ std::pair<ArgMap, ArgList>    parse_cmdline(int argc, char* argv[])
     ArgList     args;
 
     int n;
-    for(int n=3; n<argc; ++n){
+    for(n=3; n<argc; ++n){
         std::string arg(argv[n]);
         if(arg == "--")
             break;
@@ -75,7 +75,7 @@ std::pair<ArgMap, ArgList>    parse_cmdline(int argc, char* argv[])
             attrs.attrs[k]  = std::string(bits[1]);
         }
     }
-    for(++n;n<argc;++n)
+    while(++n < argc)
         args.values << std::string(argv[n]);
     
     return {attrs, args};
