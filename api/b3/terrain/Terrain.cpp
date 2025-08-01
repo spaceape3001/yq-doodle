@@ -135,7 +135,7 @@ namespace yq::b3 {
         } else if(cc.hi == cc.lo)
             ++cc.hi;
         
-        m_counts    = { { cc.lo, rr.lo }, { cc.hi, rr.hi }};
+        m_counts    = { { cc.lo, rr.lo }, { cc.hi - 1, rr.hi - 1}};
         m_center    = attrs().coord2("center");
         
         
@@ -157,11 +157,45 @@ namespace yq::b3 {
             m_bounds |= t->bounds();
     }
 
-    Terrain::CalcResult  Terrain::calc(const Vector2D&, uint8_t lod) const
+    Terrain::CalcResult  Terrain::calc(const Vector2D& pos, uint8_t lod) const
     {
         CalcResult  ret;
         
-        return {};
+        Vector2D    tcr  = pos.ediv(m_tileSize);
+        Vector2I    tci  = iround(tcr);
+        Vector2I    tidx = tci.emin(m_counts.lo).emax(m_counts.hi);
+        tcr             += (tci - tidx).cast<double>();  // now in fractions of a tile
+        
+        const TerTile*  tt  = tile(tidx.x, tidx.y);
+        if(!tt)
+            return ret;
+    
+        auto [tp, n]    = tt->page(SIMILAR, lod);
+        if(!tp)
+            return ret;
+        lod     = n;
+        ret.page        = tp;
+    
+        double      sz  = (double)(1<<lod);
+        int         mx  = 1 << lod;
+        
+        auto apply = [&](double c, unsigned&i, float& f){
+            if(c < 0.){
+                i       = 0;
+                f       = (float)(c * sz);
+            } else if(c > 1.){
+                i       = (unsigned) mx;
+                f       = (float)((c-1.) * sz);
+            } else {
+                i       = (unsigned) (c*sz);
+                f       = (float)(sz*c - (double) i);
+            }
+        };
+
+        apply(tcr.x, ret.idx.i, ret.frac.i);
+        apply(tcr.y, ret.idx.j, ret.frac.j);
+
+        return ret;
     }
 
     std::filesystem::path   Terrain::calc_filename(const Coord2I& c, uint8_t lod) const
@@ -200,10 +234,42 @@ namespace yq::b3 {
         return frame() -> child_as<TileGroup>(k);
     }
 
+    double                  Terrain::hydro(const Vector2D&v) const
+    {
+        auto cc = calc(v);
+        if(!cc.page)
+            return NAN;
+        if(!cc.page->has_hydro())
+            return NAN;
+        return cc.page->hydro().linear(cc.idx, cc.frac);
+    }
 
     bool                    Terrain::hydro(has_k) const
     {
         return m_flags(F::Hydro);
+    }
+    
+    bool                    Terrain::is_water(const Vector2D&v) const
+    {
+        double  h   = hydro(v);
+        double  l   = litho(v);
+        if(is_nan(h)){
+            return false;
+        } else if(is_nan(l)){
+            return true;
+        } else {
+            return h > l;
+        }
+    }
+
+    double                  Terrain::litho(const Vector2D&v) const
+    {
+        auto cc = calc(v);
+        if(!cc.page)
+            return NAN;
+        if(!cc.page->has_litho())
+            return NAN;
+        return cc.page->litho().linear(cc.idx, cc.frac);
     }
     
     bool                    Terrain::litho(has_k) const

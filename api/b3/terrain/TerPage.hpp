@@ -64,6 +64,9 @@ namespace yq::b3 {
         //! Hydrosphere accessor
         const auto&                     hydro() const { return m_hydro; }
 
+        bool                            has_hydro() const { return m_flags(F::Hydro); }
+        bool                            has_litho() const { return m_flags(F::Litho); }
+
         //! Lithosphere accessor
         auto&                           litho() { return m_litho; }
         

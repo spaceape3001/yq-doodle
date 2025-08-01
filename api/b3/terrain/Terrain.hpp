@@ -25,8 +25,8 @@ namespace yq::b3 {
     public:
         struct CalcResult {
             const TerPage*      page    = nullptr;
-            Coord2I             idx     = {};
-            Vector2D            frac    = {};
+            Coord2U             idx     = {};
+            Coord2F             frac    = {};
         };
 
         Terrain(const std::filesystem::path&, const Param&);
@@ -48,7 +48,10 @@ namespace yq::b3 {
             Hydro
         };
 
+        //! Litho MSL at location (will return NAN if non-existent)
         double                  litho(const Vector2D&) const;
+
+        //! Litho MSL at location (will return NAN if non-existent)
         double                  hydro(const Vector2D&) const;
 
         bool                    hydro(has_k) const;
@@ -58,6 +61,8 @@ namespace yq::b3 {
         double                  east() const { return m_bounds.hi.x; }
         double                  south() const { return m_bounds.lo.y; }
         double                  north() const { return m_bounds.hi.y; }
+
+        //! TRUE if there's water here.... (on the surface)
         bool                    is_water(const Vector2D&) const;
 
         virtual void            frame_pop() override;

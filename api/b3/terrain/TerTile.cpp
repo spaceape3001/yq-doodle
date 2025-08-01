@@ -145,6 +145,23 @@ namespace yq::b3 {
         return true;
     }
 
+    std::pair<const TerPage*, uint8_t>  TerTile::page(similar_k, uint8_t lod) const
+    {
+        auto tp = m_pages.get(lod);
+        if(tp)
+            return { tp, lod };
+        
+        auto i  = m_pages.upper_bound(lod);
+        if(i != m_pages.end())
+            return { i->second, i->first };
+        
+        auto j = m_pages.lower_bound(lod);
+        if(j != m_pages.end())
+            return { j->second, j->first };
+
+        return {nullptr, 0};
+    }
+
     void         TerTile::set_water_level(double v)
     {
         m_flags |= F::Hydro;

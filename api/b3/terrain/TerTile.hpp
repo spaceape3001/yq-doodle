@@ -48,11 +48,13 @@ namespace yq::b3 {
         //! Load a particular LOD
         bool                page(load_k, uint8_t);
         
+        bool                page(save_k, uint8_t);
+        
+        
         //! Set the current LOD
         bool                page(set_k, uint8_t);
         
-        bool                page(save_k, uint8_t);
-        
+        std::pair<const TerPage*, uint8_t>  page(similar_k, uint8_t) const;
         bool                valid() const;
         
         

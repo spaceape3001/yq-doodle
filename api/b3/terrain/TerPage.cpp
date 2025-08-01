@@ -68,7 +68,6 @@ namespace yq::b3 {
             m_flags.set(F::Litho, alloc.litho == Tristate::YES);
             
         m_count = 1 + (1<<m_lod);
-        size_t  req = (size_t) m_count * (size_t) m_count;
         
         bool    f   = true;
         if(m_flags(F::Litho))
