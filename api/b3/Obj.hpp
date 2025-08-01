@@ -101,6 +101,8 @@ namespace yq::b3 {
 
         std::string_view    type_name() const;
 
+        void                merge(const ArgMap&, bool overwrite=true);
+
 
     private:
         friend class Doc;

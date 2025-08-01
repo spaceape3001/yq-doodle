@@ -64,7 +64,7 @@ namespace yq::b3 {
         const Obj*              find(std::string_view) const;
         Obj*                    find(std::string_view) override;
 
-        virtual void            end_frame() {}    // used for end-of-frame considerations.....
+        virtual void            frame_pop() {}    // used for end-of-frame considerations.....
 
         Point*                  point(const std::string&);
         const Point*            point(const std::string&) const;
@@ -103,6 +103,7 @@ namespace yq::b3 {
 
     private:
         friend class Obj;
+        friend class Terrain;
         
         Vector<Obj*>    m_children;
         Terrain*        m_terrain   = nullptr;

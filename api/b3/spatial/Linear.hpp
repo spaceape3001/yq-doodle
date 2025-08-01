@@ -27,6 +27,13 @@ namespace yq::b3 {
         virtual Vector3D        to_frame(const Vector3D&) const override;
         virtual Vector3D        to_parent(const Vector3D&) const override;
     
+        void    set_focus(const Vector3D&);
+        
+        const Vector3D& focus() const { return m_focus; }
+        const Tensor33D& matrix() const { return m_matrix; }
+        const Tensor33D& inverse() const { return m_inverse; }
+        const Vector3D& shift() const { return m_shift; }
+    
     protected:
         Vector3D        m_focus     = NAN;
         

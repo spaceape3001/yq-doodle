@@ -13,6 +13,7 @@
 #include <yq/units.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Set.hpp>
+#include <yq/math/Range.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_maps.hpp>
@@ -43,6 +44,7 @@ namespace yq::b3 {
         Font            font(const std::string&) const;
         int             integer(const std::string&, int def=0) const;
         IntegerSet      integer_set(const std::string&) const;
+        RangeI          irange(const std::string&, const RangeI& def={}) const;
         double          length(const std::string&, double def=0.) const;
         Pen             pen(const std::string&) const;
         PointN          point(const std::string&) const;

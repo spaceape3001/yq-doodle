@@ -11,6 +11,8 @@
 
 #include <yq/units.hpp>
 #include <yq/container/Set.hpp>
+#include <yq/math/Range.hpp>
+#include <yq/typedef/range.hpp>
 #include <yq/typedef/string_sets.hpp>
 
 namespace yq::b3 {
@@ -37,6 +39,7 @@ namespace yq::b3 {
         Font            font(size_t) const;
         int             integer(size_t, int def=0) const;
         IntegerSet      integer_set(size_t) const;
+        RangeI          irange(size_t, const RangeI& def={}) const;
         double          length(size_t, double def=0.) const;
         Pen             pen(size_t) const;
         PointN          point(size_t) const;

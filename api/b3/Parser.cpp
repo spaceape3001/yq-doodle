@@ -258,7 +258,7 @@ namespace yq::b3 {
     void            Parser::frame_pop()
     {
         if(!m_frames.empty())
-            m_frames.pop() -> end_frame();
+            m_frames.pop() -> frame_pop();
     }
 
     void            Parser::frame_push(Frame*f)

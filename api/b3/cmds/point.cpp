@@ -330,10 +330,10 @@ namespace yq::b3 {
         Point*      pse = nullptr;
         Point*      psw = nullptr;
         
-        pnw = new Point(box.lh().z(z), { .frame=parent, .name=id+"nw" });
-        pne = new Point(box.hh().z(z), { .frame=parent, .name=id+"ne" });
-        pse = new Point(box.hl().z(z), { .frame=parent, .name=id+"se" });
-        psw = new Point(box.ll().z(z), { .frame=parent, .name=id+"sw" });
+        pnw = new Point(box.lh().z(z), { .frame=parent, .name=id+"@nw" });
+        pne = new Point(box.hh().z(z), { .frame=parent, .name=id+"@ne" });
+        pse = new Point(box.hl().z(z), { .frame=parent, .name=id+"@se" });
+        psw = new Point(box.ll().z(z), { .frame=parent, .name=id+"@sw" });
         
         if(ap){
             ap->point(ADD, pnw);

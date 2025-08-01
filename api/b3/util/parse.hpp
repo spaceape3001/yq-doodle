@@ -13,6 +13,7 @@
 #include <yq/container/Map.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/container/Vector.hpp>
+#include <yq/math/Range.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/typedef/coord2.hpp>
 #include <yq/typedef/coord3.hpp>
@@ -43,6 +44,9 @@ namespace yq::b3::parse {
     Font                    font(std::string_view);
     int                     integer(std::string_view, int def=0);
     IntegerSet              integer_set(std::string_view);
+    
+    //! Searches for ".." (if not present, it'll attempt a simple integer parse, returning identical values)
+    RangeI                  irange(std::string_view, const RangeI& def={});
     double                  length(std::string_view, double def=0.);
     Pen                     pen(std::string_view);
     PointN                  point(std::string_view);

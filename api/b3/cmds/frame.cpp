@@ -45,4 +45,12 @@ YQ_B3_COMMAND("}", ifNone, 0, cmdStopFrame);
 
 ////////////////////////////////////////////////////////////////////////////////
 
+static bool cmdNewFrame(Parser& p, const ArgList&pArgs, const ArgMap& nArgs)
+{
+    p << new Linear({.args=pArgs, .attrs=nArgs, .frame=p.frame()});
+    return true;
+}
+YQ_B3_COMMAND("frame", ifNone, 0, cmdNewFrame);
+
+
 ////////////////////////////////////////////////////////////////////////////////

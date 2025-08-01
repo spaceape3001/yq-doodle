@@ -130,6 +130,11 @@ namespace yq::b3 {
         return parse::point3(value(i));
     }
     
+    RangeI          ArgList::irange(size_t i, const RangeI& def) const
+    {
+        return parse::irange(value(i),def);
+    }
+
     double          ArgList::real(size_t i, double def) const
     {
         std::string_view    s = value(i);

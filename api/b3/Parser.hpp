@@ -97,6 +97,8 @@ namespace yq::b3 {
     //    static Instruction      s_kITable[];
     
         void            set_frame_point_type(Frame*, PointType);
+        
+        const std::filesystem::path&    cache() const { return m_cache; }
     
     
     private:
@@ -113,6 +115,7 @@ namespace yq::b3 {
         Set<std::filesystem::path>  m_included;
         Obj*                        m_last      = nullptr;
         std::unique_ptr<Points>     m_points;    
+        std::filesystem::path       m_cache;
     };
 }
 

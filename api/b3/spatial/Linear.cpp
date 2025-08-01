@@ -58,7 +58,7 @@ namespace yq::b3 {
         Tensor33D   R(HPR, hdg, pit, rll);
         
         m_matrix    = xyz * R * uvw;
-        m_inverse   = inverse(m_matrix);
+        m_inverse   = ::yq::inverse(m_matrix);
         
         m_shift = ZERO;
         if(!is_nan(m_focus)) 
@@ -78,5 +78,9 @@ namespace yq::b3 {
         return m_matrix * v + m_shift;
     }
     
+    void    Linear::set_focus(const Vector3D&v)
+    {
+        m_focus = v;
+    }
  }
 

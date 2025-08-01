@@ -120,6 +120,11 @@ namespace yq::b3 {
     {
         return parse::integer_set(attr(k));
     }
+
+    RangeI          ArgMap::irange(const std::string& k, const RangeI& def) const
+    {
+        return parse::irange(attr(k));
+    }
     
     double          ArgMap::length(const std::string&k, double def) const
     {

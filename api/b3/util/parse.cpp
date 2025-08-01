@@ -7,6 +7,7 @@
 #include "parse.hpp"
 
 #include <b3/Context.hpp>
+#include <yq/math/Range.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/match.hpp>
 #include <yq/text/parse.hpp>
@@ -104,6 +105,19 @@ namespace yq::b3::parse {
         });
         return ret;
     }
+    
+    RangeI          irange(std::string_view v, const RangeI& def)
+    {
+        auto n  = v.find("..");
+        if(n != std::string_view::npos){
+            auto    a   = v.substr(0,n);
+            auto    b   = v.substr(n+2);
+            return { integer(a, def.lo), integer(b, def.hi) };
+        } else {
+            return { integer(v, def.lo), integer(v, def.hi) };
+        }
+    }
+    
 
     double          length(std::string_view v, double def)
     {

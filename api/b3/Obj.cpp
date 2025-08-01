@@ -56,8 +56,7 @@ namespace yq::b3 {
         }
     
         // explicit merge (in case there's a style)
-        for(auto& itr : p.attrs.attrs)
-            m_attrs.attrs[itr.first]    = itr.second;
+        merge(p.attrs, true);
     }
     
     Obj::~Obj()
@@ -137,6 +136,11 @@ namespace yq::b3 {
     bool            Obj::is_hidden() const
     {
         return m_flags(F::Hide);
+    }
+
+    void         Obj::merge(const ArgMap&atts, bool overwrite)
+    {
+        m_attrs.attrs.merge_map(atts.attrs, overwrite);
     }
 
     AxCorners23D Obj::to_global(const AxBox2D&v) const

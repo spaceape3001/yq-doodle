@@ -16,9 +16,11 @@ add_library(${PROJECT_NAME} SHARED
     Parser.cpp
     
     cmds/basic.cpp
+    cmds/building.cpp
     cmds/frame.cpp
     cmds/point.cpp
     cmds/style.cpp
+    cmds/terrain.cpp
     
     annotate/Style.cpp
     
@@ -29,7 +31,10 @@ add_library(${PROJECT_NAME} SHARED
     spatial/PointType.cpp
     spatial/Vertical.cpp
     
+    terrain/StdTerrain.cpp
+    terrain/TerPage.cpp
     terrain/Terrain.cpp
+    terrain/TerTile.cpp
     terrain/TileGroup.cpp
     
     util/ArgList.cpp
