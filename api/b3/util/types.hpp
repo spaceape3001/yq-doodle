@@ -7,6 +7,7 @@
 #pragma once
 
 #include <b3/typedef.hpp>
+#include <yq/units.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/container/Vector.hpp>
 #include <yq/coord/Coord1.hpp>
@@ -19,11 +20,16 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/shape/Size3.hpp>
 #include <yq/shape/Size4.hpp>
+#include <yq/tensor/Tensor23.hpp>
 #include <yq/vector/Vector1.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
 #include <vector>
+
+#ifdef NAN
+    #undef NAN
+#endif
 
 namespace yq::b3 {
 
@@ -35,7 +41,6 @@ namespace yq::b3 {
 
     struct Brush {
         Color       color;
-        Color       bgcolor;
         
         bool operator==(const Brush&) const = default;
     };
@@ -91,6 +96,15 @@ namespace yq::b3 {
         operator Size2D() const;
         operator Size3D() const;
         operator Size4D() const;
+    };
+    
+    struct Transform {
+        Tensor23D       matrix      = NAN;
+        Vector2D        origin      = NAN;
+        unit::Degree    rotate      = NAN;
+        Vector2D        scale       = NAN;
+        Vector2D        skew        = NAN;
+        Vector2D        translate   = NAN;
     };
     
     struct VectorN {

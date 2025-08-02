@@ -12,6 +12,7 @@ add_library(${PROJECT_NAME} SHARED
     Context.cpp
     Doc.cpp
     Frame.cpp
+    MapPainter.cpp
     Obj.cpp
     Parser.cpp
     
@@ -23,6 +24,12 @@ add_library(${PROJECT_NAME} SHARED
     cmds/terrain.cpp
     
     annotate/Style.cpp
+    
+    #format/SvgPainter.cpp
+    
+    handler/docmap.cpp
+    
+    paint/SvgGenerator.cpp
     
     spatial/Areal.cpp
     spatial/Linear.cpp
@@ -47,7 +54,10 @@ target_link_libraries( ${PROJECT_NAME}
     PUBLIC 
         yq_core 
         yq_file
-        yq_math 
+        yq_math
+        
+    PRIVATE
+        yq_xml 
 )
 
 target_include_directories(${PROJECT_NAME}
