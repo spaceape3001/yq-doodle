@@ -29,6 +29,24 @@ namespace yq::b3 {
     {
     }
 
+    ObjMeta::DelegateFN  ObjMeta::delegate(Meta::id_t id) const
+    {
+        auto k  = m_delegates.find(id);
+        if(k == m_delegates.end())
+            return nullptr;
+        return k->second;
+    }
+
+    ObjMeta::DelegateCFN  ObjMeta::cDelegate(Meta::id_t id) const
+    {
+        auto k  = m_cDelegates.find(id);
+        if(k == m_cDelegates.end())
+            return nullptr;
+        return k->second;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Obj::Obj(const Param& p) : m_frame(p.frame), m_name(p.name)
     {
         m_args  = p.args;
@@ -89,6 +107,30 @@ namespace yq::b3 {
                 vars[k] = *x;
             }
         }
+    }
+
+    bool        Obj::delegate(Meta::id_t i, void* arg)
+    {
+        for(const ObjMeta* objm = &metaInfo(); objm; objm = dynamic_cast<const ObjMeta*>(objm -> base())){
+            auto fn     = objm->delegate(i);
+            if(fn)
+                return fn(arg, this);
+
+            auto cfn    = objm->cDelegate(i);
+            if(cfn)
+                return cfn(arg, this);
+        }
+        return false;
+    }
+
+    bool        Obj::delegate(Meta::id_t i, void* arg) const
+    {
+        for(const ObjMeta* objm = &metaInfo(); objm; objm = dynamic_cast<const ObjMeta*>(objm -> base())){
+            auto cfn    = objm->cDelegate(i);
+            if(cfn)
+                return cfn(arg, this);
+        }
+        return false;
     }
 
     Obj*        Obj::find(std::string_view path)

@@ -26,9 +26,15 @@ namespace yq::b3 {
         template <typename> class Writer;
         ObjMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
     
-    private:
-        typedef bool    (*MakerFN)(void*, Obj*);
-        std::map<Meta::id_t,MakerFN>      m_makers;
+    private:    
+        friend class Obj;
+        typedef bool    (*DelegateFN)(void*, Obj*);
+        typedef bool    (*DelegateCFN)(void*, const Obj*);
+        std::map<Meta::id_t,DelegateFN>      m_delegates;
+        std::map<Meta::id_t,DelegateCFN>     m_cDelegates;
+    
+        DelegateFN      delegate(Meta::id_t) const;
+        DelegateCFN     cDelegate(Meta::id_t) const;
     
     };
 
@@ -103,7 +109,12 @@ namespace yq::b3 {
 
         void                merge(const ArgMap&, bool overwrite=true);
 
+        template <typename A>
+        bool                delegate(A&);
 
+        template <typename A>
+        bool                delegate(A&) const;
+        
     private:
         friend class Doc;
         friend class Frame;
@@ -115,6 +126,20 @@ namespace yq::b3 {
         Frame*              m_frame     = nullptr;
         std::string         m_full;
         std::string         m_name;
+
+        bool    delegate(Meta::id_t, void*);
+        bool    delegate(Meta::id_t, void*) const;
     };
 
+    template <typename A>
+    bool    Obj::delegate(A& a)
+    {
+        return delegate(meta<A>().id(), &a);
+    }
+
+    template <typename A>
+    bool    Obj::delegate(A& a) const
+    {
+        return delegate(meta<A>().id(), &a);
+    }
 }

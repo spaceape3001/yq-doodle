@@ -22,15 +22,25 @@ namespace yq::b3 {
         }
         
         template <typename T>
-        Writer&     maker(void(*fn)(T&, C&))
+        Writer&     delegate(void(*fn)(T&, C&))
         {
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_makers[meta<T>().id()] = [fn](void* arg, Obj* obj) {
+                m_meta -> m_delegates[meta<T>().id()] = [fn](void* arg, Obj* obj) {
                     fn(*(T*)arg, *static_cast<C*>(obj));
                 };
             }
         }
     
+        template <typename T>
+        Writer&     delegate(void(*fn)(T&, const C&))
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_cDelegates[meta<T>().id()] = [fn](void* arg, const Obj* obj) {
+                    fn(*(T*)arg, *static_cast<const C*>(obj));
+                };
+            }
+        }
+
     private:
         ObjMeta*    m_meta;
     };
