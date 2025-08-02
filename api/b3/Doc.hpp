@@ -30,6 +30,9 @@ namespace yq::b3 {
         double      south_bound() const { return m_bounds.lo.y; }
         double      north_bound() const { return m_bounds.hi.y; }
         
+        const AxBox2D&  bounds() const { return m_bounds; }
+        const AxBox2D&  edges() const { return m_edges; }
+        
         bool    has_terrain() const;
         
         const std::filesystem::path&    file() const { return m_file; }
@@ -48,6 +51,9 @@ namespace yq::b3 {
 
         std::filesystem::path   output_reextension(all_k, std::string_view sfx) const;
         std::filesystem::path   output_reextension(last_k, std::string_view  sfx) const;
+        
+        const Vector<Point*>&   points() const { return m_points; }
+        size_t                  points(count_k) const { return m_points.size(); }
 
         // TBD (as to what's needed....)
         //std::filesystem::path   output_append(all_k, const QString& bit) const;
@@ -61,7 +67,7 @@ namespace yq::b3 {
     
         friend class Point;
     
-        Vector<Object*>                     m_objects;
+        Vector<Obj*>                        m_objects;
         Vector<Point*>                      m_points;
         AxBox2D                             m_edges = NAN;
         AxBox2D                             m_bounds = NAN;

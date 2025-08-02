@@ -30,6 +30,8 @@ namespace yq::b3 {
         void                group(pop_k) override;
         void                line(const Segment2D&, const Data&) override;
         
+        virtual bool        pixelated() const override { return false; }
+        
     private:
         AxBox2D             m_bounds    = NAN;
         XmlDocument         m_xml;

@@ -23,6 +23,11 @@ namespace yq::b3 {
     class Terrain : public Frame {
         YQ_OBJECT_DECLARE(Terrain, Frame)
     public:
+    
+        /*
+            Starting with an uplift, however, I see this terrain being reworked.
+        */
+    
         struct CalcResult {
             const TerPage*      page    = nullptr;
             Coord2U             idx     = {};

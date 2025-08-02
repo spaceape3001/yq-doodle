@@ -12,7 +12,6 @@ add_library(${PROJECT_NAME} SHARED
     Context.cpp
     Doc.cpp
     Frame.cpp
-    MapPainter.cpp
     Obj.cpp
     Parser.cpp
 
@@ -35,7 +34,11 @@ add_library(${PROJECT_NAME} SHARED
     grid/grid.cpp
     
     handler/docmap.cpp
+    handler/docstat.cpp
     
+    paint/MapPainter.cpp
+    paint/Painter.cpp
+    paint/RasterGenerator.cpp
     paint/SvgGenerator.cpp
     
     spatial/spatial.cpp

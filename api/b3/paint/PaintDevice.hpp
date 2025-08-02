@@ -36,9 +36,12 @@ namespace yq::b3 {
         
         //  Starts a new transform
         virtual void    group(std::string_view, const Data& d){}
-        //  Ends a tranform
+        
+        //!  Ends a tranform
         virtual void    group(pop_k){}
         
+        virtual bool    pixelated() const = 0;
+
     protected:
         PaintDevice(){}
         ~PaintDevice(){}

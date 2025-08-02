@@ -147,12 +147,13 @@ namespace yq::b3 {
         g_context       = this;
         bool    f       = parse.read_file(file, false);
         g_context       = nullptr;
-        if(f){
+        if(f || attrs().boolean("ignore")){
             m_file      = file;
             m_files     = std::move(parse.m_included);
             calc_points();
+            return true;
         }
-        return f;
+        return false;
     }
 }
 

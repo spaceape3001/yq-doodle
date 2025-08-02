@@ -21,8 +21,8 @@
 YQ_UNTYPE_IMPLEMENT(yq::b3::MapPainter)
 
 namespace yq::b3 {
-    MapPainter::MapPainter(PaintDevice& paint, const Frame& frame) : 
-        m_doc(*frame.document()), m_frame(frame), m_paint(paint)
+    MapPainter::MapPainter(PaintDevice& paint, const Frame& frame) : Painter(paint),
+        m_doc(*frame.document()), m_frame(frame)
     {
     }
     
@@ -87,32 +87,6 @@ namespace yq::b3 {
         return NAN;
     }
 
-    void    MapPainter::pop()
-    {
-        if(!m_states.empty())
-            m_state = m_states.pop();
-    }
-
-    void    MapPainter::push()
-    {
-        m_states.push_back(m_state);
-    }
-
-    void    MapPainter::set_brush(const Brush&v)
-    {
-        m_state.brush   = v;
-    }
-    
-    void    MapPainter::set_font(const Font&v)
-    {
-        m_state.font    = v;
-    }
-    
-    void    MapPainter::set_pen(const Pen& v)
-    {
-        m_state.pen     = v;
-    }
-    
     
     //void    MapPainter::set_origin(const Vector3D&);
     //void    MapPainter::set_shift(const Vector3D&);

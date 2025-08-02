@@ -101,7 +101,8 @@ namespace yq::b3 {
     {
         assert(p.frame);
         
-        if((_use() || _map() || _list()) && doc())
+        _use() || _map() || _list();
+        if(doc())
             doc() -> m_points << this;
     }
     
