@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <b3/grid/Grid.hpp>
+
+namespace yq::b3 {
+    class HexGrid : public Grid {
+        YQ_OBJECT_DECLARE(HexGrid, Grid)
+    public:
+        HexGrid(const Param&);
+        ~HexGrid();
+    };
+}
+

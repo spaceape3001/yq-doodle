@@ -20,8 +20,7 @@ static bool     docMap(Doc&doc, PaintDevice& dev)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-
-static bool     docMapPng(Doc&)
+static bool     docMapPng(Doc& doc)
 {
     std::filesystem::path   file    = doc.output_reextension(LAST, "png");
 

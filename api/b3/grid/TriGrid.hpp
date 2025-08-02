@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <b3/grid/Grid.hpp>
+
+namespace yq::b3 {
+    class TriGrid : public Grid {
+        YQ_OBJECT_DECLARE(TriGrid, Grid)
+    public:
+        TriGrid(const Param&);
+        ~TriGrid();
+    };
+}
+

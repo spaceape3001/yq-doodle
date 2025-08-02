@@ -51,7 +51,7 @@ namespace yq::b3 {
         struct Param {
             ArgList         args;               //!< positional arguments to the command
             ArgMap          attrs;              //!< named arguments to the command
-            Frame*          frame   = nullptr;  //!< containing frame (root will be null)
+            Frame*          frame    = nullptr; //!< containing frame (root will be null)
             std::string     name;               //!< object name
         };
     

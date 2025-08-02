@@ -15,28 +15,30 @@ add_library(${PROJECT_NAME} SHARED
     MapPainter.cpp
     Obj.cpp
     Parser.cpp
-    
-    cmds/basic.cpp
-    cmds/building.cpp
-    cmds/frame.cpp
-    cmds/point.cpp
-    cmds/style.cpp
-    cmds/terrain.cpp
-    
+
+    annotate/Circle.cpp
+    annotate/Label.cpp
+    annotate/Polyline.cpp
     annotate/Style.cpp
     
+    cmds/annotatecmds.cpp
+    cmds/basiccmds.cpp
+    cmds/buildingcmds.cpp
+    cmds/framecmds.cpp
+    cmds/gridcmds.cpp
+    cmds/pointcmds.cpp
+    cmds/stylecmds.cpp
+    cmds/terraincmds.cpp
+    
     #format/SvgPainter.cpp
+    
+    grid/grid.cpp
     
     handler/docmap.cpp
     
     paint/SvgGenerator.cpp
     
-    spatial/Areal.cpp
-    spatial/Linear.cpp
-    spatial/Point.cpp
-    spatial/PointLine.cpp
-    spatial/PointType.cpp
-    spatial/Vertical.cpp
+    spatial/spatial.cpp
     
     terrain/StdTerrain.cpp
     terrain/TerPage.cpp
@@ -44,10 +46,7 @@ add_library(${PROJECT_NAME} SHARED
     terrain/TerTile.cpp
     terrain/TileGroup.cpp
     
-    util/ArgList.cpp
-    util/ArgMap.cpp
-    util/parse.cpp
-    util/types.cpp
+    util/util.cpp
 )
 
 target_link_libraries( ${PROJECT_NAME} 

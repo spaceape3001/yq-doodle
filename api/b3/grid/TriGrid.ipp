@@ -4,16 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include "TriGrid.hpp"
+#include <b3/ObjMetaWriter.hpp>
 
-#include <b3/grid/Grid.hpp>
+YQ_OBJECT_IMPLEMENT(yq::b3::TriGrid)
 
 namespace yq::b3 {
-    class PieGrid : public Grid {
-        YQ_OBJECT_DECLARE(PieGrid, Grid)
-    public:
-        PieGrid(const Param&);
-        ~PieGrid();
-    };
+    TriGrid::TriGrid(const Param& p) : Grid(p)
+    {
+    }
+    
+    TriGrid::~TriGrid()
+    {
+    }
 }
-

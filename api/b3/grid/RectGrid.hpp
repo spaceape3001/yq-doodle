@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <b3/grid/Grid.hpp>
+
+namespace yq::b3 {
+    class RectGrid : public Grid {
+        YQ_OBJECT_DECLARE(RectGrid, Grid)
+    public:
+        RectGrid(const Param&);
+        ~RectGrid();
+    };
+}
+
