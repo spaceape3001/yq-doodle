@@ -74,7 +74,6 @@ namespace yq::b3 {
         if(m_name.empty())
             m_name  = p.attrs.string("id");
         if(m_frame){
-        b3Info << "Obj has frame";
             m_doc   = m_frame -> document();
             if(!m_name.empty())
                 m_frame -> m_byName[m_name]   = this;

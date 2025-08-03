@@ -12,6 +12,8 @@
 #include <b3/terrain/TerPage.hpp>
 #include <b3/terrain/TerTile.hpp>
 #include <b3/util/parse.hpp>
+#include <yq/text/join.hpp>
+
 #include <yq/shape/AxBox2.hxx>
 #include <cstdio>
 
@@ -49,7 +51,7 @@ namespace yq::b3 {
         //  Tile size
         auto ts = attrs().attr("tile");
         if(!ts.empty()){
-            if(ts.find_first_of(',')){
+            if(ts.find_first_of(',') != std::string_view::npos) {
                 m_tileSize  = parse::vector2(ts);
             } else {
                 m_tileSize.x    = m_tileSize.y  = parse::length(ts, 1024.);
@@ -95,33 +97,34 @@ namespace yq::b3 {
         if(m_lods.empty())
             m_lods << kMinLOD;
             
+        auto ctr    = attrs().coord2("center");
+
         uint8_t     lod0    = m_lods.first();
         
         RangeI          rr{}, cc{};
         auto cnts   = attrs().attr("tiles");
         if(cnts.empty()){
-            m_counts    = AxBox2I( {0,0}, {1,1});
+            m_coords    = AxBox2I( {0,0}, {1,1});
         } else if(auto n = cnts.find(','); n != std::string_view::npos){
-            
             std::string_view    c   = cnts.substr(0,n);
             if(c.find("..") != std::string_view::npos){
                 cc  = parse::irange(c, {0,1});
             } else {
-                cc  = { 0, std::min(1,parse::integer(c, 1)) };
+                cc  = { 0, std::max(1,parse::integer(c, 1)) };
             }
 
             std::string_view    r   = cnts.substr(n+1);
             if(r.find("..") != std::string_view::npos){
                 rr  = parse::irange(r, {0,1});
             } else {
-                rr  = { 0, std::min(1,parse::integer(r, 1))};
+                rr  = { 0, std::max(1,parse::integer(r, 1))};
             }
             
         } else {
             if(cnts.find("..") != std::string_view::npos){
                 rr = cc = parse::irange(cnts, {0,1});
             } else {
-                rr = cc = { 0, std::min(1,parse::integer(cnts, 1))};
+                rr = cc = { 0, std::max(1,parse::integer(cnts, 1))};
             }
         }
         
@@ -135,19 +138,20 @@ namespace yq::b3 {
         } else if(cc.hi == cc.lo)
             ++cc.hi;
         
-        m_counts    = { { cc.lo, rr.lo }, { cc.hi - 1, rr.hi - 1}};
-        m_center    = attrs().coord2("center");
+        m_coords    = { { cc.lo - ctr.i, rr.lo - ctr.j }, { cc.hi - 1 - ctr.i, rr.hi - 1 - ctr.j }};
         
         
-        Coord2I     lo{ cc.lo, rr.lo };
-        Coord2I     hi{ cc.hi, rr.hi };
-
-        m_trow      = rr.hi;
+        Coord2I     lo{ m_coords.lo.x, m_coords.lo.y };
+        Coord2I     hi{ m_coords.hi.x+1, m_coords.hi.y+1 };
+        m_trow      = m_coords.hi.y+1;
 
         m_tiles.resize(lo, hi);
-        for(int i=cc.lo;i<cc.hi;++i)
-            for(int j=rr.lo;j<rr.hi;++j) {
-            TerTile*    tt  = new TerTile(this, {i,j});
+        
+        for(int i=lo.i;i<hi.i;++i)
+            for(int j=lo.j;j<hi.j;++j) {
+            
+            std::string     tname    = std::format("tile@{},{}", i, j);
+            TerTile*    tt  = new TerTile(this, {i,j}, { .name=tname });
             m_tiles(i,j)  = tt;
             tt -> page(CREATE, lod0);
         }
@@ -163,7 +167,7 @@ namespace yq::b3 {
         
         Vector2D    tcr  = pos.ediv(m_tileSize);
         Vector2I    tci  = iround(tcr);
-        Vector2I    tidx = tci.emin(m_counts.lo).emax(m_counts.hi);
+        Vector2I    tidx = tci.emin(m_coords.lo).emax(m_coords.hi);
         tcr             += (tci - tidx).cast<double>();  // now in fractions of a tile
         
         const TerTile*  tt  = tile(tidx.x, tidx.y);
@@ -289,14 +293,14 @@ namespace yq::b3 {
 
     TerTile*                Terrain::tile(const Coord2I&c)
     {
-        if(!m_tiles.is_interior(c))
+        if(!m_coords.contains({c.i, c.j}))
             return nullptr;
         return m_tiles(c);
     }
     
     const TerTile*          Terrain::tile(const Coord2I&c) const
     {
-        if(!m_tiles.is_interior(c))
+        if(!m_coords.contains({c.i, c.j}))
             return nullptr;
         return m_tiles(c);
     }

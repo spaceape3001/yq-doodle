@@ -106,8 +106,7 @@ namespace yq::b3 {
         double                  m_waterLevel    = NAN;
         Flags<F,uint32_t>       m_flags;
         Set<uint8_t>            m_lods;
-        Coord2I                 m_center{};
-        AxBox2I                 m_counts{};
+        AxBox2I                 m_coords{};
         Vector<uint32_t>        m_seed;
         int                     m_trow = 0;
     };

@@ -26,6 +26,15 @@ YQ_B3_HANDLER("files", "List files used during parse", includedFiles)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+static bool     nullNothing(Doc&doc)
+{
+    return true;
+}
+
+YQ_B3_HANDLER("null", "Does nothing (used for parsing checks)", nullNothing)
+
+////////////////////////////////////////////////////////////////////////////////
+
 static bool    objCounter(Doc&)
 {
     std::cout << "Obj allocations is " << Obj::net_allocations();
