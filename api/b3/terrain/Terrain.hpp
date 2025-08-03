@@ -52,6 +52,9 @@ namespace yq::b3 {
             Litho,
             Hydro
         };
+        
+        //  These are the tile counts
+        const auto&             coords() const { return m_coords; }
 
         //! Litho MSL at location (will return NAN if non-existent)
         double                  litho(const Vector2D&) const;

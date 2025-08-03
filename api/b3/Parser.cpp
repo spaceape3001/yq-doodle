@@ -248,6 +248,14 @@ namespace yq::b3 {
         return f->file;
     }
 
+    unsigned        Parser::line() const
+    {
+        const File* f   = top();
+        if(!f)
+            return 0;
+        return f->line;
+    }
+
     Frame*          Parser::frame()
     {
         if(m_frames.empty())

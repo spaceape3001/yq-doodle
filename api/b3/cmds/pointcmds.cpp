@@ -50,7 +50,8 @@ static bool cmdPrintPoint(Parser& p, const ArgList&, const ArgMap&)
 {
     Point*  pt  = dynamic_cast<Point*>(p.last());
     if(pt){
-        std::cout << pt->define().x << ", " << pt->define().y << ", " << key_for(pt->type())
+        std::cout << "{Point Request: " << p.file() << "@" << p.line() << "}: " 
+            << pt->define().x << ", " << pt->define().y << ", " << key_for(pt->type())
             << " " << pt->define().z << "\n";
     }
     return true;

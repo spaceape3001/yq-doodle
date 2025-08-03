@@ -76,6 +76,8 @@ namespace yq::b3 {
         void            install(Obj* obj, const ArgMap&);
 
         Obj*            last() { return m_last; }
+        
+        unsigned        line() const;
 
         Points&         points();
 
