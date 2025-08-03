@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Linear.hpp"
+#include <b3/logging.hpp>
 #include <b3/Parser.hpp>
 #include <b3/ObjMetaWriter.hpp>
 #include <b3/spatial/Point.hpp>
@@ -65,6 +66,9 @@ namespace yq::b3 {
             m_shift     = m_focus;
         if(m_origin)
             m_shift     = frame()->to_local(m_origin->global());
+            
+b3Info << "Linear{" << name() << "} matrix is: " << m_matrix;            
+            
         Frame::calc_points();
     }
 

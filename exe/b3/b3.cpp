@@ -19,6 +19,7 @@
 using namespace yq;
 using namespace yq::b3;
 
+
 void    print_help(const char* arg0)
 {
     std::cerr   << "USAGE: " << arg0 << " [in-file] [command] arg=...\n";
@@ -29,7 +30,7 @@ void    print_help(const char* arg0)
     for(auto& k : handlers)
         n   = std::max(n, k.size());
     
-    for(auto& k : Doc::handlers()){
+    for(auto& k : handlers){
         std::cerr << "    ";
         std::cerr.width(n);
         std::cerr.setf(std::ios::left);
@@ -38,15 +39,6 @@ void    print_help(const char* arg0)
         std::cerr << " := " << Doc::description(k) << "\n";
     }
 }
-
-bool    list_files(Doc& doc)
-{
-    for(auto& fp : doc.files())
-        std::cout << fp.string() << "\n";
-    return true;
-}
-
-YQ_B3_HANDLER("files", "List files used during parse", list_files)
 
 std::pair<ArgMap, ArgList>    parse_cmdline(int argc, char* argv[])
 {
@@ -114,12 +106,19 @@ int main(int argc, char* argv[])
     attrs.attrs[cmd] = "true";
     attrs.attrs["__" + cmd + "__"] = "true";
     
-    Doc doc({.args=args, .attrs=attrs});
-    if(!doc.parse_file(file)){
-        b3Error << "Parsing failure";
-        return -1;
+    {
+        Doc doc({.args=args, .attrs=attrs});
+        if(!doc.parse_file(file)){
+            b3Error << "Parsing failure";
+            return -1;
+        }
+        
+        handler(doc);
     }
     
-    handler(doc);
+    #ifndef NDEBUG
+    b3Info << "Net allocations is " << Obj::net_allocations();
+    #endif
+    
     return 0;
 }

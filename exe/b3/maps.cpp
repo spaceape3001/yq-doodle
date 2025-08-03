@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/logging.hpp>
-#include <b3/Doc.hpp>
+#include "b3.hpp"
+
 #include <b3/paint/MapPainter.hpp>
 #include <b3/paint/SvgGenerator.hpp>
 #include <b3/paint/RasterGenerator.hpp>

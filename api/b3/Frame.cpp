@@ -24,19 +24,16 @@ namespace yq::b3 {
     
     Frame::~Frame()
     {
+        m_byName.clear();
+        for(Obj* obj : m_children)
+            delete obj;
+        m_children.clear();
     }
 
     void    Frame::calc_points()
     {
-        for(Obj*obj : m_children){
-            Point*  pt  = dynamic_cast<Point*>(obj);
-            if(pt)
-                pt->calc_points();
-        }
-        for(Obj* obj : m_children){
-            if(!dynamic_cast<Point*>(obj))
-                obj->calc_points();
-        }
+        for(Obj*obj : m_children)
+            obj->calc_points();
     }
 
     Obj*            Frame::child(std::string_view path)

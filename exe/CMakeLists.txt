@@ -4,6 +4,8 @@
 ##
 ################################################################################
 
+add_subdirectory(b3)
+
 if(Build_Qt6)
     # temporarily disabled
     #add_subdirectory(doodlerQt)

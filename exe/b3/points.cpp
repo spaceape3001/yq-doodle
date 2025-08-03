@@ -4,20 +4,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/logging.hpp>
-#include <b3/Doc.hpp>
+#include "b3.hpp"
+
 #include <b3/spatial/Point.hpp>
 #include <yq/container/Array.hpp>
 #include <yq/text/format.hpp>
 #include <array>
 #include <iostream>
 
+
 using namespace yq;
 using namespace yq::b3;
 
 
 
-static bool docPoints(Doc& doc)
+static bool docPointsTable(Doc& doc)
 {
     auto& pts    = doc.points();
     
@@ -134,4 +135,6 @@ static bool docPoints(Doc& doc)
 }
 
 
-YQ_B3_HANDLER("points", "Prints the points table", docPoints);
+YQ_B3_HANDLER("points", "Prints the points table", docPointsTable);
+
+

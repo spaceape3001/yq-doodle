@@ -12,6 +12,7 @@
 #include <b3/annotate/Style.hpp>
 
 #include <yq/container/Stack.hpp>
+#include <yq/macro/debugrel.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/AxCorners2.hpp>
@@ -21,9 +22,18 @@
 #include <yq/shape/AxBox2.hxx>
 #include <yq/shape/AxBox3.hxx>
 
+#include <atomic>
+
 YQ_OBJECT_IMPLEMENT(yq::b3::Obj)
 
 namespace yq::b3 {
+
+    static constexpr bool   kObjTrackNetAllocations = YQ_DBGREL(true,false);
+
+    std::atomic<int>     g_objAllocBalance{0};
+
+    ////////////////////////////////////////////////////////////////////////////
+
     ObjMeta::ObjMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
@@ -47,6 +57,13 @@ namespace yq::b3 {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    int Obj::net_allocations()
+    {
+        return g_objAllocBalance;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Obj::Obj(const Param& p) : m_frame(p.frame), m_name(p.name)
     {
         m_args  = p.args;
@@ -57,6 +74,7 @@ namespace yq::b3 {
         if(m_name.empty())
             m_name  = p.attrs.string("id");
         if(m_frame){
+        b3Info << "Obj has frame";
             m_doc   = m_frame -> document();
             if(!m_name.empty())
                 m_frame -> m_byName[m_name]   = this;
@@ -75,10 +93,17 @@ namespace yq::b3 {
     
         // explicit merge (in case there's a style)
         merge(p.attrs, true);
+
+        if constexpr (kObjTrackNetAllocations){
+            ++g_objAllocBalance;
+        }
     }
     
     Obj::~Obj()
     {
+        if constexpr (kObjTrackNetAllocations){
+            --g_objAllocBalance;
+        }
     }
 
     std::string_view    Obj::attr(const std::string&k, std::string_view def) const

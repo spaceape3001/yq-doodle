@@ -114,18 +114,21 @@ namespace yq::b3 {
 
         template <typename A>
         bool                delegate(A&) const;
-        
+
+        //  debug info
+        static int          net_allocations();
+
     private:
         friend class Doc;
         friend class Frame;
 
-        ArgList             m_args;
-        ArgMap              m_attrs;
-        Doc*                m_doc       = nullptr;
-        Flags<F>            m_flags;
-        Frame*              m_frame     = nullptr;
-        std::string         m_full;
-        std::string         m_name;
+        ArgList                     m_args;
+        ArgMap                      m_attrs;
+        Doc*                        m_doc       = nullptr;
+        Flags<F>                    m_flags;
+        Frame*                      m_frame     = nullptr;
+        std::string                 m_full;
+        std::string                 m_name;
 
         bool    delegate(Meta::id_t, void*);
         bool    delegate(Meta::id_t, void*) const;

@@ -33,9 +33,6 @@ add_library(${PROJECT_NAME} SHARED
     
     grid/grid.cpp
     
-    handler/docmap.cpp
-    handler/docstat.cpp
-    
     paint/MapPainter.cpp
     paint/Painter.cpp
     paint/RasterGenerator.cpp
@@ -57,8 +54,6 @@ target_link_libraries( ${PROJECT_NAME}
         yq_core 
         yq_file
         yq_math
-        
-    PRIVATE
         yq_xml 
 )
 

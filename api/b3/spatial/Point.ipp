@@ -124,7 +124,6 @@ namespace yq::b3 {
     
     void Point::calc_points() 
     {
-        Obj::calc_points();
         switch(m_type){
         case PointType::D2:
             m_global    = to_global_msl({ m_define.x, m_define.y }, 0. );
@@ -141,7 +140,7 @@ namespace yq::b3 {
         default:
             m_global    = ZERO;
         }
-        
+        Obj::calc_points();
     }
 }
 

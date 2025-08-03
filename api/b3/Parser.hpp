@@ -100,6 +100,7 @@ namespace yq::b3 {
         
         const std::filesystem::path&    cache() const { return m_cache; }
     
+        const auto& included() const { return m_included; }
     
     private:
         struct Repo;
