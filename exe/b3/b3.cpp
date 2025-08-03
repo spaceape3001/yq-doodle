@@ -115,10 +115,10 @@ int main(int argc, char* argv[])
         
         handler(doc);
     }
-    
-    #ifndef NDEBUG
-    b3Info << "Net allocations is " << Obj::net_allocations();
-    #endif
+
+    if(int cnt = Obj::net_allocations()){
+        b3Alert << "Net allocations is not zero, it's " << cnt;
+    }
     
     return 0;
 }

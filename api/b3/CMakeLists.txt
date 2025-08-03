@@ -13,6 +13,7 @@ add_library(${PROJECT_NAME} SHARED
     Doc.cpp
     Frame.cpp
     Obj.cpp
+    Painter.cpp
     Parser.cpp
 
     annotate/Circle.cpp
@@ -33,8 +34,9 @@ add_library(${PROJECT_NAME} SHARED
     
     grid/grid.cpp
     
-    paint/MapPainter.cpp
-    paint/Painter.cpp
+    map/map.cpp
+    map/MapPainter.cpp
+
     paint/RasterGenerator.cpp
     paint/SvgGenerator.cpp
     

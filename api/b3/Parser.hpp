@@ -120,6 +120,9 @@ namespace yq::b3 {
     };
 }
 
+//  NOTE: This doesn't follow the pattern of deferring to Delay Init.
+//  This is due to uplifting existing code that used this method.
+//  As it's pretty lightweight, not going to worry about it
 
 #define YQ_B3_COMMAND(name, flags, args, proc)    \
     static int  YQ_B3_INTERNAL_CMD_NAME(__LINE__)  = ::yq::b3::Parser::add_instruction(name, flags, args, proc);

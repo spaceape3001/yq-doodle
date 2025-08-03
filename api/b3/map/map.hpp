@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq::b3 {
+    class Doc;
+    class PaintDevice;
+    
+    struct MapParams {
+        //  these will be overrides...
+    };
+
+    bool    render_map(Doc&, PaintDevice&, const MapParams& mp={});
+}

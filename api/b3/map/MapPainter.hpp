@@ -7,7 +7,7 @@
 #pragma once
 
 #include <b3/keywords.hpp>
-#include <b3/paint/Painter.hpp>
+#include <b3/Painter.hpp>
 #include <b3/util/types.hpp>
 
 #include <yq/units.hpp>
