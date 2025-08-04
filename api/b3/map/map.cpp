@@ -8,9 +8,15 @@
 
 #include <b3/logging.hpp>
 #include <b3/Doc.hpp>
+#include <b3/ObjMetaWriter.hpp>
 #include <b3/map/MapPainter.hpp>
 #include <b3/util/parse.hpp>
 #include <b3/paint/PaintDevice.hpp>
+
+#include <b3/Frame.hxx>
+
+#include <yq/core/DelayInit.hpp>
+
 #include <yq/shape/AxBox2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/text/match.hpp>
@@ -68,19 +74,26 @@ namespace yq::b3 {
         if(is_similar(ap, "shrink"))
             resizing        = AspectRatioPolicy::Shrink;
     
-        
-    
-        b3Info  << "Bounds for the document are: " << doc.bounds();
-        b3Info  << "Edges for the document are: " << doc.edges();
-        b3Info  << "Point count for the document is: " << doc.points(COUNT);
-
-
 
         MapPainter  mapper(dev, doc, bb, { .heading=hdg, .resizing = resizing });
+        doc.delegate(mapper);
         
-        //  TODO... options for areas, details, etc.... (default to the image)....
-    
         return true;
     }
+
+
+    static void    map_frame(MapPainter& mp, Frame& f)
+    {
+        f.children([&](Obj& obj){
+            if(obj.is_hidden())
+                return;
+            obj.delegate(mp);
+        });
+    }
+    
+    YQ_INVOKE(
+        writer<Frame>().delegate(map_frame);
+    )
+
 }
 

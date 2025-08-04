@@ -6,6 +6,7 @@
 
 #include "Painter.hpp"
 
+#include <b3/logging.hpp>
 #include <b3/paint/PaintDevice.hpp>
 
 #include <yq/shape/AxBox2.hpp>
@@ -60,8 +61,8 @@ namespace yq::b3 {
     {
         Size2D      sz  = m_paint.size();
         
-        Tensor22D   T   = IDENTITY;
-        Vector2D    ctr = ZERO;
+        Tensor22D   T       = IDENTITY;
+        Vector2D    ctr     = ZERO;
         
         if(!is_nan(sz) && (any(sz) != 0.)){ // need size to do anything
             if(is_nan(bounds) || (any(bounds.size()) == 0.)){
@@ -96,18 +97,21 @@ namespace yq::b3 {
             T  = R * T; // might be wrong... TBD
         }
         
-        ctr             = T * ctr;
+        if(opts.vertflip){
+            T.yx    = -T.yx;
+            T.yy    = -T.yy;
+        }
+
+        ctr         = inverse(T) * ctr;
+
+        if(!is_nan(sz) && (any(sz) != 0.)){ // need size to do anything
+            ctr -= 0.5 * (Vector2D) sz;
+        }
             
         m_proj2     = {
             T.xx, T.xy, -ctr.x,
             T.yx, T.yy, -ctr.y
         };
-
-        if(opts.vertflip){
-            m_proj2.yx    = -m_proj2.yx;
-            m_proj2.yy    = -m_proj2.yy;
-            m_proj2.yz    = -m_proj2.yz;
-        }
         
         // For now until there's rotation, etc.... (likely in set 3D)
         m_proj3 = Tensor24D(

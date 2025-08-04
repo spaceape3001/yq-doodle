@@ -34,9 +34,13 @@ add_library(${PROJECT_NAME} SHARED
     
     grid/grid.cpp
     
+    map/annotate_map.cpp
     map/map.cpp
     map/MapPainter.cpp
+    map/point_map.cpp
+    map/terrain_map.cpp
 
+    paint/PaintDevice.cpp
     paint/RasterGenerator.cpp
     paint/SvgGenerator.cpp
     

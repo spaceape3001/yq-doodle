@@ -26,8 +26,13 @@ namespace yq::b3 {
             _write(x, *pd.font);
         if(pd.pen)
             _write(x, *pd.pen);
-        if(pd.brush && !cantFill)
-            _write(x, *pd.brush);
+        if(!cantFill){
+            if(pd.brush){
+                _write(x, *pd.brush);
+            } else {
+                write_attribute(x, "fill", "none"sv);
+            }
+        }
     }
     
 

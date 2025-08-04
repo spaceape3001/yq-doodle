@@ -8,8 +8,11 @@
 
 #include <b3/keywords.hpp>
 #include <yq/shape/Size2.hpp>
+#include <yq/typedef/axbox2.hpp>
 #include <yq/typedef/circle2.hpp>
 #include <yq/typedef/segment2.hpp>
+#include <yq/typedef/vector2.hpp>
+#include <span>
 #include <string_view>
 
 #ifdef NAN
@@ -37,8 +40,8 @@ namespace yq::b3 {
             const Transform*    transform   = nullptr;
         };
     
-        virtual void                circle(const Circle2D&, const Data& d) {}
-        virtual void                line(const Segment2D&, const Data& d) {}
+        virtual void                circle(const Circle2D&, const Data&) {}
+        virtual void                line(const Segment2D&, const Data&) {}
         
         //  Starts a new transform
         virtual void                group(std::string_view, const Data& d){}
@@ -47,15 +50,20 @@ namespace yq::b3 {
         virtual void                group(pop_k){}
         
         virtual bool                pixelated() const = 0;
+        
+        virtual void                polyline(const std::span<const Vector2D>, const Data&){}
+        virtual void                polygon(const std::span<const Vector2D>, const Data&){}
 
         virtual const Size2D&       size() const { return m_size; }
         
         //! Sets the size (note... negatives will be quashed, ie sign flipped)
         virtual void                set_size(const Size2D&){}
+        
+        AxBox2D                     bounds() const;
 
     protected:
-        PaintDevice(){}
-        ~PaintDevice(){}
+        PaintDevice();
+        ~PaintDevice();
         
         //! Bounds to the paint device...
         Size2D                      m_size = NAN;

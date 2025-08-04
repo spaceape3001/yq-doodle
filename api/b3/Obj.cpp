@@ -39,7 +39,7 @@ namespace yq::b3 {
     {
     }
 
-    ObjMeta::DelegateFN  ObjMeta::delegate(Meta::id_t id) const
+    ObjMeta::DelegateFN*  ObjMeta::delegate(Meta::id_t id) const
     {
         auto k  = m_delegates.find(id);
         if(k == m_delegates.end())
@@ -47,7 +47,7 @@ namespace yq::b3 {
         return k->second;
     }
 
-    ObjMeta::DelegateCFN  ObjMeta::cDelegate(Meta::id_t id) const
+    ObjMeta::DelegateCFN*  ObjMeta::cDelegate(Meta::id_t id) const
     {
         auto k  = m_cDelegates.find(id);
         if(k == m_cDelegates.end())
@@ -137,12 +137,16 @@ namespace yq::b3 {
     {
         for(const ObjMeta* objm = &metaInfo(); objm; objm = dynamic_cast<const ObjMeta*>(objm -> base())){
             auto fn     = objm->delegate(i);
-            if(fn)
-                return fn(arg, this);
+            if(fn){
+                fn->invoke(arg, this);
+                return true;
+            }
 
             auto cfn    = objm->cDelegate(i);
-            if(cfn)
-                return cfn(arg, this);
+            if(cfn){
+                cfn->invoke(arg, this);
+                return true;
+            }
         }
         return false;
     }
@@ -151,8 +155,10 @@ namespace yq::b3 {
     {
         for(const ObjMeta* objm = &metaInfo(); objm; objm = dynamic_cast<const ObjMeta*>(objm -> base())){
             auto cfn    = objm->cDelegate(i);
-            if(cfn)
-                return cfn(arg, this);
+            if(cfn){
+                cfn->invoke(arg, this);
+                return true;
+            }
         }
         return false;
     }

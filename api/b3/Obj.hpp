@@ -12,6 +12,7 @@
 
 #include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/meta/UntypeMeta.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/typedef/axbox3.hpp>
 #include <yq/typedef/vector2.hpp>
@@ -26,15 +27,17 @@ namespace yq::b3 {
         template <typename> class Writer;
         ObjMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
     
+        struct DelegateFN;
+        struct DelegateCFN;
+    
     private:    
         friend class Obj;
-        typedef bool    (*DelegateFN)(void*, Obj*);
-        typedef bool    (*DelegateCFN)(void*, const Obj*);
-        std::map<Meta::id_t,DelegateFN>      m_delegates;
-        std::map<Meta::id_t,DelegateCFN>     m_cDelegates;
+        
+        std::map<Meta::id_t,DelegateFN*>      m_delegates;
+        std::map<Meta::id_t,DelegateCFN*>     m_cDelegates;
     
-        DelegateFN      delegate(Meta::id_t) const;
-        DelegateCFN     cDelegate(Meta::id_t) const;
+        DelegateFN*     delegate(Meta::id_t) const;
+        DelegateCFN*    cDelegate(Meta::id_t) const;
     
     };
 
