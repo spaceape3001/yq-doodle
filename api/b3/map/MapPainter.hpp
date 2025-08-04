@@ -12,6 +12,7 @@
 
 #include <yq/units.hpp>
 #include <yq/meta/MetaBinder.hpp>
+#include <yq/shape/AxBox2.hpp>
 #include <yq/tensor/Tensor24.hpp>
 #include <yq/typedef/circle2.hpp>
 #include <yq/typedef/segment2.hpp>
@@ -24,11 +25,25 @@ namespace yq::b3 {
     class Frame;
     class Point;
     class PaintDevice;
+    
+    #ifdef NAN
+        #undef NAN
+    #endif
+    
+    struct MapPainterOptions {
+        //! Heading for the top edge
+        unit::Degree        heading         = NAN;
+
+        //! Resizing policy
+        AspectRatioPolicy   resizing        = AspectRatioPolicy::Ignore;
+    };
 
     class MapPainter : public Painter {
     public:
     
         using vertex_t  = std::variant<Vector2D, Vector3D, const Point*>;
+
+        const AxBox2D&      bounds() const { return m_bounds; }
 
         const Doc&          doc() const { return m_doc; }
         const Frame&        frame() const { return m_frame; }
@@ -57,18 +72,14 @@ namespace yq::b3 {
         //void                set_projection(const Tensor23&);
         
 
-        MapPainter(PaintDevice&, const Frame& frame);
+        MapPainter(PaintDevice&, const Frame& frame, const AxBox2D&, const MapPainterOptions& options={});
         ~MapPainter();
     
     protected:         
     
         const Doc&      m_doc;
         const Frame&    m_frame;
-
-    private:
-    
-        Tensor24D       m_transform = IDENTITY; // composition TBD
-    
+        AxBox2D         m_bounds;
     };
 }
 

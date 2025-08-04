@@ -13,6 +13,8 @@
 #include <yq/shape/Segment2.hpp>
 
 
+#include <yq/shape/AxBox2.hxx>
+#include <yq/shape/Size2.hxx>
 #include <yq/tensor/Tensor24.hxx>
 //#include <yq/vector/Spinor2.hxx>
 #include <yq/vector/Vector2.hxx>
@@ -21,9 +23,10 @@
 YQ_UNTYPE_IMPLEMENT(yq::b3::MapPainter)
 
 namespace yq::b3 {
-    MapPainter::MapPainter(PaintDevice& paint, const Frame& frame) : Painter(paint),
+    MapPainter::MapPainter(PaintDevice& paint, const Frame& frame, const AxBox2D& bounds, const MapPainterOptions& opts) : Painter(paint),
         m_doc(*frame.document()), m_frame(frame)
     {
+        set_proj2(bounds, { .heading=opts.heading, .resizing=opts.resizing });
     }
     
     MapPainter::~MapPainter()
@@ -72,8 +75,7 @@ namespace yq::b3 {
     
     Vector2D MapPainter::map(const Vector3D& v) const
     {
-        Vector3D    f   = m_frame.to_frame(v);
-        return m_transform * Vector4D(f.x,f.y,f.z,1.);
+        return project(m_frame.to_frame(v));
     }
     
     Vector2D MapPainter::map(const vertex_t&v) const

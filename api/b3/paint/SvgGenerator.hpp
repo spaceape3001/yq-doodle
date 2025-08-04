@@ -29,6 +29,7 @@ namespace yq::b3 {
         void                group(std::string_view, const Data&) override;
         void                group(pop_k) override;
         void                line(const Segment2D&, const Data&) override;
+        void                set_size(const Size2D&) override;
         
         virtual bool        pixelated() const override { return false; }
         
@@ -38,7 +39,6 @@ namespace yq::b3 {
         XmlNode*            m_root      = nullptr;
         XmlAttribute*       m_width     = nullptr;
         XmlAttribute*       m_height    = nullptr;
-        XmlAttribute*       m_viewBox   = nullptr;
         XmlNode*            m_current   = nullptr;
         Stack<XmlNode*>     m_nodes;
         

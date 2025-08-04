@@ -6,6 +6,8 @@
 
 #include "Frame.hpp"
 #include "Frame.hxx"
+
+#include <b3/logging.hpp>
 #include <b3/ObjMetaWriter.hpp>
 #include <b3/spatial/Point.hpp>
 

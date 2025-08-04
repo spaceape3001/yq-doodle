@@ -67,8 +67,6 @@ namespace yq::b3 {
         if(m_origin)
             m_shift     = frame()->to_local(m_origin->global());
             
-b3Info << "Linear{" << name() << "} matrix is: " << m_matrix;            
-            
         Frame::calc_points();
     }
 

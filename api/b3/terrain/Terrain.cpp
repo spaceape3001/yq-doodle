@@ -140,8 +140,6 @@ namespace yq::b3 {
         
         m_coords    = { { cc.lo - ctr.i, rr.lo - ctr.j }, { cc.hi - ctr.i, rr.hi -  ctr.j }};
         
-
-b3Info << "Terrain coords: " << m_coords;
         
         Coord2I     lo{ m_coords.lo.x, m_coords.lo.y };
         Coord2I     hi{ m_coords.hi.x+1, m_coords.hi.y+1 };

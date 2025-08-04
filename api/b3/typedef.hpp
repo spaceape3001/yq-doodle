@@ -18,6 +18,18 @@ namespace yq {
 }
 
 namespace yq::b3 {
+    //! How a painter would honor 
+    enum class AspectRatioPolicy {
+        //! Ignore aspect ratio discrepancies, remap as indicated
+        Ignore,
+        
+        //! Keep the aspect ratio, shrink to fit
+        Shrink,
+        
+        //! Keep the aspect ratio, expand to fit
+        Expand
+    };
+
     enum class PenStyle {
         Solid,
         Dash,

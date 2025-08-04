@@ -103,6 +103,8 @@ namespace yq::b3 {
 
     void    Doc::calc_points() 
     {
+        Frame::calc_points();
+    
         m_edges  = NAN;
         for(Point*p : m_points){
             if(!p)

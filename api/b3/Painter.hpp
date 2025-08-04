@@ -8,6 +8,9 @@
 
 #include <b3/util/types.hpp>
 #include <yq/container/Stack.hpp>
+#include <yq/tensor/Tensor24.hpp>
+#include <yq/tensor/Tensor23.hpp>
+#include <yq/typedef/axbox2.hpp>
 
 namespace yq::b3 {
     class PaintDevice;
@@ -32,6 +35,27 @@ namespace yq::b3 {
         //! Saves the current state
         void                stash();
         
+        //! This is used to convert painter coordinates into device coordinates.
+        const Tensor23D&    proj2() const { return m_proj2; }
+        const Tensor24D&    proj3() const { return m_proj3; }
+        
+        Vector2D            operator()(const Vector2D&) const;
+        Vector2D            project(const Vector2D&) const;
+
+        Vector2D            operator()(const Vector3D&) const;
+        Vector2D            project(const Vector3D&) const;
+
+
+        struct Projection2DOpts {
+            unit::Degree        heading     = NAN;      //!< Heading for "up"
+            AspectRatioPolicy   resizing    = AspectRatioPolicy::Ignore;    //!< How to treat bounds/size mismatch
+            bool                vertflip    = true;     //!< true to make +y go up
+        };
+    
+        //! Sets the projection (note, kinda useless w/o bounds & paint device size)
+        void                set_proj2(const AxBox2D&, const Projection2DOpts&);  
+        
+        //  TODO... 3D
         
     protected:
         struct State {
@@ -39,6 +63,7 @@ namespace yq::b3 {
             Font            font;
             Pen             pen;
         };
+        
 
         Painter(PaintDevice&);
         ~Painter();
@@ -46,5 +71,7 @@ namespace yq::b3 {
         PaintDevice&    m_paint;
         Stack<State>    m_states;
         State           m_state;
+        Tensor24D       m_proj3;
+        Tensor23D       m_proj2;   //!< Projection matrix
     };
 }

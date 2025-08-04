@@ -133,4 +133,17 @@ namespace yq::b3 {
     {
         return save_file(m_xml, fp);
     }
+
+    void               SvgGenerator::set_size(const Size2D& sz) 
+    {
+        m_size.x    = fabs(sz.x);
+        m_size.y    = fabs(sz.y);
+        if(!m_width)
+            m_width = m_root->create_attribute("width");
+        if(!m_height)
+            m_height = m_root->create_attribute("height");
+        write_x(*m_width, m_size.x);
+        write_x(*m_height, m_size.y);
+    }
 }
+
