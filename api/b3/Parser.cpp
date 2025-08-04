@@ -13,6 +13,8 @@
 #include <b3/util/parse.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Set.hpp>
+#include <yq/file/FileResolver.hpp>
+#include <yq/file/FileUtils.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/text/transform.hpp>
@@ -158,6 +160,7 @@ namespace yq::b3 {
     struct Parser::Repo {
         Map<std::string, Instruction*,IgCase>   kIMap;
         StringSet                               keys;
+        FileResolver                            includes;
     };
 
     Parser::Repo&        Parser::repo()
@@ -177,6 +180,11 @@ namespace yq::b3 {
         }
         return ++counter;
     }    
+
+    void     Parser:: add_include_path(const std::filesystem::path& path)
+    {
+        repo().includes.add_path(path);
+    }
 
     const StringSet& Parser:: command_list()
     {
@@ -294,28 +302,17 @@ namespace yq::b3 {
         return *m_points;
     }
 
-    bool            Parser::read_file(const std::filesystem::path& cand, bool fSkipIfAlreadyDone)
+    bool            Parser::read_file(const std::filesystem::path& toOpen, bool fSkipIfAlreadyDone)
     {
-        if(m_files.empty()){
+        if(m_files.empty()){    // on the off-chance we're re-parsing the document?
             m_frames.clear();
             m_frames << m_doc;
             m_last      = m_doc;
         }
         
-        std::filesystem::path   toOpen;
-        
-        if(File* f = top()){
-            if(cand.is_relative()){
-                std::filesystem::path   pp  = f->file.parent_path();
-                toOpen  = pp / cand;
-            }
-        }
-        
-        if(toOpen.empty())
-            toOpen  = cand;
         if(fSkipIfAlreadyDone && m_included.contains(toOpen))
             return true;
-        m_included << toOpen;
+
         
         File    file;
         m_files << &file;
@@ -323,6 +320,9 @@ namespace yq::b3 {
         if(!file.open(toOpen))
             return false;
             
+            //  only adding if succeeded....
+        m_included << toOpen;
+
         std::string_view    error;
 
         bool    success = true;
@@ -425,6 +425,27 @@ namespace yq::b3 {
             return false;
         }
         return success;
+    }
+
+    std::filesystem::path   Parser::resolve(std::string_view sv) const
+    {
+        std::filesystem::path   cand(sv);
+        if(!cand.is_relative())
+            return cand;
+        
+        if(File* f = m_files.top()){
+            std::filesystem::path   pp  = f->file.parent_path();
+            auto toOpen  = pp / cand;
+            if(file_exists(toOpen))
+                return toOpen;
+        }
+        
+        auto res    = repo().includes.resolve(sv);
+        if(file_exists(res))
+            return res;
+            
+            // *SHRUG* try it anyways
+        return cand;
     }
 
     void       Parser::set_frame_point_type(Frame*f, PointType pt)

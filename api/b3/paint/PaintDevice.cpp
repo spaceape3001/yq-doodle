@@ -6,6 +6,7 @@
 
 #include "PaintDevice.hpp"
 #include <yq/shape/AxBox2.hpp>
+#include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector2.hxx>
 
@@ -18,4 +19,8 @@ namespace yq::b3 {
         return AxBox2D( ZERO, (Vector2D) m_size );
     }
     
+    void    PaintDevice::rectangle(const Rectangle2D&v, const Data&d)
+    {
+        rectangle(v.bounds(), d);
+    }
 }

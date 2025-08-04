@@ -104,6 +104,10 @@ namespace yq::b3 {
     
         const auto& included() const { return m_included; }
     
+        static void     add_include_path(const std::filesystem::path&);
+
+        std::filesystem::path   resolve(std::string_view) const;
+    
     private:
         struct Repo;
         struct Instruction;

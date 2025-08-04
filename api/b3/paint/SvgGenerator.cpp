@@ -7,8 +7,12 @@
 #include "SvgGenerator.hpp"
 
 #include <b3/util/types.hpp>
+
+#include <yq/container/ByteArray.hpp>
+#include <yq/core/StreamOps.hpp>
 #include <yq/shape/Circle2.hpp>
 #include <yq/shape/Segment2.hpp>
+#include <yq/stream/Text.hpp>
 #include <yq/xml/XmlUtils.hpp>
 
 #include <yq/shape/AxBox2.hxx>
@@ -17,6 +21,26 @@
 #include <yq/vector/Vector2.hxx>
 
 namespace yq::b3 {
+
+    void SvgGenerator::_write(XmlBase&x, const std::span<const Vector2D> pts)
+    {
+        bool    f       = false;
+        std::string     buffer;
+        {
+            stream::Text    text(buffer);
+            
+            for(const auto& p : pts){
+                if(f){
+                    text << ' ';
+                } else {
+                    f   = true;
+                }
+                text << p.x << ',' << p.y;
+            }
+            text.flush();
+        }
+        write_x(x, buffer);
+    }
 
     void SvgGenerator::_write(XmlNode&x, const Data&pd, bool cantFill)
     {
@@ -89,50 +113,11 @@ namespace yq::b3 {
         m_current   = x;
     }
 
-    void    SvgGenerator::circle(const Circle2D&v, const Data& d) 
+    ByteArray          SvgGenerator::export_bytes() const
     {
-        if(is_nan(m_bounds)){
-            m_bounds    = v.bounds();
-        } else {
-            m_bounds |= v.bounds();
-        }
-        
-        XmlNode&    x   = *m_current->create_element("circle");
-        write_attribute(x, "cx", v.center.x);
-        write_attribute(x, "cy", v.center.y);
-        write_attribute(x, "r", fabs(v.radius));
-        _write(x, d);
+        return save_bytes(m_xml);
     }
 
-    void    SvgGenerator::group(std::string_view id, const Data&d) 
-    {
-        XmlNode*    x   = m_current -> create_element("g");
-        _push(x);
-        if(!id.empty())
-            write_attribute(*x, "id", id);
-        _write(*x, d);
-    }
-    
-    void    SvgGenerator::group(pop_k) 
-    {
-        _pop();
-    }
-
-    void    SvgGenerator::line(const Segment2D& v, const Data& d)
-    {
-        if(is_nan(m_bounds)){
-            m_bounds    = v.bounds();
-        } else {
-            m_bounds |= v.bounds();
-        }
-        
-        XmlNode&    x   = *m_current->create_element("line");
-        write_attribute(x, "x1", v.a.x);
-        write_attribute(x, "y1", v.a.y);
-        write_attribute(x, "x2", v.b.x);
-        write_attribute(x, "y2", v.b.y);
-        _write(x, d, true);
-    }
 
     std::error_code    SvgGenerator::save_to(const std::filesystem::path& fp) const
     {
@@ -149,6 +134,82 @@ namespace yq::b3 {
             m_height = m_root->create_attribute("height");
         write_x(*m_width, m_size.x);
         write_x(*m_height, m_size.y);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    //  Drawing Routines
+
+
+    void    SvgGenerator::circle(const Circle2D&v, const Data& d) 
+    {
+        XmlNode&    x   = *m_current->create_element("circle");
+        write_attribute(x, "cx", v.center.x);
+        write_attribute(x, "cy", v.center.y);
+        write_attribute(x, "r", fabs(v.radius));
+        _write(x, d);
+    }
+
+    void    SvgGenerator::ellipse(const AxBox2D&bx, const Data&d) 
+    {
+        AxBox2D     v   = bx.fixed();
+        XmlNode&    x   = *m_current->create_element("ellipse");
+        Vector2D    ctr = v.center();
+        write_attribute(x, "cx", ctr.x);
+        write_attribute(x, "cy", ctr.y);
+        write_attribute(x, "rx", v.hi.x - ctr.x);
+        write_attribute(x, "ry", v.hi.y - ctr.y);
+        _write(x,d);
+    }
+        
+    void    SvgGenerator::group(std::string_view id, const Data&d) 
+    {
+        XmlNode*    x   = m_current -> create_element("g");
+        _push(x);
+        if(!id.empty())
+            write_attribute(*x, "id", id);
+        _write(*x, d);
+    }
+    
+    void    SvgGenerator::group(pop_k) 
+    {
+        _pop();
+    }
+
+    void    SvgGenerator::line(const Segment2D& v, const Data& d)
+    {
+        XmlNode&    x   = *m_current->create_element("line");
+        write_attribute(x, "x1", v.a.x);
+        write_attribute(x, "y1", v.a.y);
+        write_attribute(x, "x2", v.b.x);
+        write_attribute(x, "y2", v.b.y);
+        _write(x, d, true);
+    }
+
+    void    SvgGenerator::polygon(const std::span<const Vector2D> pts, const Data&d)
+    {
+        XmlNode&    x   = *m_current->create_element("polygon");
+        XmlAttribute&   a   = *x.create_attribute("points");
+        _write(a, pts);
+        _write(x, d, true);
+    }
+    
+    void    SvgGenerator::polyline(const std::span<const Vector2D> pts, const Data&d) 
+    {
+        XmlNode&    x   = *m_current->create_element("polyline");
+        XmlAttribute&   a   = *x.create_attribute("points");
+        _write(a, pts);
+        _write(x, d, false);
+    }
+
+    void    SvgGenerator::rectangle(const AxBox2D&bx, const Data&d) 
+    {
+        AxBox2D v   = bx.fixed();
+        XmlNode&    x   = *m_current->create_element("rect");
+        write_attribute(x, "x", v.lo.x);
+        write_attribute(x, "y", v.lo.y);
+        write_attribute(x, "width", v.hi.x - v.lo.x);
+        write_attribute(x, "height", v.hi.y - v.lo.y);
+        _write(x,d);
     }
 }
 

@@ -104,7 +104,7 @@ static bool cmdInclude(Parser& p, const ArgList&pArgs, const ArgMap&)
 {
     bool    success = true;
     for(const std::string& f : pArgs.values)
-        success =  p.read_file(f, false) && success;
+        success =  p.read_file(p.resolve(f), false) && success;
     return success;
 }
 
@@ -116,7 +116,7 @@ static bool cmdIncludeOnce(Parser& p, const ArgList&pArgs, const ArgMap&)
 {
     bool    success = true;
     for(const std::string& f : pArgs.values)
-        success =  p.read_file(f, true) && success;
+        success =  p.read_file(p.resolve(f), true) && success;
     return success;
 }
 

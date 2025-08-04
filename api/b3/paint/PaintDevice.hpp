@@ -10,6 +10,7 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/typedef/circle2.hpp>
+#include <yq/typedef/rectangle2.hpp>
 #include <yq/typedef/segment2.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <span>
@@ -40,7 +41,10 @@ namespace yq::b3 {
             const Transform*    transform   = nullptr;
         };
     
+        virtual void                rectangle(const AxBox2D&, const Data&) {}
+        virtual void                rectangle(const Rectangle2D&, const Data&);
         virtual void                circle(const Circle2D&, const Data&) {}
+        virtual void                ellipse(const AxBox2D&, const Data&) {}
         virtual void                line(const Segment2D&, const Data&) {}
         
         //  Starts a new transform

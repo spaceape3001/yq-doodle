@@ -17,24 +17,33 @@
     #undef NAN
 #endif
 
+namespace yq { class ByteArray; }
+
 namespace yq::b3 {
     class SvgGenerator : public PaintDevice {
     public:
         SvgGenerator();
         ~SvgGenerator();
         
+        virtual bool        pixelated() const override { return false; }
         std::error_code     save_to(const std::filesystem::path&) const;
+        ByteArray           export_bytes() const;
+        
+        void                set_size(const Size2D&) override;
+
+        using PaintDevice::rectangle;
         
         void                circle(const Circle2D&, const Data&) override;
+        void                ellipse(const AxBox2D&, const Data&) override;
         void                group(std::string_view, const Data&) override;
         void                group(pop_k) override;
         void                line(const Segment2D&, const Data&) override;
-        void                set_size(const Size2D&) override;
+        void                polygon(const std::span<const Vector2D>, const Data&) override;
+        void                polyline(const std::span<const Vector2D>, const Data&) override;
+        void                rectangle(const AxBox2D&, const Data&) override;
         
-        virtual bool        pixelated() const override { return false; }
         
     private:
-        AxBox2D             m_bounds    = NAN;
         XmlDocument         m_xml;
         XmlNode*            m_root      = nullptr;
         XmlAttribute*       m_width     = nullptr;
@@ -50,5 +59,7 @@ namespace yq::b3 {
         static void _write(XmlNode&, const Font&);
         static void _write(XmlNode&, const Pen&);
         static void _write(XmlNode&, const Transform&);
+        
+        static void _write(XmlBase&, const std::span<const Vector2D>);
     };
 }
