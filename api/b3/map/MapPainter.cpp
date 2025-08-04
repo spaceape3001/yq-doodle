@@ -63,32 +63,10 @@ namespace yq::b3 {
         m_paint.line(v, {.pen=&p});
     }
 
-    Vector2D MapPainter::map(const Point& p) const
+    Vector2D  MapPainter::mapper(const Vector3D&v) const 
     {
-        return map(p.global());
+        return Painter::mapper(m_frame.to_frame(v));
     }
-    
-    Vector2D MapPainter::map(const Vector2D& v) const
-    {
-        return map(Vector3D(v.x, v.y, 0.));
-    }
-    
-    Vector2D MapPainter::map(const Vector3D& v) const
-    {
-        return project(m_frame.to_frame(v));
-    }
-    
-    Vector2D MapPainter::map(const vertex_t&v) const
-    {
-        if(auto p = std::get_if<Vector2D>(&v))
-            return map(*p);
-        if(auto p = std::get_if<Vector3D>(&v))
-            return map(*p);
-        if(auto p = std::get_if<const Point*>(&v))
-            return map((*p)->global());
-        return NAN;
-    }
-
     
     //void    MapPainter::set_origin(const Vector3D&);
     //void    MapPainter::set_shift(const Vector3D&);

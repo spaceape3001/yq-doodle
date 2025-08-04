@@ -40,18 +40,11 @@ namespace yq::b3 {
 
     class MapPainter : public Painter {
     public:
-    
-        using vertex_t  = std::variant<Vector2D, Vector3D, const Point*>;
 
         const AxBox2D&      bounds() const { return m_bounds; }
 
         const Doc&          doc() const { return m_doc; }
         const Frame&        frame() const { return m_frame; }
-        
-        Vector2D            map(const Point&) const;
-        Vector2D            map(const Vector2D&) const;
-        Vector2D            map(const Vector3D&) const;
-        Vector2D            map(const vertex_t&) const;
         
         //! Draws a line using the current pen
         void                draw_line(const vertex_t&, const vertex_t&);
@@ -76,6 +69,8 @@ namespace yq::b3 {
         ~MapPainter();
     
     protected:         
+
+        Vector2D  mapper(const Vector3D&v) const override;
     
         const Doc&      m_doc;
         const Frame&    m_frame;

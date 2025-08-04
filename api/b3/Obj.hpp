@@ -38,7 +38,6 @@ namespace yq::b3 {
     
         DelegateFN*     delegate(Meta::id_t) const;
         DelegateCFN*    cDelegate(Meta::id_t) const;
-    
     };
 
     struct Frame;
