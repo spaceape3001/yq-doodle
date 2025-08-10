@@ -31,12 +31,10 @@ namespace yq::art {
         MetaLookup<DocMeta>                     lookup;
     };
 
-    static constexpr const std::string_view     szDocStartTag    = "YQArt_";
-
     DocMeta::DocMeta(std::string_view zName, AbstractMeta& base, const std::source_location& sl) :
         AbstractMeta(zName, base, sl)
     {
-        m_docTag    = std::format("YQArg_{}", stem());
+        m_docTag    = std::format("YQArt{}", stem());
         auto& _r = Doc::repo();
         _r.byTag[m_docTag]  = this;
         _r.lookup << this;

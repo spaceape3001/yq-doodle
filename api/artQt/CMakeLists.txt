@@ -8,8 +8,11 @@ find_package(Qt6 REQUIRED Core Gui Widgets )
 set(CMAKE_AUTOMOC ON)
 
 add_library(yq_artQt SHARED
+    CanvasQ.hpp
+    CanvasQ.cpp
     DocumentQ.hpp
     DocumentQ.cpp
+    EditorQ.cpp
 
     artQt.cpp
 )

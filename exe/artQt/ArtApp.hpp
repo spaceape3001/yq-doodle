@@ -8,7 +8,12 @@
 
 #include <gluon/app/Application.hpp>
 
-class ArtApp : public yq::gluon::Application {
+
+using namespace yq;
+//using namespace yq::art;
+using namespace yq::gluon;
+
+class ArtApp : public Application {
     Q_OBJECT
 public:
     ArtApp(int&, char**);

@@ -13,6 +13,7 @@ using namespace yq;
 using namespace yq::art;
 using namespace yq::gluon;
 
+DocumentQPtr        defaultDocument();
 
 class ArtMain : public UndoMainWindow {
     Q_OBJECT

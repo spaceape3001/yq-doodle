@@ -10,13 +10,15 @@
 #include "ArtApp.hpp"
 
 
+#include <art/Canvas.hpp>
+
 #include <QMenuBar>
 #include <QFileDialog>
 //#include <doodleQt/Drawing2DWindow.hpp>
 //#include <doodle/canvas/Drawing2D.hpp>
 //#include <doodle/Project.hxx>
 
-ArtMain::ArtMain() : ArtMain(new DocumentQ)
+ArtMain::ArtMain() : ArtMain(defaultDocument())
 {
 }
 
@@ -95,6 +97,8 @@ ArtMain::ArtMain(DocumentQPtr doc) : UndoMainWindow(),
     enableDetachableTabs();
     enableAutoEnableCmds();
     enableClosableTabs();
+    
+    doc->startAutoChecking();
 }
 
 ArtMain::~ArtMain()
@@ -167,7 +171,7 @@ QString         ArtMain::getNewSaveFilename()
         dir     = fileInfo.canonicalPath();
     }
     
-    return QFileDialog::getSaveFileName(this, tr("Save Art As..."), dir, tr("Art Files (*.d3x *.d3)"));
+    return QFileDialog::getSaveFileName(this, tr("Save Art As..."), dir, tr("Art Files (*.art)"));
 }
 
 MainWindow*        ArtMain::newMain() 

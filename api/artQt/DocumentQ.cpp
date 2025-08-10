@@ -5,24 +5,66 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DocumentQ.hpp"
+#include "DocumentQMetaWriter.hpp"
 
 #include <art/Doc.hpp>
 #include <gluon/core/QtTypes.hpp>
 #include <QTimer>
 
+YQ_OBJECTQ_IMPLEMENT(yq::art::DocumentQ)
+
 namespace yq::art {
     using namespace yq::gluon;
+
+    struct DocumentQ::Repo {
+        Map<Meta::id_t, const DocumentQMeta*>   doc2docQ;
+    };
+
+////////////////////////////////////////////////////////////////////////////////
+
+    DocumentQMeta::DocumentQMeta(std::string_view name, ObjectQMeta& base, const std::source_location& sl) :
+        ObjectQMeta(name, base, sl)
+    {
+    }
+
+    void    DocumentQMeta::reg_document()
+    {
+        DocumentQ::repo().doc2docQ[m_doc->id()]    = this;
+    }
  
+////////////////////////////////////////////////////////////////////////////////
+
+    void DocumentQ::init_meta()
+    {
+        auto w = writer<DocumentQ>();
+        w.description("Art's QDocument");
+    }
+
     DocumentQPtr  DocumentQ::load(const QString&s, QObject* parent)
     {
         auto doc    = Doc::load_xml(yFilePath(s));
         if(!doc)
             return {};
+            
+        DocumentQPtr ret;
+        if(const DocumentQMeta* dm = repo().doc2docQ.get(doc->metaInfo().id(), nullptr)){
+            ret = dm -> create(doc, parent);
+        } 
         
-        DocumentQPtr ret = new DocumentQ(doc, parent);
+        if(!ret)
+            ret = new DocumentQ(doc, parent);
+            
         ret -> m_filename   = s;
         return ret;
     }
+
+    DocumentQ::Repo& DocumentQ::repo()
+    {
+        static Repo     s_repo;
+        return s_repo;
+    }
+
+////////////////////////////////////////////////////////////////////////////////
 
     DocumentQ::DocumentQ(QObject*parent) : DocumentQ(new Doc, parent)
     {
@@ -35,7 +77,6 @@ namespace yq::art {
         m_checker->setTimerType(Qt::CoarseTimer);
         m_checker->setInterval(100);
         connect(m_checker, &QTimer::timeout, this, &DocumentQ::checkDocument);
-        m_checker -> start();
     }
 
     DocumentQ::~DocumentQ()
@@ -114,6 +155,16 @@ namespace yq::art {
             return ;
         m_doc->set_title(s);
         emit titleChanged(str);
+    }
+
+    void DocumentQ::startAutoChecking()
+    {
+        m_checker -> start();
+    }
+    
+    void DocumentQ::stopAutoChecking()
+    {
+        m_checker -> stop();
     }
 
     unsigned    DocumentQ::takeANumber()

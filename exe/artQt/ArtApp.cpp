@@ -19,7 +19,7 @@ void    ArtApp::decrement()
         app()->quit();
 }
 
-ArtApp::ArtApp(int& argc, char** argv) : yq::gluon::Application(argc, argv)
+ArtApp::ArtApp(int& argc, char** argv) : Application(argc, argv)
 {
 }
 

@@ -9,6 +9,9 @@
 #include "ArtApp.hpp"
 #include "ArtMain.hpp"
 
+
+#include <art/Canvas.hpp>
+#include <artQt/CanvasQ.hpp>
 #include <yq/meta/Meta.hpp>
 #include <yq/process/PluginLoader.hpp>
 
@@ -16,6 +19,12 @@
 
 using namespace yq;
 using namespace yq::art;
+
+
+DocumentQPtr        defaultDocument()
+{
+    return new CanvasQ(new Canvas);
+}
 
 int main(int argc, char* argv[])
 {
