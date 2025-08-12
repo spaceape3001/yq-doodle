@@ -16,10 +16,6 @@
 #   Mean
 
 add_library(yq_art SHARED
-    Point.cpp
-    Shape.cpp
-
-    vertex.cpp
 
     doc/Canvas.cpp
     doc/Doc.cpp
@@ -27,6 +23,10 @@ add_library(yq_art SHARED
     
     obj/Abstract.cpp
     obj/Obj.cpp
+
+    shape/Point.cpp
+    shape/Shape.cpp
+    shape/vertex.cpp
 
     #Abstract.cpp
     #Canvas.cpp

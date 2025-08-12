@@ -19,7 +19,7 @@
 namespace yq::art {
     class Point;
 
-        // and if we go algebraic, add to it...
+        // and if we go algebraic/GIS, add to it...
     using vertex_t   = std::variant<
         std::monostate,     //< Uninitialized default (ie, consider it zero-dim)
         Vector2D,           //< 2D position
