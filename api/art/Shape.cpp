@@ -6,7 +6,7 @@
 
 #include "Shape.hpp"
 #include <art/logging.hpp>
-#include <art/ObjMetaWriter.hpp>
+#include <art/obj/ObjMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::art::Shape)
 

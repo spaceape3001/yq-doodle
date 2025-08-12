@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <art/Obj.hpp>
-#include <art/AbstractMetaWriter.hpp>
+#include <art/obj/Obj.hpp>
+#include <art/obj/AbstractMetaWriter.hpp>
 #include <type_traits>
 
 namespace yq::art {

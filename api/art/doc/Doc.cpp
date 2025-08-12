@@ -9,7 +9,7 @@
 #include <art/logging.hpp>
 #include <art/tags.hpp>
 #include <art/doc/DocMetaWriter.hpp>
-#include <art/Obj.hpp>
+#include <art/obj/Obj.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/core/Any.hpp>
 #include <yq/file/FileUtils.hpp>

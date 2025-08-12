@@ -7,7 +7,7 @@
 #pragma once
 
 #include <art/doc/Doc.hpp>
-#include <art/AbstractMetaWriter.hpp>
+#include <art/obj/AbstractMetaWriter.hpp>
 
 namespace yq::art {
     template <typename C>
