@@ -24,15 +24,7 @@ add_library(yq_art SHARED
     obj/Abstract.cpp
     obj/Obj.cpp
 
-    shape/Box.cpp
-    shape/Circle.cpp
-    shape/Line.cpp
-    shape/Point.cpp
-    shape/Polygon.cpp
-    shape/Polyline.cpp
-    shape/Shape.cpp
-    shape/Triangle.cpp
-    shape/Vertices.cpp
+    shape/shapes.cpp
     shape/vertex.cpp
 
     #Abstract.cpp
