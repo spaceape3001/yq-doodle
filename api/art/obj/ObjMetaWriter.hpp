@@ -48,7 +48,9 @@ namespace yq::art {
         virtual Obj*        create(Doc& doc) const
         {
             if constexpr (!std::is_abstract_v<D>){
-                return new D(doc);
+                if(!Meta::is_abstract()){
+                    return new D(doc);
+                }
             } 
             return nullptr;
         }
