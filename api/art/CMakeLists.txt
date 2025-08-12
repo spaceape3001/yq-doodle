@@ -27,21 +27,14 @@ add_library(yq_art SHARED
     shape/shapes.cpp
     shape/vertex.cpp
 
-    #Abstract.cpp
-    #Canvas.cpp
-    #Doc.cpp
-    #DocXML.cpp
     #Grid.cpp
     #Instance.cpp
-    #Obj.cpp
     #PaintDevice.cpp
     #Painter.cpp
-    #Shape.cpp
     #Surface.cpp
     #Terrain.cpp
 
     #paint/PaintDevice.cpp
-    #point/Point.cpp
 )
 
 target_link_libraries(yq_art

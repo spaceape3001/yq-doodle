@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewQ.hpp"
-#include <artQt/SceneQ.hpp>
+#include "CanvasView.hpp"
+#include <artQt/canvas/CanvasScene.hpp>
 
 namespace yq::art {
-    ViewQ::ViewQ(SceneQ*sc, QWidget* parent) : gluon::GraphicsView(sc, parent), m_scene(sc)
+    CanvasView::CanvasView(CanvasScene*sc, QWidget* parent) : ViewQ(sc, parent)
     {
     }
     
-    ViewQ::~ViewQ()
+    CanvasView::~CanvasView()
     {
     }
 }
 
-#include "moc_ViewQ.cpp"
+#include "moc_CanvasView.cpp"

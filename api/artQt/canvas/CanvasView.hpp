@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <artQt/ViewQ.hpp>
+#include <artQt/kit/ViewQ.hpp>
 
 namespace yq::art {
     class CanvasScene;

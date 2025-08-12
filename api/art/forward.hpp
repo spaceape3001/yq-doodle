@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <cstddef>
 #include <yq/meta/MetaBinder.hpp>
+#include <cstddef>
+#include <vector>
 #include <variant>
 
 #ifdef __GNUC__
@@ -49,7 +50,7 @@ namespace yq::art {
     };
     
     //! Reference to something else
-    using Reference = std::variant<ID,Key>;
+    using Reference  = std::variant<std::monostate, ID, Key>;
     
     class Canvas;   // 2D drawing document
     class Surface;  // 2D "surface" in a 3D environment

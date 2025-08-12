@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <artQt/CanvasQ.hpp>
+#include <artQt/canvas/CanvasQ.hpp>
 #include <artQt/EditorQ.hpp>
 #include <QWidget>
 

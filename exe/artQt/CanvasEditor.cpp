@@ -6,8 +6,8 @@
 
 #include "CanvasEditor.hpp"
 #include <artQt/EditorQMetaWriter.hpp>
-#include <artQt/SceneQ.hpp>
-#include <artQt/ViewQ.hpp>
+#include <artQt/canvas/CanvasScene.hpp>
+#include <artQt/canvas/CanvasView.hpp>
 #include <QHBoxLayout>
 #include <QLabel>
 

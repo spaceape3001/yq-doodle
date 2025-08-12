@@ -11,7 +11,7 @@
 
 
 #include <art/doc/Canvas.hpp>
-#include <artQt/CanvasQ.hpp>
+#include <artQt/canvas/CanvasQ.hpp>
 #include <yq/meta/Meta.hpp>
 #include <yq/process/PluginLoader.hpp>
 
