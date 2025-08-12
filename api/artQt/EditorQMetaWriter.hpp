@@ -9,6 +9,8 @@
 #include <yq/meta/ObjectMetaWriter.hpp>
 #include <artQt/EditorQ.hpp>
 
+#define YQ_EDITORQ_IMPLEMENT(...) YQ_OBJECT_IMPLEMENT(__VA_ARGS__)
+
 namespace yq::art {
 
     template <typename C>
@@ -20,6 +22,15 @@ namespace yq::art {
         
         Writer(EditorQMeta& dInfo) : Writer(&dInfo)
         {
+        }
+
+        //! Declares a new/extra menu for the application
+        Writer& menu(const std::string& key, const std::string& label)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_menus.push_back({key, label});
+            }
+            return *this;
         }
 
     private:
@@ -55,7 +66,7 @@ namespace yq::art {
             ObjectFixer<D>::sweep_impl();
             using DocQ = typename D::MyDocQ;
             if constexpr (std::is_base_of_v<DocumentQ,DocQ> && !std::is_same_v<DocumentQ,DocQ>){
-                EditorQMeta::reg_editor(&meta<D>());
+                EditorQMeta::reg_editor(&meta<DocQ>());
             }
         }
     };

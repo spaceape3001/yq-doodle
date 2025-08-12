@@ -17,15 +17,14 @@
 
 add_library(yq_art SHARED
     Abstract.cpp
-    Canvas.cpp
-    Doc.cpp
     Obj.cpp
     Point.cpp
     Shape.cpp
 
     vertex.cpp
 
-
+    doc/Canvas.cpp
+    doc/Doc.cpp
     
 
     #Abstract.cpp

@@ -8,9 +8,11 @@
 
 #include "ArtMain.hpp"
 #include "ArtApp.hpp"
+#include "DocEditor.hpp"
 
-
-#include <art/Canvas.hpp>
+#include <art/doc/Canvas.hpp>
+#include <artQt/EditorQ.hpp>
+#include <gluon/core/QtTypes.hpp>
 
 #include <QMenuBar>
 #include <QFileDialog>
@@ -44,10 +46,25 @@ ArtMain::ArtMain(DocumentQPtr doc) : UndoMainWindow(),
     addAction("save", "Save Document").shortcut(QKeySequence::Save).connect(this, &ArtMain::cmdSave);
     addAction("saveas", "Save Document As").shortcut(QKeySequence::SaveAs).connect(this, &ArtMain::cmdSaveAs);
     //addAction("newdrawing", "New Drawing").shortcut("Ctrl+N").connect(this, &ArtMain::cmdNewDrawing);
+    
+    
+    const EditorQMeta*      eqm = EditorQ::find(doc->metaInfo());
+    if(eqm){
+        m_editor    = eqm -> create(doc);
+    }
+    if(!m_editor)
+        m_editor    = new DocEditor(doc);
+    setCentralWidget(m_editor->qWidget());
+    
 
     QMenu* fileMenu     = makeMenu("file", "File");
     QMenu* editMenu     = makeMenu("edit", "Edit");
     QMenu* viewMenu     = makeMenu("view", "View");
+    
+    for(auto& itr : m_editor->metaInfo().menus()){
+        makeMenu(qString(itr.first), qString(itr.second));
+    }
+    
     QMenu* windowMenu   = makeMenu("window", "Window");
     QMenu* helpMenu     = makeMenu("help", "Help");
 
@@ -97,6 +114,10 @@ ArtMain::ArtMain(DocumentQPtr doc) : UndoMainWindow(),
     enableDetachableTabs();
     enableAutoEnableCmds();
     enableClosableTabs();
+    
+    m_editor -> configure(*this);
+    
+    //  and whatever else comes last (menus)
     
     doc->startAutoChecking();
 }

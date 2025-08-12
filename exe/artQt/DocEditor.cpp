@@ -5,15 +5,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DocEditor.hpp"
-#include <gluon/core/WidgetQMetaWriter.hpp>
+#include <artQt/EditorQMetaWriter.hpp>
 
-YQ_WIDGETQ_IMPLEMENT(DocEditor)
+YQ_EDITORQ_IMPLEMENT(DocEditor)
 
 void DocEditor::init_meta()
 {
 }
 
-DocEditor::DocEditor(DocumentQPtr doc, QWidget*parent) : QWidget(parent), m_doc(doc)
+DocEditor::DocEditor(DocumentQPtr doc, QWidget*parent) : QWidget(parent), EditorQ(doc)
 {
 }
 

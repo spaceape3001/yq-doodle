@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/Doc.hpp>
+#include <art/doc/Doc.hpp>
 #include <yq/shape/AxBox2.hpp>
 
 namespace yq::art {

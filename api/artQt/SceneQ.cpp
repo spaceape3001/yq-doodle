@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "SceneQ.hpp"
+
+namespace yq::art {
+    SceneQ::SceneQ(DocumentQPtr doc, QObject*parent) : gluon::GraphicsScene(parent), m_doc(doc)
+    {
+    }
+    
+    SceneQ::~SceneQ()
+    {
+    }
+}
+
+#include "moc_SceneQ.cpp"

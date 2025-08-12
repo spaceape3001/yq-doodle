@@ -6,7 +6,7 @@
 
 #include "Obj.hpp"
 
-#include <art/Doc.hpp>
+#include <art/doc/Doc.hpp>
 #include <art/ObjMetaWriter.hpp>
 
 #include <yq/core/Any.hpp>

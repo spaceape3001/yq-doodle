@@ -9,6 +9,11 @@
 #include <yq/trait/no_hidden_warning.hpp>
 #include <yq/core/Object.hpp>
 #include <artQt/DocumentQ.hpp>
+#include <yq/typedef/string_pairs.hpp>
+
+namespace yq::gluon {
+    class MainWindow;
+}
 
 namespace yq::art {
 
@@ -21,9 +26,14 @@ namespace yq::art {
         EditorQMeta(std::string_view, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         virtual EditorQ*    create(DocumentQPtr, QWidget* parent = nullptr) const = 0;
+
+        const std::vector<string_pair_t>& menus() const { return m_menus; }
+
     private:
+        template <typename> friend class EditorQFixer;
         void                    reg_editor(const DocumentQMeta*);
-        const DocumentQMeta*    m_docQ  = nullptr;    
+        const DocumentQMeta*        m_docQ  = nullptr;    
+        std::vector<string_pair_t>  m_menus;
     };
     
     #define YQ_EDITORQ_DECLARE_ABSTRACT(cls, base)          \
@@ -32,7 +42,6 @@ namespace yq::art {
         
     #define YQ_EDITORQ_DECLARE(cls, base)                   \
         YQ_OBJECT_DECLARE(cls, base)                        \
-        friend class ::yq::art::EditorQMeta<cls>;           \
         static constexpr const bool kAbstract   = false;
 
     //! Class for describing editors of documents
@@ -47,6 +56,8 @@ namespace yq::art {
         
         static void init_meta();
         
+        static const EditorQMeta* find(const DocumentQMeta&);
+        
         using MyDocQ        = DocumentQ;
             
         EditorQ(DocumentQPtr doc);
@@ -57,6 +68,8 @@ namespace yq::art {
         
         QWidget*            qWidget();
         const QWidget*      qWidget() const;
+
+        virtual void        configure(gluon::MainWindow&){}
 
     protected:
         DocumentQPtr        m_doc;

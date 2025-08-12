@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Canvas.hpp"
-#include <art/DocMetaWriter.hpp>
+#include <art/doc/DocMetaWriter.hpp>
 #include <art/tags.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::art::Canvas)

@@ -8,7 +8,7 @@
 
 #include <art/logging.hpp>
 #include <art/tags.hpp>
-#include <art/DocMetaWriter.hpp>
+#include <art/doc/DocMetaWriter.hpp>
 #include <art/Obj.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/core/Any.hpp>

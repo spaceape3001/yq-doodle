@@ -6,12 +6,13 @@
 
 #pragma once
 
+#include <yq/trait/no_hidden_warning.hpp>
 #include <QObject>
 #include <art/forward.hpp>
 #include <yq/core/Ref.hpp>
 #include <gluon/core/RefQ.hpp>
 #include <gluon/core/ObjectQ.hpp>
-#include <art/Doc.hpp>
+#include <art/doc/Doc.hpp>
 
 class QTimer;
 class QWidget;

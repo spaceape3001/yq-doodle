@@ -8,7 +8,7 @@
 #include "EditorQMetaWriter.hpp"
 #include <QWidget>
 
-YQ_OBJECT_IMPLEMENT(yq::art::EditorQ)
+YQ_EDITORQ_IMPLEMENT(yq::art::EditorQ)
 
 namespace yq::art {
     struct EditorQ::Repo {
@@ -31,6 +31,11 @@ namespace yq::art {
     }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+    const EditorQMeta* EditorQ::find(const DocumentQMeta& dm)
+    {
+        return repo().doc2editor.get(dm.id(), nullptr);
+    }
 
     void EditorQ::init_meta()
     {

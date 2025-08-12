@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "ViewQ.hpp"
+#include <artQt/SceneQ.hpp>
+
+namespace yq::art {
+    ViewQ::ViewQ(SceneQ*sc, QWidget* parent) : gluon::GraphicsView(sc, parent), m_scene(sc)
+    {
+    }
+    
+    ViewQ::~ViewQ()
+    {
+    }
+}
+
+#include "moc_ViewQ.cpp"

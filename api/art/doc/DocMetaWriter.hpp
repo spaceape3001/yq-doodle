@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/Doc.hpp>
+#include <art/doc/Doc.hpp>
 #include <art/AbstractMetaWriter.hpp>
 
 namespace yq::art {

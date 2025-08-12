@@ -14,6 +14,11 @@ add_executable(artQt
     ArtMain.hpp
     ArtMain.cpp
 
+    CanvasEditor.hpp
+    CanvasEditor.cpp
+    DocEditor.hpp
+    DocEditor.cpp
+
     main.cpp
 )
 

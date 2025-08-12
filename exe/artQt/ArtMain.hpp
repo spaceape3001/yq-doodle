@@ -9,6 +9,10 @@
 #include <gluon/app/UndoMainWindow.hpp>
 #include <artQt/DocumentQ.hpp>
 
+namespace yq::art {
+    class EditorQ;
+}
+
 using namespace yq;
 using namespace yq::art;
 using namespace yq::gluon;
@@ -33,6 +37,7 @@ public slots:
     
 protected:
     DocumentQPtr    m_doc;
+    EditorQ*        m_editor    = nullptr;
     
 private:
     unsigned        m_number;

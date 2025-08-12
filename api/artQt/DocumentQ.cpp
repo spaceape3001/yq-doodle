@@ -7,7 +7,7 @@
 #include "DocumentQ.hpp"
 #include "DocumentQMetaWriter.hpp"
 
-#include <art/Doc.hpp>
+#include <art/doc/Doc.hpp>
 #include <gluon/core/QtTypes.hpp>
 #include <QTimer>
 

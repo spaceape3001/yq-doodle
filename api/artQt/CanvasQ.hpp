@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <art/Canvas.hpp>
+#include <art/doc/Canvas.hpp>
 #include <artQt/DocumentQ.hpp>
 
 namespace yq::art {
@@ -19,6 +19,12 @@ namespace yq::art {
         CanvasQ(Ref<Canvas>, QObject*parent=nullptr);
         CanvasQ(QObject*parent=nullptr);
         ~CanvasQ();
+        
+        Canvas*         canvas() { return m_canvas.ptr(); }
+        const Canvas*   canvas() const { return m_canvas.ptr(); }
+        
+    signals:
+        void        boundsChanged();
         
     private:
         Ref<Canvas>     m_canvas;
