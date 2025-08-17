@@ -8,8 +8,9 @@
 #include <artQt/canvas/CanvasScene.hpp>
 
 namespace yq::art {
-    CanvasView::CanvasView(CanvasScene*sc, QWidget* parent) : ViewQ(sc, parent)
+    CanvasView::CanvasView(CanvasScene*sc, QWidget* parent) : ViewQ(sc, parent), m_scene(sc)
     {
+        assert(m_scene);
     }
     
     CanvasView::~CanvasView()

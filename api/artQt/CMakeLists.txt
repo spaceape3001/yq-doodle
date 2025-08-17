@@ -10,7 +10,6 @@ set(CMAKE_AUTOMOC ON)
 add_library(yq_artQt SHARED
     DocumentQ.hpp
     DocumentQ.cpp
-    EditorQ.cpp
     
     canvas/CanvasQ.hpp
     canvas/CanvasQ.cpp
@@ -19,8 +18,13 @@ add_library(yq_artQt SHARED
     canvas/CanvasView.hpp
     canvas/CanvasView.cpp
 
+    kit/EditorQ.cpp
+    kit/GraphicsQ.hpp
+    kit/GraphicsQ.cpp
     kit/SceneQ.hpp
     kit/SceneQ.cpp
+    kit/ToolBarQ.hpp
+    kit/ToolBarQ.cpp
     kit/ViewQ.hpp
     kit/ViewQ.cpp
 )

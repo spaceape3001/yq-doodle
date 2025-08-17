@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DocEditor.hpp"
-#include <artQt/EditorQMetaWriter.hpp>
+#include <artQt/kit/EditorQMetaWriter.hpp>
 
 YQ_EDITORQ_IMPLEMENT(DocEditor)
 

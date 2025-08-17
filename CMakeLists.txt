@@ -21,6 +21,9 @@ endif()
 if(Build_Vulkan)
     vulqan_data(data)
 endif()
+if(Build_Qt6)
+    qt_data(data)
+endif()
 
 #   If this fails, means the toolbox wasn't included/used
 YQRepo()

@@ -4,12 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <art/logging.hpp>
+
 #include "CanvasEditor.hpp"
-#include <artQt/EditorQMetaWriter.hpp>
 #include <artQt/canvas/CanvasScene.hpp>
 #include <artQt/canvas/CanvasView.hpp>
+#include <artQt/kit/EditorQMetaWriter.hpp>
+#include <artQt/kit/ToolBarQ.hpp>
 #include <QHBoxLayout>
-#include <QLabel>
+#include <QToolButton>
 
 YQ_EDITORQ_IMPLEMENT(CanvasEditor)
 
@@ -20,11 +23,19 @@ void CanvasEditor::init_meta()
     w.menu("canvas", "Canvas");
 }
 
-CanvasEditor::CanvasEditor(Ref<CanvasQ> doc, QWidget*parent) : QWidget(parent), EditorQ(doc), m_canvas(doc)
+CanvasEditor::CanvasEditor(Ref<CanvasQ> doc, QWidget*parent) : 
+    GraphicsQ(new CanvasView(new CanvasScene(doc)), parent),
+    EditorQ(doc)
 {
-    QHBoxLayout   *slay    = new QHBoxLayout;
-    slay -> addWidget( new QLabel("Hello World!"));
-    setLayout(slay);
+    m_scene     = dynamic_cast<CanvasScene*>(GraphicsQ::scene());
+    m_view      = dynamic_cast<CanvasView*>(GraphicsQ::view());
+
+    ToolBarQ*   tbar  = new ToolBarQ;
+    QToolButton*tb      = new QToolButton;
+    tb -> setText("Tools");
+    tbar -> addWidget(tb);
+    
+    addTop(tbar);
 }
 
 CanvasEditor::~CanvasEditor()
@@ -34,6 +45,7 @@ CanvasEditor::~CanvasEditor()
 void        CanvasEditor::configure(gluon::MainWindow&) 
 {
     // TODO
+    artInfo << "CanvasEditor::configure(...)";
 }
 
 #include "moc_CanvasEditor.cpp"

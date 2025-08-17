@@ -11,7 +11,7 @@
 #include "DocEditor.hpp"
 
 #include <art/doc/Canvas.hpp>
-#include <artQt/EditorQ.hpp>
+#include <artQt/kit/EditorQ.hpp>
 #include <gluon/core/QtTypes.hpp>
 
 #include <QMenuBar>
@@ -37,13 +37,13 @@ ArtMain::ArtMain(DocumentQPtr doc) : UndoMainWindow(),
     connect(doc.ptr(), &DocumentQ::titleChanged, this, &ArtMain::updateTitle);
     connect(doc.ptr(), &DocumentQ::fileChanged, this, &ArtMain::updateTitle);
 
-    addAction("copy", "Copy").shortcut(QKeySequence::Copy);
-    addAction("cut", "Cut").shortcut(QKeySequence::Cut);
-    addAction("paste", "Paste").shortcut(QKeySequence::Paste);
-    addAction("delete", "Delete").shortcut(QKeySequence::Delete);
+    addAction("copy", "Copy").shortcut(QKeySequence::Copy).icon(":icon/edit/copy.svg");
+    addAction("cut", "Cut").shortcut(QKeySequence::Cut).icon(":icon/edit/cut.svg");
+    addAction("paste", "Paste").shortcut(QKeySequence::Paste).icon(":icon/edit/paste.svg");
+    addAction("delete", "Delete").shortcut(QKeySequence::Delete).icon(":icon/edit/delete.svg");
     //addAction("new", "New Document").shortcut("Ctrl+Shift+N").connect(this, &ArtMain::cmdNew);
-    addAction("open", "Open Document").shortcut(QKeySequence::New).connect(this, &ArtMain::cmdOpen);
-    addAction("save", "Save Document").shortcut(QKeySequence::Save).connect(this, &ArtMain::cmdSave);
+    addAction("open", "Open Document").shortcut(QKeySequence::New).connect(this, &ArtMain::cmdOpen).icon(":icon/file/open.svg");
+    addAction("save", "Save Document").shortcut(QKeySequence::Save).connect(this, &ArtMain::cmdSave).icon(":icon/file/save.svg");
     addAction("saveas", "Save Document As").shortcut(QKeySequence::SaveAs).connect(this, &ArtMain::cmdSaveAs);
     //addAction("newdrawing", "New Drawing").shortcut("Ctrl+N").connect(this, &ArtMain::cmdNewDrawing);
     

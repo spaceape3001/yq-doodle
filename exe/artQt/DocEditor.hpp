@@ -7,7 +7,7 @@
 #pragma once
 
 #include <artQt/DocumentQ.hpp>
-#include <artQt/EditorQ.hpp>
+#include <artQt/kit/EditorQ.hpp>
 #include <QWidget>
 
 using namespace yq;

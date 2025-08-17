@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SceneQ.hpp"
+#pragma once
+
+#include <QToolBox>
 
 namespace yq::art {
-    SceneQ::SceneQ(QObject*parent) : gluon::GraphicsScene(parent)
-    {
-    }
-    
-    SceneQ::~SceneQ()
-    {
-    }
+    class PaletteQ : public QToolBox {
+        Q_OBJECT
+    public:
+        PaletteQ(QWidget*parent=nullptr);
+        ~PaletteQ();
+    };
 }
 
-#include "moc_SceneQ.cpp"

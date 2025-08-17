@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SceneQ.hpp"
+#pragma once
+
+#include <QToolBar>
 
 namespace yq::art {
-    SceneQ::SceneQ(QObject*parent) : gluon::GraphicsScene(parent)
-    {
-    }
-    
-    SceneQ::~SceneQ()
-    {
-    }
+    class ToolBarQ : public QToolBar {
+        Q_OBJECT
+    public:
+        ToolBarQ(QWidget*parent=nullptr);
+        ~ToolBarQ();
+    };
 }
 
-#include "moc_SceneQ.cpp"

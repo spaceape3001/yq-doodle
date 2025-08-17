@@ -7,8 +7,8 @@
 #pragma once
 
 #include <artQt/canvas/CanvasQ.hpp>
-#include <artQt/EditorQ.hpp>
-#include <QWidget>
+#include <artQt/kit/EditorQ.hpp>
+#include <artQt/kit/GraphicsQ.hpp>
 
 namespace yq::art {
     class SceneQ;
@@ -21,7 +21,7 @@ namespace yq::art {
 using namespace yq;
 using namespace yq::art;
 
-class CanvasEditor : public QWidget, public EditorQ {
+class CanvasEditor : public GraphicsQ, public EditorQ {
     Q_OBJECT
     YQ_EDITORQ_DECLARE(CanvasEditor, EditorQ)
 public:
@@ -36,9 +36,16 @@ public:
     const CanvasQ*      canvas() const { return m_canvas.ptr(); }
     
     virtual void        configure(gluon::MainWindow&) override;
+    
+    CanvasScene*        scene() { return m_scene; }
+    const CanvasScene*  scene() const { return m_scene; }
+    CanvasView*         view() { return m_view; }
+    const CanvasView*   view() const { return m_view; }
 
 private:
-    Ref<CanvasQ>        m_canvas;
+    Ref<CanvasQ>    m_canvas;
+    CanvasScene*    m_scene = nullptr;
+    CanvasView*     m_view  = nullptr;
 };
 
 

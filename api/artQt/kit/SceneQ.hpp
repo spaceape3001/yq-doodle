@@ -13,9 +13,9 @@ namespace yq::art {
     class SceneQ : public gluon::GraphicsScene {
         Q_OBJECT
     public:
-        SceneQ(DocumentQPtr, QObject*parent=nullptr);
+        SceneQ(QObject*parent=nullptr);
         virtual ~SceneQ();
     private:
-        DocumentQPtr    m_doc;
+        // vector of documents?
     };
 }
