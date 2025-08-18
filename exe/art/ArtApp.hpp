@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+#include <tachyon/app/Application.hpp>
+
+using namespace yq;
+using namespace yq::tachyon;
+
+class ArtApp : public Application {
+public:
+    ArtApp(int argc, char* argv[], const AppCreateInfo& aci);
+    ~ArtApp();
+};
