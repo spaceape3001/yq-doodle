@@ -6,6 +6,7 @@
 
 #include "ArtMW.hpp"
 #include <art/doc/Canvas.hpp>
+#include <artVk/DocTypeMenuUI.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/ui/UIWriters.hxx>
@@ -23,6 +24,8 @@ void ArtMW::init_meta()
     auto view       = mmb.menu("View");
     auto window     = mmb.menu("Window");
     auto help       = mmb.menu("Help");
+
+    auto newW       = file << new DocTypeMenuUI("New");
 
 
     auto open       = file.menuitem("Open", "Ctrl+O");
@@ -55,7 +58,7 @@ ArtMW::ArtMW() : ArtMW(new Canvas)
 {
 }
 
-ArtMW::ArtMW(DocPtr p) : m_doc(p)
+ArtMW::ArtMW(DocPtr p) : ArtDocPtr(p)
 {
     assert(m_doc);
 }

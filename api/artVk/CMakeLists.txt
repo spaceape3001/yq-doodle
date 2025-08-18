@@ -6,7 +6,8 @@
 
 
 add_library(yq_artVk SHARED
-    artVk.cpp
+    ArtDocPtr.cpp
+    DocTypeMenuUI.cpp
 )
 
 target_link_libraries(yq_artVk

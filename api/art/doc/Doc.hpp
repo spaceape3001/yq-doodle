@@ -22,6 +22,8 @@ namespace yq::art {
         
         std::string_view    doc_tag() const { return m_docTag; }
         
+        static const std::vector<const DocMeta*>& all();
+        
     private:
         std::string     m_docTag;
     };

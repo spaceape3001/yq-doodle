@@ -31,6 +31,11 @@ namespace yq::art {
         MetaLookup<DocMeta>                     lookup;
     };
 
+    const std::vector<const DocMeta*>& DocMeta::all()
+    {
+        return Doc::repo().lookup.all;
+    }
+
     DocMeta::DocMeta(std::string_view zName, AbstractMeta& base, const std::source_location& sl) :
         AbstractMeta(zName, base, sl)
     {

@@ -1,0 +1,22 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "ArtDocPtr.hpp"
+#include <art/doc/Canvas.hpp>
+
+namespace yq::art {
+    ArtDocPtr::ArtDocPtr()
+    {
+    }
+    
+    ArtDocPtr::ArtDocPtr(DocPtr d) : m_doc(d)
+    {
+    }
+    
+    ArtDocPtr::~ArtDocPtr()
+    {
+    }
+}
