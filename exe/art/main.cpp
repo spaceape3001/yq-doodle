@@ -6,6 +6,7 @@
 
 #include "ArtApp.hpp"
 #include "ArtMW.hpp"
+#include <art/doc/Canvas.hpp>
 #include <tachyon/api/Tachyon.hxx>
 
 int main(int argc, char* argv[])
@@ -22,8 +23,23 @@ int main(int argc, char* argv[])
 
     ArtApp   app(argc, argv, aci);
     app.start();
+
+    std::vector<WidgetPtr>    starters;
     
-    ArtMW*   mw  = Widget::create<ArtMW>();
-    app.run(mw);
+    for(int i=1;i<argc;++i){
+        std::error_code ec;
+        std::filesystem::path   pth(argv[i]);
+        if(!std::filesystem::exists(pth, ec))
+            continue;
+        
+        DocPtr  doc = Doc::load_xml(pth);
+        if(!doc)
+            continue;
+        starters.push_back(Widget::create<ArtMW>(doc));
+    }
+    
+    if(starters.empty())
+        starters.push_back(Widget::create<ArtMW>(new Canvas));
+    app.run(starters);
     return 0;
 }

@@ -39,11 +39,13 @@ namespace yq::art {
     
         static void init_meta();
     
-        //! Filepath that we were loaded from
+        //! Filepath that we were loaded from (can be set)
         //! \note Empty for something that's newly created
         const std::filesystem::path&    file() const { return m_file; }
         
         static const DocMeta*           find_by_xml_tag(std::string_view);
+        
+        void    set_file(const std::filesystem::path&);
         
             //////////////////////////////////////////////////////
             //  GETTERS/INFORMATION
@@ -81,6 +83,9 @@ namespace yq::art {
         
         //  Will insert a root node
         bool                save_xml(XmlDocument&) const;
+        
+        //! If there's a current filename, will save to it
+        bool                save() const;
         
         
     protected:

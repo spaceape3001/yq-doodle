@@ -5,37 +5,69 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ArtMW.hpp"
-#include <art/doc/Canvas.hpp>
+#include <art/doc/Doc.hpp>
 #include <artVk/DocTypeMenuUI.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/WidgetMetaWriter.hpp>
+#include <tachyon/app/Application.hpp>
+#include <tachyon/command/ui/TitleCommand.hpp>
 #include <tachyon/ui/UIWriters.hxx>
 #include <art/logging.hpp>
+
+#include <algorithm>
+#include <ImGuiFileDialog.h>
+
 
 void ArtMW::init_meta()
 {
     auto w          = writer<ArtMW>();
-    
     auto app        = w.imgui(UI, APP);
     auto mmb        = app.menubar(MAIN);
+
+    /////////////////////////////////
+    //  MENUS
+
     auto file       = mmb.menu("File");
     auto edit       = mmb.menu("Edit");
-    auto artM       = mmb.menu("Art");
     auto view       = mmb.menu("View");
-    auto window     = mmb.menu("Window");
+    auto artM       = mmb.menu("Art");
     auto help       = mmb.menu("Help");
+    auto rhs        = mmb.right(ALIGN);
+    
+    rhs.callback(&ArtMW::edit_title);
 
-    auto newW       = file << new DocTypeMenuUI("New");
+    /////////////////////////////////
+    //  FILE MENU
+
+    file << new DocTypeMenuUI("New");
+
+    file.menuitem("Open...", "Ctrl+O").action(&ArtMW::cmd_open);
+    file.menuitem("Save", "Ctrl+S").action(&ArtMW::cmd_save);
+    file.menuitem("Save As...").action(&ArtMW::cmd_save_as);
+    file.menuitem("Save Copy...").action(&ArtMW::cmd_save_copy);
 
 
-    auto open       = file.menuitem("Open", "Ctrl+O");
-    auto save       = file.menuitem("Save", "Ctrl+S");
+    /////////////////////////////////
+    //  EDIT MENU
 
+    edit.menuitem("Cut", "Ctrl+X");
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
-    
-    //artM.menuitem("New Drawing", "Ctrl+I").action(&ArtMW::new_drawing);
-    
+    edit.menuitem("Delete", "Del");
+
+    /////////////////////////////////
+    //  VIEW MENU
+
+    /////////////////////////////////
+    //  ART MENU
+
+    /////////////////////////////////
+    //  HELP MENU
+
+
+    /////////////////////////////////
+    //  MISC
+
     
     auto buttonbar     = app.toolbar(Vector2F{0.75,1.0}, "Generic ToolBar");
     buttonbar.image("openicon/icons/png/32x32/actions/arrow-left-double.png", { 32, 32 }).action(&ArtMW::btn_left);
@@ -50,26 +82,175 @@ void ArtMW::init_meta()
     
     auto win        = app.window("Window");
     win.label("Hello World!");
-    
-    help.checkbox(VISIBLE, win);
-}
 
-ArtMW::ArtMW() : ArtMW(new Canvas)
-{
+    help.checkbox(VISIBLE, win);
+
 }
 
 ArtMW::ArtMW(DocPtr p) : ArtDocPtr(p)
 {
     assert(m_doc);
+    if(!m_doc){
+        cmd_teardown();
+        return;
+    }
 }
 
 ArtMW::~ArtMW()
 {
 }
     
+void ArtMW::_copy(const std::filesystem::path& pth)
+{
+    if(!m_doc->save_xml(pth)){
+        artWarning << "Unable to save copy to " << pth;
+    }
+}
+
+void ArtMW::_open(const std::filesystem::path& pth)
+{
+    Application*    app = Application::app();
+    if(!app){
+        artWarning << "Can't open with no application";
+        return ;
+    }
+        
+    //  We'll get fancy on "open" to auto-close/take creds to current if no good document....
+    
+    DocPtr  doc = Doc::load_xml(pth);
+    if(!doc){
+        artWarning << "Unable to load/open document " << pth;
+        return;
+    }
+    
+    app->create(VIEWER, new ArtMW(doc));
+}
+
+
+void ArtMW::_save(const std::filesystem::path& pth)
+{
+    if(!m_doc->save_xml(pth)){
+        artWarning << "Unable to save to " << m_doc->file();
+        return ;
+    }
+    
+    if(pth != m_doc->file()){
+        m_doc -> set_file(pth);
+        _update(TITLE);
+    }
+}
+
+void ArtMW::_update(title_k)
+{
+    if(!m_doc)
+        return;
+        
+    std::string     newTitle;
+    if(m_doc->file().empty()){
+        newTitle        = "Art";
+    } else {
+        auto& fp        = m_doc->file();
+        newTitle        = std::format("{} - {} - Art", fp.filename().string(), fp.parent_path().string());
+    }
+    send(new TitleCommand({.source=*this, .target=TypedID(viewer().id, Type::Viewer)}, newTitle));
+}
+
+void ArtMW::cmd_open()
+{
+    IGFD::FileDialogConfig config;
+    if(m_doc->file().empty()){
+        config.path = ".";
+    } else {
+        config.path = m_doc->file().parent_path();
+    }
+    m_fileMode  = FileMode::Open;
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Open", ".art", config);        
+}
+
+void ArtMW::cmd_save()
+{
+    if(m_doc->file().empty()){
+        cmd_save_as();
+    } else {
+        _save(m_doc->file());
+    }
+}
+
+void ArtMW::cmd_save_as()
+{
+    IGFD::FileDialogConfig config;
+    if(m_doc->file().empty()){
+        config.path = ".";
+    } else {
+        config.path = m_doc->file().parent_path();
+    }
+    config.flags |= ImGuiFileDialogFlags_ConfirmOverwrite;
+    m_fileMode  = FileMode::Save;
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Save As", ".art", config);        
+}
+
+void ArtMW::cmd_save_copy()
+{
+    IGFD::FileDialogConfig config;
+    if(m_doc->file().empty()){
+        config.path = ".";
+    } else {
+        config.path = m_doc->file().parent_path();
+    }
+    config.flags |= ImGuiFileDialogFlags_ConfirmOverwrite;
+    m_fileMode  = FileMode::Copy;
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Save Copy", ".art", config);        
+}
+
+void ArtMW::edit_title()
+{
+    if(!m_doc)
+        return;
+        
+    static constexpr const size_t   kMax    = 40;
+    char    data[kMax+1];
+    size_t          mx  =    std::min<size_t>(m_doc->title().size(), kMax);
+    strncpy(data, m_doc->title().data(), mx);
+    data[kMax]  = '\0';
+    
+    if(ImGui::InputText("##Title", data, kMax, ImGuiInputTextFlags_EnterReturnsTrue)){
+        data[kMax]  = '\0';
+        if(data != m_doc->title()){
+            m_doc -> set_title(data);
+        }
+    }
+}
+
 void ArtMW::imgui(ViContext& u) 
 {
     Widget::imgui(UI,u);
+
+    if(m_fileMode != FileMode::None){
+        ImVec2  minSize = { (float)(0.5 * width()), (float)(0.5 * height()) };
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
+            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                
+artNotice << "ArtMW::imgui file ... '" << filePathName << "'/'" << filePath << "'";
+                
+                switch(m_fileMode){
+                case FileMode::None:
+                    break;
+                case FileMode::Open:
+                    _open(filePathName);
+                    break;
+                case FileMode::Save:
+                    _save(filePathName);
+                    break;
+                case FileMode::Copy:
+                    _copy(filePathName);
+                    break;
+                }
+            }
+            ImGuiFileDialog::Instance()->Close();
+        }
+    }
 }
 
 void ArtMW::bar()
@@ -91,6 +272,8 @@ void ArtMW::new_drawing()
 {
     artInfo << "New drawing requested";
 }
+
+
 
 
 YQ_TACHYON_IMPLEMENT(ArtMW)

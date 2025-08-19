@@ -145,11 +145,24 @@ namespace yq::art {
             return nullptr;
         return m_objects[i.id];
     }
+
+    bool        Doc::save() const
+    {
+        if(m_file.empty())
+            return false;
+        return save_xml(m_file);
+    }
     
+    void    Doc::set_file(const std::filesystem::path& pth)
+    {
+        m_file  = pth;
+        bump();
+    }
+
     void        Doc::set_title(std::string_view t)
     {
         m_title = std::string(t);
-        //bump();
+        bump();
     }
 
     bool        Doc::valid(ID i) const
@@ -161,10 +174,13 @@ namespace yq::art {
 //  XML I/O
 
 
+
     void        Doc::save_to(XmlNode&xn) const
     {
         Abstract::save_to(xn);
         write_attribute(xn, "n", m_objects.size());
+        if(!m_title.empty())
+            write_child(xn, "title", m_title);
         for(const Obj* obj : m_objects){
             if(!obj)
                 continue;
@@ -179,6 +195,7 @@ namespace yq::art {
         auto n  = read_attribute(xn, "n", x_uint64);
         if(n)
             m_objects.resize(*n, nullptr);
+        m_title = read_child(xn, "title", x_string);
         for(const XmlNode* x = xn.first_node(); x; x = x -> next_sibling()){
             if(!is_upper(x->name()[0]))
                 continue;
