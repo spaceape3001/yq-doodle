@@ -17,10 +17,12 @@ namespace yq::art {
         template <typename> class Writer;
         ObjMeta(std::string_view zName, AbstractMeta& base, const std::source_location& sl=std::source_location::current());
         
-        virtual Obj*        create(Doc&) const = 0;
+        virtual Obj*            create(Doc&) const = 0;
         
+        const std::string&      category() const { return m_category; }
         
     private:
+        std::string             m_category;
     };
 
     template <typename> class ObjFixer;

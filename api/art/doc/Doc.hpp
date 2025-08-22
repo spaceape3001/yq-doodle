@@ -87,14 +87,13 @@ namespace yq::art {
         //! If there's a current filename, will save to it
         bool                save() const;
         
+        Doc();
+        virtual ~Doc();
         
     protected:
     
         virtual void        save_to(XmlNode&) const override;
         virtual bool        load_from(const XmlNode&) override;
-
-    public:         Doc();
-    protected:      virtual ~Doc();
 
     private:
         friend class DocMeta;

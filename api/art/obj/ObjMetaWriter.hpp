@@ -10,6 +10,11 @@
 #include <art/obj/AbstractMetaWriter.hpp>
 #include <type_traits>
 
+namespace yq::tachyon {
+    class Rendered;
+    class Scene;
+}
+
 namespace yq::art {
     template <typename C>
     class ObjMeta::Writer : public AbstractMeta::Writer<C> {
@@ -20,6 +25,14 @@ namespace yq::art {
         
         Writer(ObjMeta& dInfo) : Writer(&dInfo)
         {
+        }
+        
+        Writer& category(std::string_view cat)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_category    = std::string(cat);
+            }
+            return *this;
         }
 
     private:

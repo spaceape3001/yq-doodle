@@ -11,6 +11,10 @@
 #include <art/keywords.hpp>
 #include <artVk/ArtDocPtr.hpp>
 
+namespace yq::tachyon {
+    class Payload;
+}
+
 using namespace yq;
 using namespace yq::art;
 using namespace yq::tachyon;
@@ -46,6 +50,8 @@ public:
     
     void        edit_title();
 
+    void        action_create_new(const tachyon::Payload&);
+    
 private:
     FileMode    m_fileMode  = FileMode::None;
     
@@ -53,4 +59,7 @@ private:
     void    _copy(const std::filesystem::path&);
     void    _open(const std::filesystem::path&);
     void    _save(const std::filesystem::path&);
+    
+    const int               m_number;
+    static std::atomic<int> s_counter;
 };

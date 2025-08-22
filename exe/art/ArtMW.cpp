@@ -8,6 +8,8 @@
 #include <art/doc/Doc.hpp>
 #include <artVk/DocTypeMenuUI.hpp>
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/parameters.hpp>
+#include <tachyon/api/Payload.hpp>
 #include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/command/ui/TitleCommand.hpp>
@@ -17,6 +19,8 @@
 #include <algorithm>
 #include <ImGuiFileDialog.h>
 
+
+std::atomic<int> ArtMW::s_counter{0};
 
 void ArtMW::init_meta()
 {
@@ -39,7 +43,7 @@ void ArtMW::init_meta()
     /////////////////////////////////
     //  FILE MENU
 
-    file << new DocTypeMenuUI("New");
+    (file << new DocTypeMenuUI("New")).action(&ArtMW::action_create_new);
 
     file.menuitem("Open...", "Ctrl+O").action(&ArtMW::cmd_open);
     file.menuitem("Save", "Ctrl+S").action(&ArtMW::cmd_save);
@@ -87,7 +91,7 @@ void ArtMW::init_meta()
 
 }
 
-ArtMW::ArtMW(DocPtr p) : ArtDocPtr(p)
+ArtMW::ArtMW(DocPtr p) : ArtDocPtr(p), m_number(s_counter++)
 {
     assert(m_doc);
     if(!m_doc){
@@ -155,6 +159,33 @@ void ArtMW::_update(title_k)
     send(new TitleCommand({.source=*this, .target=TypedID(viewer().id, Type::Viewer)}, newTitle));
 }
 
+void ArtMW::action_create_new(const tachyon::Payload& pay)
+{
+    Application*    app = Application::app();
+    if(!app)
+        return ;
+        
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const DocMeta*   meta    = dynamic_cast<const DocMeta*>(itr.second);
+        if(!meta)
+            continue;
+            
+        Object*     obj = meta->create();
+        if(!obj)
+            continue;
+        
+        DocPtr      doc = dynamic_cast<Doc*>(obj);
+        if(!doc){
+            delete obj;
+            continue;
+        }
+        
+        
+        app->create(VIEWER, Tachyon::create<ArtMW>(doc));
+    }
+}
+
+
 void ArtMW::cmd_open()
 {
     IGFD::FileDialogConfig config;
@@ -211,7 +242,7 @@ void ArtMW::edit_title()
     char    data[kMax+1];
     size_t          mx  =    std::min<size_t>(m_doc->title().size(), kMax);
     strncpy(data, m_doc->title().data(), mx);
-    data[kMax]  = '\0';
+    data[mx]  = '\0';
     
     if(ImGui::InputText("##Title", data, kMax, ImGuiInputTextFlags_EnterReturnsTrue)){
         data[kMax]  = '\0';
@@ -272,7 +303,6 @@ void ArtMW::new_drawing()
 {
     artInfo << "New drawing requested";
 }
-
 
 
 

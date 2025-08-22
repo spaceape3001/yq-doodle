@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
 
     AppCreateInfo        aci;
     aci.thread.sim        = true;
+    aci.thread.viewer     = true;
     aci.view.title        = "Art";
     aci.view.resizable    = false;
     aci.view.size         = { 1920, 1080 };

@@ -16,6 +16,6 @@ namespace yq::art {
     
         static void init_meta();
         Library();
-        ~Library();
+        virtual ~Library();
     };
 }
