@@ -10,6 +10,7 @@
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/parameters.hpp>
 #include <tachyon/api/Payload.hpp>
+#include <tachyon/api/Tachyon.hxx>
 #include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/command/ui/TitleCommand.hpp>

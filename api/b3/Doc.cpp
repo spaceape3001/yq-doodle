@@ -15,9 +15,15 @@
 
 #include <yq/file/FileUtils.hpp>
 #include <yq/shape/AxBox2.hxx>
+#include <yq/vector/Vector2.hxx>
 #include <yq/vector/Vector3.hxx>
 
 YQ_OBJECT_IMPLEMENT(yq::b3::Doc)
+
+namespace yq {
+	// doing an explicit instantiation as this seems to be missing
+	template AxBox2D& AxBox2D::operator|=(const Vector2D&);
+}
 
 namespace yq::b3 {
     struct Doc::Handler {
