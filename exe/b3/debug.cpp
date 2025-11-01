@@ -5,11 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "b3.hpp"
-#include <b3/spatial/Point.hpp>
-#include <b3/spatial/PointLine.hpp>
-#include <b3/terrain/Terrain.hpp>
+#include <yq/b3/spatial/Point.hpp>
+#include <yq/b3/spatial/PointLine.hpp>
+#include <yq/b3/terrain/Terrain.hpp>
 
-#include <b3/Frame.hxx>
+#include <yq/b3/Frame.hxx>
 
 #include <iostream>
 

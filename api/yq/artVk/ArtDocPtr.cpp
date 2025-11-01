@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ArtDocPtr.hpp"
-#include <art/doc/Canvas.hpp>
+#include <yq/art/doc/Canvas.hpp>
 
 namespace yq::art {
     ArtDocPtr::ArtDocPtr()

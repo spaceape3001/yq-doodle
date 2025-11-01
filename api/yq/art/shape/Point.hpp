@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <art/obj/Obj.hpp>
-#include <art/shape/vertex.hpp>
+#include <yq/art/obj/Obj.hpp>
+#include <yq/art/shape/vertex.hpp>
 
 namespace yq::art {
 

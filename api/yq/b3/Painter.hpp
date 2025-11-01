@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/keywords.hpp>
-#include <b3/util/types.hpp>
+#include <yq/b3/keywords.hpp>
+#include <yq/b3/util/types.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/tensor/Tensor24.hpp>
 #include <yq/tensor/Tensor23.hpp>

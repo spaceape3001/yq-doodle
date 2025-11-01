@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Canvas2D.hpp"
-#include <doodle/space/Space2DMetaWriter.hpp>
-#include <doodle/Project.hpp>
+#include <yq/doodle/space/Space2DMetaWriter.hpp>
+#include <yq/doodle/Project.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Canvas2D)
 

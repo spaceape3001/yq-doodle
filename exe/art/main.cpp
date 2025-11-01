@@ -6,8 +6,8 @@
 
 #include "ArtApp.hpp"
 #include "ArtMW.hpp"
-#include <art/doc/Canvas.hpp>
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/art/doc/Canvas.hpp>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 int main(int argc, char* argv[])
 {

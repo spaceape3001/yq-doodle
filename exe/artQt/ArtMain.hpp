@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <gluon/app/UndoMainWindow.hpp>
-#include <artQt/DocumentQ.hpp>
+#include <yq/gluon/app/UndoMainWindow.hpp>
+#include <yq/artQt/DocumentQ.hpp>
 
 namespace yq::art {
     class EditorQ;

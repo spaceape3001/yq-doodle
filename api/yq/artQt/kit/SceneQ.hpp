@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <gluon/graphics/GraphicsScene.hpp>
-#include <artQt/DocumentQ.hpp>
+#include <yq/gluon/graphics/GraphicsScene.hpp>
+#include <yq/artQt/DocumentQ.hpp>
 
 namespace yq::art {
     class SceneQ : public gluon::GraphicsScene {

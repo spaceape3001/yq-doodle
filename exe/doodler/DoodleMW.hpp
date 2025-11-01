@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
-#include <doodle/typedef/project.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/doodle/typedef/project.hpp>
 
 using namespace yq;
 using namespace yq::doodle;

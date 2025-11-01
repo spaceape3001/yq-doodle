@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "StdTerrain.hpp"
-#include <b3/ObjMetaWriter.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::b3::StdTerrain)
 

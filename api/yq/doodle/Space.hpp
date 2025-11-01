@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodle/DObject.hpp>
+#include <yq/doodle/DObject.hpp>
 
 namespace yq::doodle {
     class SpaceMeta : public DObjectMeta {

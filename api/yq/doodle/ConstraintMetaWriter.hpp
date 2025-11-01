@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <doodle/DObjectMetaWriter.hpp>
-#include <doodle/Constraint.hpp>
+#include <yq/doodle/DObjectMetaWriter.hpp>
+#include <yq/doodle/Constraint.hpp>
 
 namespace yq::doodle {
     template <typename T>

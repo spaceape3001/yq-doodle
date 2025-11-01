@@ -6,9 +6,9 @@
 
 #include "Painter.hpp"
 
-#include <b3/logging.hpp>
-#include <b3/paint/PaintDevice.hpp>
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/paint/PaintDevice.hpp>
+#include <yq/b3/spatial/Point.hpp>
 
 #include <yq/shape/AxBox2.hpp>
 #include <yq/tensor/Tensor22.hpp>

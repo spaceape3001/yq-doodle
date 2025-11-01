@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <gluon/graphics/GraphicsView.hpp>
+#include <yq/gluon/graphics/GraphicsView.hpp>
 
 namespace yq::art {
     class SceneQ;

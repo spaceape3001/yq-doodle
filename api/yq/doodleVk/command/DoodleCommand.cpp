@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <doodleVk/command/DoodleCommand.hpp>
+#include <yq/doodleVk/command/DoodleCommand.hpp>
 
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::DoodleCommand)
 

@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Point.hpp"
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/Doc.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/Doc.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::b3::Point)
 

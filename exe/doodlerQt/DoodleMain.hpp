@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <gluon/app/UndoMainWindow.hpp>
-#include <doodleQt/ProjectQ.hpp>
+#include <yq/gluon/app/UndoMainWindow.hpp>
+#include <yq/doodleQt/ProjectQ.hpp>
 
 using namespace yq;
 using namespace yq::gluon;

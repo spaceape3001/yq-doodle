@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <doodle/logging.hpp>
-#include <doodle/Project.hpp>
-#include <doodle/Evaluator.hpp>
-#include <doodle/py/Curve.hpp>
-#include <doodle/py/Point.hpp>
-#include <doodle/Project.hxx>
+#include <yq/doodle/logging.hpp>
+#include <yq/doodle/Project.hpp>
+#include <yq/doodle/Evaluator.hpp>
+#include <yq/doodle/py/Curve.hpp>
+#include <yq/doodle/py/Point.hpp>
+#include <yq/doodle/Project.hxx>
 #include <yq/core/Any.hpp>
 #include <memory>
 #include <cmath>

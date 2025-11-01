@@ -7,8 +7,8 @@
 #include "DocumentQ.hpp"
 #include "DocumentQMetaWriter.hpp"
 
-#include <art/doc/Doc.hpp>
-#include <gluon/core/QtTypes.hpp>
+#include <yq/art/doc/Doc.hpp>
+#include <yq/gluon/core/QtTypes.hpp>
 #include <QTimer>
 
 YQ_OBJECTQ_IMPLEMENT(yq::art::DocumentQ)

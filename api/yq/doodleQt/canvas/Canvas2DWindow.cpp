@@ -15,8 +15,8 @@
     #undef emit
 #endif
 
-#include <doodle/logging.hpp>
-#include <gluon/logging.hpp>
+#include <yq/doodle/logging.hpp>
+#include <yq/gluon/logging.hpp>
 
 #ifdef emitQt
     #define emit emitQt

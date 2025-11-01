@@ -8,7 +8,7 @@
 #include <yq/process/PluginLoader.hpp>
 #include "DoodleApp.hpp"
 #include "DoodleMain.hpp"
-#include <gluon/core/Logging.hpp>
+#include <yq/gluon/core/Logging.hpp>
 #include <yq/meta/Meta.hpp>
 
 using namespace yq;

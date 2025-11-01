@@ -4,13 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <art/logging.hpp>
+#include <yq/art/logging.hpp>
 
 #include "CanvasEditor.hpp"
-#include <artQt/canvas/CanvasScene.hpp>
-#include <artQt/canvas/CanvasView.hpp>
-#include <artQt/kit/EditorQMetaWriter.hpp>
-#include <artQt/kit/ToolBarQ.hpp>
+#include <yq/artQt/canvas/CanvasScene.hpp>
+#include <yq/artQt/canvas/CanvasView.hpp>
+#include <yq/artQt/kit/EditorQMetaWriter.hpp>
+#include <yq/artQt/kit/ToolBarQ.hpp>
 #include <QHBoxLayout>
 #include <QToolButton>
 

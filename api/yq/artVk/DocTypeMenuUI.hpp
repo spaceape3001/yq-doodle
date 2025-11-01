@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UIMenu.hpp>
+#include <yq/tachyon/ui/UIMenu.hpp>
 
 namespace yq::art {
     class DocTypeMenuUI : public tachyon::UIMenu {

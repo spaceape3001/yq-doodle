@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/Frame.hpp>
+#include <yq/b3/Frame.hpp>
 #include <yq/container/Array.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/shape/AxBox2.hpp>

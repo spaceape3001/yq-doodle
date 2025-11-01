@@ -8,10 +8,10 @@
 #include "Frame.hxx"
 #include "Parser.hpp"
 
-#include <b3/logging.hpp>
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/spatial/Point.hpp>
-#include <b3/terrain/Terrain.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/spatial/Point.hpp>
+#include <yq/b3/terrain/Terrain.hpp>
 
 #include <yq/file/FileUtils.hpp>
 #include <yq/shape/AxBox2.hxx>

@@ -7,9 +7,9 @@
 #include "Frame.hpp"
 #include "Frame.hxx"
 
-#include <b3/logging.hpp>
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/spatial/Point.hpp>
 
 #include <yq/shape/AxBox2.hpp>
 #include <yq/tensor/Tensor23.hpp>

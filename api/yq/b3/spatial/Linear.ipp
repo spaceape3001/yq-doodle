@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Linear.hpp"
-#include <b3/logging.hpp>
-#include <b3/Parser.hpp>
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/spatial/Point.hpp>
 
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>

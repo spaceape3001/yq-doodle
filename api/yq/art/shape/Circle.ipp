@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Circle.hpp"
-#include <art/tags.hpp>
-#include <art/obj/ObjMetaWriter.hpp>
+#include <yq/art/tags.hpp>
+#include <yq/art/obj/ObjMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::art::Circle)
 

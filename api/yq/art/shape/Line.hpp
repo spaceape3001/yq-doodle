@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/shape/Shape.hpp>
+#include <yq/art/shape/Shape.hpp>
 
 namespace yq::art {
     class Line : public Shape {

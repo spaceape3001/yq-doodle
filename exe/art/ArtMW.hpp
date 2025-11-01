@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
-#include <art/forward.hpp>
-#include <art/keywords.hpp>
-#include <artVk/ArtDocPtr.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/art/forward.hpp>
+#include <yq/art/keywords.hpp>
+#include <yq/artVk/ArtDocPtr.hpp>
 
 namespace yq::tachyon {
     class Payload;

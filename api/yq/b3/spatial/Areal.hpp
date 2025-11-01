@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/spatial/PointLine.hpp>
+#include <yq/b3/spatial/PointLine.hpp>
 
 namespace yq::b3 {
 

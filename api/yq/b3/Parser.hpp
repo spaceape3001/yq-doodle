@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/typedef.hpp>
-#include <b3/spatial/PointType.hpp>
+#include <yq/b3/typedef.hpp>
+#include <yq/b3/spatial/PointType.hpp>
 
 #include <yq/container/Stack.hpp>
 #include <yq/container/Set.hpp>

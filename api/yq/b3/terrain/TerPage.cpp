@@ -6,7 +6,7 @@
 
 #include "TerPage.hpp"
 
-#include <b3/logging.hpp>
+#include <yq/b3/logging.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/hash/MD5.hpp>
 

@@ -8,9 +8,9 @@
 #include "DoodleApp.hpp"
 #include <QMenuBar>
 #include <QFileDialog>
-#include <doodleQt/Drawing2DWindow.hpp>
-#include <doodle/canvas/Drawing2D.hpp>
-#include <doodle/Project.hxx>
+#include <yq/doodleQt/Drawing2DWindow.hpp>
+#include <yq/doodle/canvas/Drawing2D.hpp>
+#include <yq/doodle/Project.hxx>
 #include <yq/core/Logging.hpp>
 
 DoodleMain::DoodleMain() : DoodleMain(new ProjectQ)

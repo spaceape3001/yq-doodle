@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <artQt/canvas/CanvasQ.hpp>
-#include <artQt/kit/EditorQ.hpp>
-#include <artQt/kit/GraphicsQ.hpp>
+#include <yq/artQt/canvas/CanvasQ.hpp>
+#include <yq/artQt/kit/EditorQ.hpp>
+#include <yq/artQt/kit/GraphicsQ.hpp>
 
 namespace yq::art {
     class SceneQ;

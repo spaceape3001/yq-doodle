@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Label.hpp"
-#include <b3/ObjMetaWriter.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
 #include <yq/text/join.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::b3::Label)

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "CanvasQ.hpp"
-#include <artQt/DocumentQMetaWriter.hpp>
+#include <yq/artQt/DocumentQMetaWriter.hpp>
 
 YQ_OBJECTQ_IMPLEMENT(yq::art::CanvasQ)
 

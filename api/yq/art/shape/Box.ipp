@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Box.hpp"
-#include <art/obj/ObjMetaWriter.hpp>
+#include <yq/art/obj/ObjMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::art::Box)
 

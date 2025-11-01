@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/obj/Obj.hpp>
+#include <yq/art/obj/Obj.hpp>
 
 namespace yq::art {
 

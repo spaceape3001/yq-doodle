@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PointLine.hpp"
-#include <b3/Frame.hpp>
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/Frame.hpp>
+#include <yq/b3/spatial/Point.hpp>
 #include <yq/math/trigonometry.hpp>
 #include <yq/vector/Vector2.hxx>
 #include <yq/vector/Vector3.hxx>

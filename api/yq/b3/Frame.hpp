@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/Obj.hpp>
-#include <b3/typedef.hpp>
+#include <yq/b3/Obj.hpp>
+#include <yq/b3/typedef.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/typedef/tensor23.hpp>
 

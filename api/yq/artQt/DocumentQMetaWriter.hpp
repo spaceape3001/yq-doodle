@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <gluon/core/ObjectQMetaWriter.hpp>
-#include <artQt/DocumentQ.hpp>
+#include <yq/gluon/core/ObjectQMetaWriter.hpp>
+#include <yq/artQt/DocumentQ.hpp>
 
 namespace yq::art {
     template <typename C>

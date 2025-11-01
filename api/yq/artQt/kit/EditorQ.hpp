@@ -8,7 +8,7 @@
 
 #include <yq/trait/no_hidden_warning.hpp>
 #include <yq/core/Object.hpp>
-#include <artQt/DocumentQ.hpp>
+#include <yq/artQt/DocumentQ.hpp>
 #include <yq/typedef/string_pairs.hpp>
 
 namespace yq::gluon {

@@ -11,11 +11,11 @@
 #include <yq/core/Any.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/container/Map.hpp>
-#include <doodle/bit/Dim.hpp>
-#include <doodle/bit/ID.hpp>
-#include <doodle/typedef/revision.hpp>
-#include <doodle/typedef/dobject.hpp>
-#include <doodle/keywords.hpp>
+#include <yq/doodle/bit/Dim.hpp>
+#include <yq/doodle/bit/ID.hpp>
+#include <yq/doodle/typedef/revision.hpp>
+#include <yq/doodle/typedef/dobject.hpp>
+#include <yq/doodle/keywords.hpp>
 #include <yq/typedef/string_vectors.hpp>
 #include <yq/typedef/xml.hpp>
 #include <unordered_map>

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <b3/logging.hpp>
-#include <b3/Doc.hpp>
-#include <b3/Parser.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/Parser.hpp>
 
 using namespace yq;
 using namespace yq::b3;

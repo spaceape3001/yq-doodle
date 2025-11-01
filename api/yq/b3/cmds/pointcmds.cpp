@@ -4,15 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/Doc.hpp>
-#include <b3/Parser.hpp>
-#include <b3/spatial/Point.hpp>
-#include <b3/spatial/PointLine.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/spatial/Point.hpp>
+#include <yq/b3/spatial/PointLine.hpp>
 #include <yq/math/trigonometry.hpp>
 
 #include <format>
 #include <iostream>
-#include <b3/Frame.hxx>
+#include <yq/b3/Frame.hxx>
 #include <yq/shape/AxBox2.hxx>
 #include <yq/vector/Vector3.hxx>
 

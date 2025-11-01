@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/ObjectMetaWriter.hpp>
-#include <artQt/kit/EditorQ.hpp>
+#include <yq/artQt/kit/EditorQ.hpp>
 
 #define YQ_EDITORQ_IMPLEMENT(...) YQ_OBJECT_IMPLEMENT(__VA_ARGS__)
 

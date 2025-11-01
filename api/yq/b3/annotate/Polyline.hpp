@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/Frame.hpp>
-#include <b3/spatial/PointLine.hpp>
+#include <yq/b3/Frame.hpp>
+#include <yq/b3/spatial/PointLine.hpp>
 
 namespace yq::b3 {
     class Polyline : public Frame, public PointLine {

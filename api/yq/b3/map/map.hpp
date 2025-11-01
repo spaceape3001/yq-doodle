@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/typedef.hpp>
+#include <yq/b3/typedef.hpp>
 #include <yq/units.hpp>
 #include <yq/shape/AxBox2.hpp>
 

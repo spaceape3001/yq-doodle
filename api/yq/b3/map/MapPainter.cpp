@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MapPainter.hpp"
-#include <b3/Doc.hpp>
-#include <b3/paint/PaintDevice.hpp>
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/paint/PaintDevice.hpp>
+#include <yq/b3/spatial/Point.hpp>
 #include <yq/meta/UntypeMetaWriter.hpp>
 #include <yq/shape/Circle2.hpp>
 #include <yq/shape/Segment2.hpp>

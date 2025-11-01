@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <gluon/model/ColumnModel.hxx>
-#include <gluon/model/RowTableModel.hxx>
+#include <yq/gluon/model/ColumnModel.hxx>
+#include <yq/gluon/model/RowTableModel.hxx>
 
 #include "DObjectTableModel.hpp"
 #include <yq/algorithm/DiffEngine.hpp>

@@ -7,7 +7,7 @@
 #include "Space3D.hpp"
 #include "Space3D.hxx"
 #include "Space3DMetaWriter.hpp"
-#include <doodle/utility.hpp>
+#include <yq/doodle/utility.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space3D)
 

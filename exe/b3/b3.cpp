@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
-#include <b3/logging.hpp>
-#include <b3/Doc.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/Doc.hpp>
 #include <yq/container/StringMap.hpp>
 #include <yq/container/StringVector.hpp>
 #include <yq/core/BasicApp.hpp>

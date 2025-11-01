@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <gluon/graphics/GraphicsScene.hpp>
-#include <doodle/bit/ID.hpp>
+#include <yq/gluon/graphics/GraphicsScene.hpp>
+#include <yq/doodle/bit/ID.hpp>
 #include <yq/core/Ref.hpp>
 
 namespace yq::doodle {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <doodle/DObjectMetaWriter.hpp>
-#include <doodle/Py.hpp>
+#include <yq/doodle/DObjectMetaWriter.hpp>
+#include <yq/doodle/Py.hpp>
 
 namespace yq::doodle {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/grid/Grid.hpp>
+#include <yq/b3/grid/Grid.hpp>
 
 namespace yq::b3 {
     class TriGrid : public Grid {

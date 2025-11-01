@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/Doc.hpp>
-#include <b3/Parser.hpp>
-#include <b3/spatial/Linear.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/spatial/Linear.hpp>
 
 using namespace yq;
 using namespace yq::b3;

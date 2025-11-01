@@ -6,7 +6,7 @@
 
 #include "ProjectQ.hpp"
 
-#include <gluon/core/QtTypes.hpp>
+#include <yq/gluon/core/QtTypes.hpp>
 #include <QTimer>
 
 using namespace yq::gluon;

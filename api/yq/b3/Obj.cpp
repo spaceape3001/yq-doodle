@@ -7,9 +7,9 @@
 #include "Obj.hpp"
 #include "Obj.hxx"
 
-#include <b3/logging.hpp>
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/annotate/Style.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/annotate/Style.hpp>
 
 #include <yq/container/Stack.hpp>
 #include <yq/macro/debugrel.hpp>

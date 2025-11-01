@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodle/Py.hpp>
+#include <yq/doodle/Py.hpp>
 
 namespace yq::doodle {
     class Circle : public Py {

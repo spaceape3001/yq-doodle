@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <doodle/Space.hpp>
-#include <doodle/keywords.hpp>
+#include <yq/doodle/Space.hpp>
+#include <yq/doodle/keywords.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/typedef/range.hpp>
 #include <yq/typedef/vector2.hpp>

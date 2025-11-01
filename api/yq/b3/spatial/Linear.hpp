@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/Frame.hpp>
+#include <yq/b3/Frame.hpp>
 #include <yq/tensor/Tensor33.hpp>
 #include <yq/vector/Vector3.hpp>
 

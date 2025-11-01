@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/keywords.hpp>
-#include <b3/spatial/Linear.hpp>
+#include <yq/b3/keywords.hpp>
+#include <yq/b3/spatial/Linear.hpp>
 #include <yq/shape/AxBox2.hpp>
 
 namespace yq::b3 {

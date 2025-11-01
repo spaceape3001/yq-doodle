@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <gluon/app/SubWindow.hpp>
+#include <yq/gluon/app/SubWindow.hpp>
 #include <yq/core/Ref.hpp>
-#include <doodle/bit/ID.hpp>
+#include <yq/doodle/bit/ID.hpp>
 
 class QBrush;
 class QPen;

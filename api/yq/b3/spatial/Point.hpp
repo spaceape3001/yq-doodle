@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/Obj.hpp>
-#include <b3/spatial/PointType.hpp>
+#include <yq/b3/Obj.hpp>
+#include <yq/b3/spatial/PointType.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 

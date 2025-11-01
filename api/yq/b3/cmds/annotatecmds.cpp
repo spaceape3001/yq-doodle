@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/Doc.hpp>
-#include <b3/Parser.hpp>
-#include <b3/annotate/Circle.hpp>
-#include <b3/annotate/Label.hpp>
-#include <b3/annotate/Polyline.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/annotate/Circle.hpp>
+#include <yq/b3/annotate/Label.hpp>
+#include <yq/b3/annotate/Polyline.hpp>
 
 using namespace yq;
 using namespace yq::b3;

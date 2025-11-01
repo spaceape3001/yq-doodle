@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodleQt/canvas/Canvas2DWindow.hpp>
+#include <yq/doodleQt/canvas/Canvas2DWindow.hpp>
 
 namespace yq::doodle {
     //! 2D Drawing

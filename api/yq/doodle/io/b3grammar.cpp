@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <doodle/io/b3grammar.hpp>
+#include <yq/doodle/io/b3grammar.hpp>
 #include <yq/errors.hpp>
 #include <yq/text/chars.hpp>
 

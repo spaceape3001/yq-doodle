@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UIWindow.hpp>
+#include <yq/tachyon/ui/UIWindow.hpp>
 
 using namespace yq::tachyon;
 using namespace yq::doodle;

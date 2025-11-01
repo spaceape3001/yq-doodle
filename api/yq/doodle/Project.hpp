@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <doodle/keywords.hpp>
-#include <doodle/bit/ID.hpp>
-#include <doodle/typedef/project.hpp>
-#include <doodle/typedef/dobject.hpp>
-#include <doodle/typedef/id.hpp>
-#include <doodle/typedef/revision.hpp>
+#include <yq/doodle/keywords.hpp>
+#include <yq/doodle/bit/ID.hpp>
+#include <yq/doodle/typedef/project.hpp>
+#include <yq/doodle/typedef/dobject.hpp>
+#include <yq/doodle/typedef/id.hpp>
+#include <yq/doodle/typedef/revision.hpp>
 #include <filesystem>
 #include <vector>
 #include <yq/container/Map.hpp>

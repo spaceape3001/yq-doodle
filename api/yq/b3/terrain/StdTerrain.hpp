@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/terrain/Terrain.hpp>
+#include <yq/b3/terrain/Terrain.hpp>
 
 namespace yq::b3 {
     class  StdTerrain : public Terrain {

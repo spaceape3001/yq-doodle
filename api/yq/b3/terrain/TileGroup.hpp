@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/Frame.hpp>
+#include <yq/b3/Frame.hpp>
 
 namespace yq::b3 {
     class TileGroup : public Frame {

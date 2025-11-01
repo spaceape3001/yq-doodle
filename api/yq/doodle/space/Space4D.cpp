@@ -10,7 +10,7 @@
 #include <yq/math/Range.hpp>
 #include <yq/shape/AxBox4.hpp>
 #include <yq/shape/AxBox4.hxx>
-#include <doodle/utility.hpp>
+#include <yq/doodle/utility.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::doodle::Space4D)
 

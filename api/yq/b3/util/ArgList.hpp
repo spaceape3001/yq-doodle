@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/typedef.hpp>
-#include <b3/util/types.hpp>
+#include <yq/b3/typedef.hpp>
+#include <yq/b3/util/types.hpp>
 
 #include <yq/units.hpp>
 #include <yq/container/Set.hpp>

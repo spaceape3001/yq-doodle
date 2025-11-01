@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodle/Space.hpp>
+#include <yq/doodle/Space.hpp>
 #include <yq/shape/AxBox4.hpp>
 #include <yq/typedef/range.hpp>
 #include <yq/typedef/vector4.hpp>

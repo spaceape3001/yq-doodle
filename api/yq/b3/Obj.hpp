@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <b3/typedef.hpp>
-#include <b3/util/ArgList.hpp>
-#include <b3/util/ArgMap.hpp>
+#include <yq/b3/typedef.hpp>
+#include <yq/b3/util/ArgList.hpp>
+#include <yq/b3/util/ArgMap.hpp>
 
 #include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>

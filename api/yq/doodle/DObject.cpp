@@ -7,7 +7,7 @@
 #include "DObject.hpp"
 #include "DObjectMetaWriter.hpp"
 
-#include <doodle/Project.hpp>
+#include <yq/doodle/Project.hpp>
 
 namespace yq::doodle {
     struct DObject::Repo {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <doodle/DObjectMetaWriter.hpp>
-#include <doodle/Motion.hpp>
+#include <yq/doodle/DObjectMetaWriter.hpp>
+#include <yq/doodle/Motion.hpp>
 
 namespace yq::doodle {
     template <typename T>

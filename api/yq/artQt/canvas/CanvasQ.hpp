@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <art/doc/Canvas.hpp>
-#include <artQt/DocumentQ.hpp>
+#include <yq/art/doc/Canvas.hpp>
+#include <yq/artQt/DocumentQ.hpp>
 
 namespace yq::art {
     class CanvasQ : public DocumentQ {

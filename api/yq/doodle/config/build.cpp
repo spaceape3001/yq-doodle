@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <doodle/config/build.hpp>
+#include <yq/doodle/config/build.hpp>
 
 namespace yq::doodle {
     //! The share path to the one inside the build directory;

@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/Doc.hpp>
-#include <b3/Parser.hpp>
-#include <b3/util/parse.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/util/parse.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/transform.hpp>
 #include <iostream>

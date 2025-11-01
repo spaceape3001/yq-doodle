@@ -8,11 +8,11 @@
 
 #include <yq/trait/no_hidden_warning.hpp>
 #include <QObject>
-#include <art/forward.hpp>
+#include <yq/art/forward.hpp>
 #include <yq/core/Ref.hpp>
-#include <gluon/core/RefQ.hpp>
-#include <gluon/core/ObjectQ.hpp>
-#include <art/doc/Doc.hpp>
+#include <yq/gluon/core/RefQ.hpp>
+#include <yq/gluon/core/ObjectQ.hpp>
+#include <yq/art/doc/Doc.hpp>
 
 class QTimer;
 class QWidget;

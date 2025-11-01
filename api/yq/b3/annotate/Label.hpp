@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/Obj.hpp>
+#include <yq/b3/Obj.hpp>
 
 namespace yq::b3 {
 

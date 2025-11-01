@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DoodleMW.hpp"
-#include <doodle/Project.hpp>
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
-#include <tachyon/ui/UIWriters.hxx>
+#include <yq/doodle/Project.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/core/Logging.hpp>
 
 void DoodleMW::init_meta()

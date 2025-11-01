@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <doodle/typedef/id.hpp>
-#include <doodle/bit/ID.hpp>
-#include <gluon/model/RowTableModel.hpp>
+#include <yq/doodle/typedef/id.hpp>
+#include <yq/doodle/bit/ID.hpp>
+#include <yq/gluon/model/RowTableModel.hpp>
 
 namespace yq::doodle {
     class Project;

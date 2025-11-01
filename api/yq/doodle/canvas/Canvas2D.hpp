@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <doodle/space/Space2D.hpp>
-#include <doodle/Canvas.hpp>
+#include <yq/doodle/space/Space2D.hpp>
+#include <yq/doodle/Canvas.hpp>
 #include <yq/units.hpp>
 #include <yq/shape/AxSide2.hpp>
 

@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "TerTile.hpp"
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/terrain/Terrain.hpp>
-#include <b3/terrain/TerPage.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/terrain/Terrain.hpp>
+#include <yq/b3/terrain/TerPage.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/shape/AxBox2.hxx>
 #include <yq/vector/Vector2.hxx>

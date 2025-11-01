@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/Parser.hpp>
-#include <b3/annotate/Style.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/annotate/Style.hpp>
 
 using namespace yq;
 using namespace yq::b3;

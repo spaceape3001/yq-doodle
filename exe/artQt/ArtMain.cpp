@@ -4,21 +4,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <art/logging.hpp>
+#include <yq/art/logging.hpp>
 
 #include "ArtMain.hpp"
 #include "ArtApp.hpp"
 #include "DocEditor.hpp"
 
-#include <art/doc/Canvas.hpp>
-#include <artQt/kit/EditorQ.hpp>
-#include <gluon/core/QtTypes.hpp>
+#include <yq/art/doc/Canvas.hpp>
+#include <yq/artQt/kit/EditorQ.hpp>
+#include <yq/gluon/core/QtTypes.hpp>
 
 #include <QMenuBar>
 #include <QFileDialog>
-//#include <doodleQt/Drawing2DWindow.hpp>
-//#include <doodle/canvas/Drawing2D.hpp>
-//#include <doodle/Project.hxx>
+//#include <yq/doodleQt/Drawing2DWindow.hpp>
+//#include <yq/doodle/canvas/Drawing2D.hpp>
+//#include <yq/doodle/Project.hxx>
 
 ArtMain::ArtMain() : ArtMain(defaultDocument())
 {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/paint/PaintDevice.hpp>
+#include <yq/b3/paint/PaintDevice.hpp>
 #include <filesystem>
 #include <system_error>
 

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <b3/Obj.hpp>
-#include <b3/Frame.hpp>
+#include <yq/b3/Obj.hpp>
+#include <yq/b3/Frame.hpp>
 
 namespace yq::b3 {
     template <typename O>

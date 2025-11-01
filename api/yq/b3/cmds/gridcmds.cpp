@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/Doc.hpp>
-#include <b3/Parser.hpp>
-#include <b3/grid/HexGrid.hpp>
-#include <b3/grid/PieGrid.hpp>
-#include <b3/grid/RectGrid.hpp>
-#include <b3/grid/TriGrid.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/Parser.hpp>
+#include <yq/b3/grid/HexGrid.hpp>
+#include <yq/b3/grid/PieGrid.hpp>
+#include <yq/b3/grid/RectGrid.hpp>
+#include <yq/b3/grid/TriGrid.hpp>
 #include <yq/text/match.hpp>
 
 using namespace yq;

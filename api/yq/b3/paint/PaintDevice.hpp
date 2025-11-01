@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/keywords.hpp>
+#include <yq/b3/keywords.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/typedef/circle2.hpp>

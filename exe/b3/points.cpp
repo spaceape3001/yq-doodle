@@ -6,7 +6,7 @@
 
 #include "b3.hpp"
 
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/spatial/Point.hpp>
 #include <yq/container/Array.hpp>
 #include <yq/text/format.hpp>
 #include <array>

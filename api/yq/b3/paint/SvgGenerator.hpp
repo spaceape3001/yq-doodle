@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <b3/paint/PaintDevice.hpp>
+#include <yq/b3/paint/PaintDevice.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/typedef/xml.hpp>

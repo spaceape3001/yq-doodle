@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <doodle/space/Space2D.hpp>
+#include <yq/doodle/space/Space2D.hpp>
 
 namespace yq::doodle {
     class Space2ZMeta : public Space2DMeta {

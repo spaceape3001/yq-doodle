@@ -12,8 +12,8 @@
 #include <yq/xml/XmlUtils.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/errors.hpp>
-#include <doodle/strings.hpp>
-#include <doodle/logging.hpp>
+#include <yq/doodle/strings.hpp>
+#include <yq/doodle/logging.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/text/match.hpp>
 #include <yq/tags.hpp>

@@ -6,8 +6,8 @@
 
 #include "Obj.hpp"
 
-#include <art/doc/Doc.hpp>
-#include <art/obj/ObjMetaWriter.hpp>
+#include <yq/art/doc/Doc.hpp>
+#include <yq/art/obj/ObjMetaWriter.hpp>
 
 #include <yq/core/Any.hpp>
 #include <yq/xml/XmlUtils.hpp>

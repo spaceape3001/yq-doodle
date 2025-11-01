@@ -6,10 +6,10 @@
 
 #include "Doc.hpp"
 
-#include <art/logging.hpp>
-#include <art/tags.hpp>
-#include <art/doc/DocMetaWriter.hpp>
-#include <art/obj/Obj.hpp>
+#include <yq/art/logging.hpp>
+#include <yq/art/tags.hpp>
+#include <yq/art/doc/DocMetaWriter.hpp>
+#include <yq/art/obj/Obj.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/core/Any.hpp>
 #include <yq/file/FileUtils.hpp>

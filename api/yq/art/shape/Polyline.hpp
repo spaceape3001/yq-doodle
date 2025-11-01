@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/shape/Vertices.hpp>
+#include <yq/art/shape/Vertices.hpp>
 
 namespace yq::art {
     class Polyline : public Vertices {

@@ -7,9 +7,9 @@
 #pragma once
 
 #include <QObject>
-#include <doodle/Project.hpp>
+#include <yq/doodle/Project.hpp>
 #include <yq/core/Ref.hpp>
-#include <gluon/core/RefQ.hpp>
+#include <yq/gluon/core/RefQ.hpp>
 
 class QTimer;
 

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <artQt/kit/SceneQ.hpp>
-#include <artQt/canvas/CanvasQ.hpp>
+#include <yq/artQt/kit/SceneQ.hpp>
+#include <yq/artQt/canvas/CanvasQ.hpp>
 
 namespace yq::art {
     class CanvasScene : public SceneQ {

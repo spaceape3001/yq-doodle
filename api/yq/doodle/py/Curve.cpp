@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Curve.hpp"
-#include <doodle/PyMetaWriter.hpp>
+#include <yq/doodle/PyMetaWriter.hpp>
 #include <algorithm>
 
 YQ_DOODLE_IMPLEMENT(yq::doodle::Curve)

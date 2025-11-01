@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <art/logging.hpp>
+#include <yq/art/logging.hpp>
 
 #include "ArtApp.hpp"
 #include "ArtMain.hpp"
 
 
-#include <art/doc/Canvas.hpp>
-#include <artQt/canvas/CanvasQ.hpp>
+#include <yq/art/doc/Canvas.hpp>
+#include <yq/artQt/canvas/CanvasQ.hpp>
 #include <yq/meta/Meta.hpp>
 #include <yq/process/PluginLoader.hpp>
 

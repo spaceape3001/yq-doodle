@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <doodle/SpaceMetaWriter.hpp>
-#include <doodle/space/Space4D.hpp>
+#include <yq/doodle/SpaceMetaWriter.hpp>
+#include <yq/doodle/space/Space4D.hpp>
 
 namespace yq::doodle {
     template <typename T>

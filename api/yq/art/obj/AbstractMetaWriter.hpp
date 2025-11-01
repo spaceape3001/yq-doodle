@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/obj/Abstract.hpp>
+#include <yq/art/obj/Abstract.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/meta/UntypeMeta.hpp>
 

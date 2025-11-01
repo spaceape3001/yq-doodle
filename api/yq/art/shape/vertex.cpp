@@ -6,7 +6,7 @@
 
 #include "vertex.hpp"
 
-#include <art/logging.hpp>
+#include <yq/art/logging.hpp>
 #include <yq/xml/XmlUtils.hpp>
 
 #include <yq/coord/Polar2.hxx>

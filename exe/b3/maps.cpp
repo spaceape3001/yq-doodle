@@ -6,9 +6,9 @@
 
 #include "b3.hpp"
 
-#include <b3/map/map.hpp>
-#include <b3/paint/SvgGenerator.hpp>
-#include <b3/paint/RasterGenerator.hpp>
+#include <yq/b3/map/map.hpp>
+#include <yq/b3/paint/SvgGenerator.hpp>
+#include <yq/b3/paint/RasterGenerator.hpp>
 #include <yq/shape/AxBox2.hxx>
 
 using namespace yq;

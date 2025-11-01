@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <b3/logging.hpp>
-#include <b3/Doc.hpp>
-#include <b3/ObjMetaWriter.hpp>
-#include <b3/map/MapPainter.hpp>
-#include <b3/paint/PaintDevice.hpp>
-#include <b3/spatial/Point.hpp>
+#include <yq/b3/logging.hpp>
+#include <yq/b3/Doc.hpp>
+#include <yq/b3/ObjMetaWriter.hpp>
+#include <yq/b3/map/MapPainter.hpp>
+#include <yq/b3/paint/PaintDevice.hpp>
+#include <yq/b3/spatial/Point.hpp>
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/shape/Circle2.hpp>

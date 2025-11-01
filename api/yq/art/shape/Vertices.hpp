@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <art/shape/Shape.hpp>
+#include <yq/art/shape/Shape.hpp>
 
 namespace yq::art {
     //! Abstract shape that's a collection of vertices (ie... common base to polygon & polyline)

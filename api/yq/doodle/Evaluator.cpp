@@ -7,7 +7,7 @@
 #include "Evaluator.hpp"
 #include "Project.hpp"
 #include "DObject.hpp"
-#include <doodle/typedef/revision.hpp>
+#include <yq/doodle/typedef/revision.hpp>
 #include <yq/errors.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/UniqueID.hpp>
@@ -16,7 +16,7 @@
 #include <yq/text/match32.hpp>
 #include <yq/userexpr/Context.hpp>
 #include <yq/userexpr/UserExpr.hpp>
-#include <doodle/logging.hpp>
+#include <yq/doodle/logging.hpp>
 #include "Project.hxx"
 
 namespace yq::doodle {
