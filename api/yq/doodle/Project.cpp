@@ -219,7 +219,11 @@ namespace yq::doodle {
     bool     Project::census(Census&, const std::filesystem::path& fp)
     {
         XmlDocument prj;
-        std::error_code ec  = read_file(prj, fp);
+        ByteArray   bytes   = file_bytes(fp);
+        if(bytes.empty())
+            return false;
+        
+        std::error_code ec  = parse_xml(prj, bytes);
         if(ec != std::error_code())
             return false;
         const XmlNode* root = prj.first_node(szD3X);
@@ -370,16 +374,8 @@ namespace yq::doodle {
     bool         Project::load_xml(ByteArray& bytes, generator_fn&& fn)
     {
         XmlDocument prj;
-        bytes << '\0';  // safety....
-
-        try {
-            prj.parse<0>(bytes.data());
-        } catch(const rapidxml::parse_error& pe){
-            size_t  pt  = pe.where<char>() - bytes.data();
-            doodleError << "Xml parse error: " << pe.what() << " (at byte " << pt << ")";
+        if(parse_xml(prj, bytes) != std::error_code())
             return false;
-        }
-        
         Project*p   = fn();
         if(!p)
             return false;

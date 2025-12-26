@@ -242,7 +242,8 @@ namespace yq::art {
     DocPtr       Doc::load_xml(const std::filesystem::path& file)
     {
         XmlDocument xdoc;
-        if(read_file(xdoc, file) != std::error_code())
+        ByteArray   bytes   = file_bytes(file);
+        if(parse_xml(xdoc, bytes)  != std::error_code())
             return {};
         return load_xml(xdoc);
     }
@@ -250,17 +251,9 @@ namespace yq::art {
     DocPtr       Doc::load_xml(const ByteArray& bytes)
     {
         ByteArray       copy    = bytes;
-        copy << '\0';
         XmlDocument     doc;
-        try {
-            doc.parse<0>(copy.data());
-        }
-        catch(const rapidxml::parse_error&pe){
-            size_t  pt  = pe.where<char>() - copy.data();
-            artError << "Xml parse error: " << pe.what() << " (at byte " << pt << ")";
+        if(parse_xml(doc, copy)  != std::error_code())
             return {};
-        }
-        
         return load_xml(doc);
     }
 
