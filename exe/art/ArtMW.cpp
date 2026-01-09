@@ -21,6 +21,8 @@
 #include <ImGuiFileDialog.h>
 
 
+#include <yq/tachyon/ui/UIElementWriter.hxx>
+
 std::atomic<int> ArtMW::s_counter{0};
 
 void ArtMW::init_meta()
@@ -37,7 +39,7 @@ void ArtMW::init_meta()
     auto view       = mmb.menu("View");
     auto artM       = mmb.menu("Art");
     auto help       = mmb.menu("Help");
-    auto rhs        = mmb.right(ALIGN);
+    auto rhs        = mmb.make<UIRightAlign>();
     
     rhs.callback(&ArtMW::edit_title);
 

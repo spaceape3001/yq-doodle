@@ -14,6 +14,7 @@ add_executable(art
 target_link_libraries(art 
 PUBLIC 
     yq_art
+    yq_assetvk
     yq_tachyon 
     yq_artVk
 

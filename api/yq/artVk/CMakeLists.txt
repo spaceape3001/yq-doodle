@@ -14,5 +14,6 @@ target_link_libraries(yq_artVk
     PUBLIC
         yq_art
         yq_tachyon
+        yq_assetvk
 )
 LinkTest(yq_artVk)
