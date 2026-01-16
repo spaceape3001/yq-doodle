@@ -9,6 +9,7 @@
 
 #include <yq/art/doc/Doc.hpp>
 #include <yq/gluon/core/QtTypes.hpp>
+#include <yq/gluon/core/ustring.hpp>
 #include <QTimer>
 
 YQ_OBJECTQ_IMPLEMENT(yq::art::DocumentQ)

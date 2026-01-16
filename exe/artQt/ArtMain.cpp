@@ -13,6 +13,7 @@
 #include <yq/art/doc/Canvas.hpp>
 #include <yq/artQt/kit/EditorQ.hpp>
 #include <yq/gluon/core/QtTypes.hpp>
+#include <yq/gluon/core/ustring.hpp>
 
 #include <QMenuBar>
 #include <QFileDialog>

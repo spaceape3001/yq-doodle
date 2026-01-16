@@ -7,6 +7,7 @@
 #include "ProjectQ.hpp"
 
 #include <yq/gluon/core/QtTypes.hpp>
+#include <yq/gluon/core/ustring.hpp>
 #include <QTimer>
 
 using namespace yq::gluon;
