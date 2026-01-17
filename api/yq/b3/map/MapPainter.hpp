@@ -8,7 +8,7 @@
 
 #include <yq/b3/keywords.hpp>
 #include <yq/b3/Painter.hpp>
-#include <yq/b3/util/types.hpp>
+#include <yq/b3fmt/types.hpp>
 
 #include <yq/units.hpp>
 #include <yq/meta/MetaBinder.hpp>

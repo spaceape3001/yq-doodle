@@ -17,18 +17,18 @@
 
 namespace yq::b3::parse {
 
-    unit::Degree    angle(std::string_view v, unit::Degree def)
-    {
-        return unit::Degree{real(v, def.value)};
-    }
+    //unit::Degree    angle(std::string_view v, unit::Degree def)
+    //{
+        //return unit::Degree{real(v, def.value)};
+    //}
 
-    bool    boolean(std::string_view v, bool def)
-    {
-        auto x = to_boolean(v);
-        if(!x)
-            return def;
-        return *x;
-    }
+    //bool    boolean(std::string_view v, bool def)
+    //{
+        //auto x = to_boolean(v);
+        //if(!x)
+            //return def;
+        //return *x;
+    //}
 
     Brush           brush(std::string_view v)
     {
@@ -44,79 +44,79 @@ namespace yq::b3::parse {
             return { std::move(k) };
     }
 
-    CoordN              coord(std::string_view v)
-    {
-        CoordN      ret;
-        vsplit(v, ',', [&](std::string_view s){
-            if(s.empty())
-                return;
-            ret.indices.push_back(integer(s));
-        });
-        return ret;
-    }
+    //CoordN              coord(std::string_view v)
+    //{
+        //CoordN      ret;
+        //vsplit(v, ',', [&](std::string_view s){
+            //if(s.empty())
+                //return;
+            //ret.indices.push_back(integer(s));
+        //});
+        //return ret;
+    //}
     
-    Coord2I             coord2(std::string_view v)
-    {
-        return (Coord2I) coord(v);
-    }
+    //Coord2I             coord2(std::string_view v)
+    //{
+        //return (Coord2I) coord(v);
+    //}
     
-    Coord3I             coord3(std::string_view v)
-    {
-        return (Coord3I) coord(v);
-    }
+    //Coord3I             coord3(std::string_view v)
+    //{
+        //return (Coord3I) coord(v);
+    //}
 
-    CountN              count(std::string_view v)
-    {
-        CountN      ret;
-        vsplit(v, ',', [&](std::string_view s){
-            if(s.empty())
-                return;
-            ret.axes.push_back(integer(s));
-        });
-        return ret;
-    }
+    //CountN              count(std::string_view v)
+    //{
+        //CountN      ret;
+        //vsplit(v, ',', [&](std::string_view s){
+            //if(s.empty())
+                //return;
+            //ret.axes.push_back(integer(s));
+        //});
+        //return ret;
+    //}
 
-    Font            font(std::string_view v)
-    {
-        Font    ret;
-        auto bits = split(v,',');
-        if(bits.size() > 0)
-            ret.family    = std::string(bits[0]);
-        if(bits.size() > 1)
-            ret.size = real(bits[1]);
-        return ret;
-    }
+    //Font            font(std::string_view v)
+    //{
+        //Font    ret;
+        //auto bits = split(v,',');
+        //if(bits.size() > 0)
+            //ret.family    = std::string(bits[0]);
+        //if(bits.size() > 1)
+            //ret.size = real(bits[1]);
+        //return ret;
+    //}
 
-    int                 integer(std::string_view v, int def)
-    {
-        auto x =  to_integer(v);
-        if(!x)
-            return def;
-        return *x;
-    }
+    //int                 integer(std::string_view v, int def)
+    //{
+        //auto x =  to_integer(v);
+        //if(!x)
+            //return def;
+        //return *x;
+    //}
 
-    IntegerSet          integer_set(std::string_view v)
-    {
-        IntegerSet      ret;
-        vsplit(v, ',', [&](std::string_view s){
-            if(s.empty())
-                return;
-            ret.insert(integer(s));
-        });
-        return ret;
-    }
+    //IntegerSet          integer_set(std::string_view v)
+    //{
+        //IntegerSet      ret;
+        //vsplit(v, ',', [&](std::string_view s){
+            //if(s.empty())
+                //return;
+            //ret.insert(integer(s));
+        //});
+        //return ret;
+    //}
     
-    RangeI          irange(std::string_view v, const RangeI& def)
-    {
-        auto n  = v.find("..");
-        if(n != std::string_view::npos){
-            auto    a   = v.substr(0,n);
-            auto    b   = v.substr(n+2);
-            return { integer(a, def.lo), integer(b, def.hi) };
-        } else {
-            return { integer(v, def.lo), integer(v, def.hi) };
-        }
-    }
+    //RangeI          irange(std::string_view v, const RangeI& def)
+    //{
+        //auto n  = v.find("..");
+        //if(n != std::string_view::npos){
+            //auto    a   = v.substr(0,n);
+            //auto    b   = v.substr(n+2);
+            //return { integer(a, def.lo), integer(b, def.hi) };
+        //} else {
+            //return { integer(v, def.lo), integer(v, def.hi) };
+        //}
+    //}
     
 
     double          length(std::string_view v, double def)
@@ -189,13 +189,13 @@ namespace yq::b3::parse {
         return (Vector3D) point(v);
     }
 
-    double              real(std::string_view v, double def)
-    {
-        auto x = to_double(v);
-        if(!x)
-            return def;
-        return *x;
-    }
+    //double              real(std::string_view v, double def)
+    //{
+        //auto x = to_double(v);
+        //if(!x)
+            //return def;
+        //return *x;
+    //}
     
     SizeN               size(std::string_view v)
     {
@@ -218,33 +218,33 @@ namespace yq::b3::parse {
         return (Size3D) size(v);
     }
 
-    StringSet       string_set(std::string_view v)
-    {
-        StringSet       ret;
-        vsplit(v, ',', [&](std::string_view s){
-            ret.insert(std::string(trimmed(s)));
-        });
-        return ret;
-    }
+    //StringSet       string_set(std::string_view v)
+    //{
+        //StringSet       ret;
+        //vsplit(v, ',', [&](std::string_view s){
+            //ret.insert(std::string(trimmed(s)));
+        //});
+        //return ret;
+    //}
     
-    VectorN         vector(std::string_view v)
-    {
-        VectorN      ret;
-        vsplit(v, ',', [&](std::string_view s){
-            if(s.empty())
-                return;
-            ret.axes.push_back(real(s));
-        });
-        return ret;
-    }
+    //VectorN         vector(std::string_view v)
+    //{
+        //VectorN      ret;
+        //vsplit(v, ',', [&](std::string_view s){
+            //if(s.empty())
+                //return;
+            //ret.axes.push_back(real(s));
+        //});
+        //return ret;
+    //}
 
-    Vector2D        vector2(std::string_view v)
-    {
-        return (Vector2D) vector(v);
-    }
+    //Vector2D        vector2(std::string_view v)
+    //{
+        //return (Vector2D) vector(v);
+    //}
     
-    Vector3D        vector3(std::string_view v)
-    {
-        return (Vector3D) vector(v);
-    }
+    //Vector3D        vector3(std::string_view v)
+    //{
+        //return (Vector3D) vector(v);
+    //}
 }

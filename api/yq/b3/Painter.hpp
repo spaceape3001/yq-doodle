@@ -7,7 +7,8 @@
 #pragma once
 
 #include <yq/b3/keywords.hpp>
-#include <yq/b3/util/types.hpp>
+#include <yq/b3/typedef.hpp>
+#include <yq/b3fmt/types.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/tensor/Tensor24.hpp>
 #include <yq/tensor/Tensor23.hpp>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/b3/typedef.hpp>
-#include <yq/b3/util/types.hpp>
+#include <yq/b3fmt/types.hpp>
 
 #include <yq/units.hpp>
 #include <yq/container/Set.hpp>

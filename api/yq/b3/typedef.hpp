@@ -10,6 +10,7 @@
 #include <yq/text/IgCase.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <yq/typedef/vector3.hpp>
+#include <yq/b3fmt/typedef.hpp>
 
 namespace yq {
     template <typename> struct AxCorners2;
@@ -30,26 +31,6 @@ namespace yq::b3 {
         Expand
     };
 
-    enum class PenStyle {
-        Solid,
-        Dash,
-        Dot,
-        DashDot
-    };
-
-    using IntegerSet    = Set<int>;
-
-    struct Color;
-
-    struct CoordN;
-    struct CountN;
-    struct Brush;
-    struct Pen;
-    struct Font;
-    struct PointN;
-    struct SizeN;
-    struct VectorN;
-    
     class Style;
     
     struct Doc;
@@ -67,9 +48,6 @@ namespace yq::b3 {
     using DoubleMap         = Map<std::string,double,IgCase>;
     using StyleMap          = Map<std::string,Style*,IgCase>;
     
-    
-    using AxCorners23D          = AxCorners2<Vector3D>;
-    using AxCorners33D          = AxCorners3<Vector3D>;
 
     class Context;
     extern thread_local Context*    g_context;

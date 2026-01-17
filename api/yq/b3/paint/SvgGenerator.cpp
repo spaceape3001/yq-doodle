@@ -6,7 +6,7 @@
 
 #include "SvgGenerator.hpp"
 
-#include <yq/b3/util/types.hpp>
+#include <yq/b3fmt/types.hpp>
 
 #include <yq/container/ByteArray.hpp>
 #include <yq/core/StreamOps.hpp>

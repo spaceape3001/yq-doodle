@@ -61,6 +61,7 @@ target_link_libraries( ${PROJECT_NAME}
         yq_file
         yq_math
         yq_xml 
+	yq_b3fmt
 )
 
 target_include_directories(${PROJECT_NAME}
