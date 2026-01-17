@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ArgList.hpp"
-#include "parse.hpp"
+#include <yq/b3fmt/parse.hpp>
 
 namespace yq::b3 {
     std::string_view        ArgList::operator[](size_t i) const

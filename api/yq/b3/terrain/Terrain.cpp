@@ -11,7 +11,7 @@
 #include <yq/b3/terrain/TileGroup.hpp>
 #include <yq/b3/terrain/TerPage.hpp>
 #include <yq/b3/terrain/TerTile.hpp>
-#include <yq/b3/util/parse.hpp>
+#include <yq/b3fmt/parse.hpp>
 #include <yq/text/join.hpp>
 
 #include <yq/shape/AxBox2.hxx>

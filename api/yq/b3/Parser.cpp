@@ -10,7 +10,7 @@
 #include <yq/b3/Doc.hpp>
 #include <yq/b3/Frame.hpp>
 #include <yq/b3/spatial/PointType.hpp>
-#include <yq/b3/util/parse.hpp>
+#include <yq/b3fmt/parse.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/file/FileResolver.hpp>

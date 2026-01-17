@@ -153,8 +153,10 @@ namespace yq::b3 {
     {
         Parser          parse(this);
         g_context       = this;
+        parse::context_t::current(this);
         bool    f       = parse.read_file(file, false);
         g_context       = nullptr;
+        parse::context_t::current(nullptr);
         if(f || attrs().boolean("ignore")){
             m_file      = file;
             m_files     = std::move(parse.m_included);

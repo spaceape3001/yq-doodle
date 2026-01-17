@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ArgMap.hpp"
-#include "parse.hpp"
+#include <yq/b3fmt/parse.hpp>
 
 namespace yq::b3 {
   
