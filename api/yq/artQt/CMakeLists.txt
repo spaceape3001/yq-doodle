@@ -4,10 +4,12 @@
 ##
 ################################################################################
 
+project(yq_artQt)
+
 find_package(Qt6 REQUIRED Core Gui Widgets )
 set(CMAKE_AUTOMOC ON)
 
-add_library(yq_artQt SHARED
+add_library(${PROJECT_NAME} SHARED
     DocumentQ.hpp
     DocumentQ.cpp
     
@@ -29,10 +31,12 @@ add_library(yq_artQt SHARED
     kit/ViewQ.cpp
 )
 
-target_link_libraries(yq_artQt
+target_link_libraries(${PROJECT_NAME}
     PUBLIC
         yq_art
         yq_gluon
         yq_graphicsQt
 )
-LinkTest(yq_artQt)
+
+yq_qtlib(${PROJECT_NAME})
+LinkTest(${PROJECT_NAME})

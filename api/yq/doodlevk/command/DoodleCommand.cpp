@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/doodleVk/command/DoodleCommand.hpp>
+#include "DoodleCommand.hpp"
 
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 

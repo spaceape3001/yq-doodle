@@ -6,7 +6,7 @@
 
 #include "ArtMW.hpp"
 #include <yq/art/doc/Doc.hpp>
-#include <yq/artVk/DocTypeMenuUI.hpp>
+#include <yq/artvk/DocTypeMenuUI.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>
 #include <yq/tachyon/api/Payload.hpp>

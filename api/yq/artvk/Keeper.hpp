@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/art/doc/Doc.hpp>
-#include <yq/artVk/ArtDocPtr.hpp>
+#include <yq/artvk/ArtDocPtr.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::art {

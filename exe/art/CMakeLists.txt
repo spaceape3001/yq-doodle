@@ -16,7 +16,7 @@ PUBLIC
     yq_art
     yq_assetvk
     yq_tachyon 
-    yq_artVk
+    yq_artvk
 
 PRIVATE
     ImGuiFileDialog

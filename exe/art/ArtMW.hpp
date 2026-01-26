@@ -9,7 +9,7 @@
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/art/forward.hpp>
 #include <yq/art/keywords.hpp>
-#include <yq/artVk/ArtDocPtr.hpp>
+#include <yq/artvk/ArtDocPtr.hpp>
 
 namespace yq::tachyon {
     class Payload;

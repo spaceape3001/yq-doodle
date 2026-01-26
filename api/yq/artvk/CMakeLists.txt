@@ -4,14 +4,19 @@
 ##
 ################################################################################
 
-project(yq_doodleVk)
+project(yq_artvk)
 
 add_library(${PROJECT_NAME} SHARED
-    command/DoodleCommand.cpp
+    ArtDocPtr.cpp
+    DocTypeMenuUI.cpp
 )
 
-vulqan_library(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME}
+    PUBLIC
+        yq_art
+        yq_tachyon
+        yq_assetvk
+)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC yq_doodle yq_tachyon)
-
+yq_vklib(${PROJECT_NAME})
 LinkTest(${PROJECT_NAME})

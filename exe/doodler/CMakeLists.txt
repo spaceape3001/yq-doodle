@@ -15,5 +15,5 @@ PUBLIC
     yq_doodle 
     yq_tachyon 
     yq_assetvk
-    yq_doodleVk
+    yq_doodlevk
 )

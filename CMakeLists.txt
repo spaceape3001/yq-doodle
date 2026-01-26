@@ -18,6 +18,8 @@ if(PROJECT_IS_TOP_LEVEL)
     include(yq-toolbox/standard.cmake)
 endif()
 
+yq_data(data)
+
 if(Build_Vulkan)
     vulqan_data(data)
 endif()
