@@ -33,5 +33,6 @@ target_link_libraries(yq_artQt
     PUBLIC
         yq_art
         yq_gluon
+        yq_graphicsQt
 )
 LinkTest(yq_artQt)

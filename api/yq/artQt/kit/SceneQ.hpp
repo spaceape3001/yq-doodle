@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/gluon/graphics/GraphicsScene.hpp>
+#include <yq/graphicsQt/GraphicsScene.hpp>
 #include <yq/artQt/DocumentQ.hpp>
 
 namespace yq::art {

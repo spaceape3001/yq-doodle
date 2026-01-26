@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/gluon/graphics/GraphicsScene.hpp>
+#include <yq/graphicsQt/GraphicsScene.hpp>
 #include <yq/doodle/bit/ID.hpp>
 #include <yq/core/Ref.hpp>
 

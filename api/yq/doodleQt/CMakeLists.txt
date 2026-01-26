@@ -30,6 +30,7 @@ add_library(${PROJECT_NAME} SHARED
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
         yq_gluon
+        yq_graphicsQt
         yq_doodle
         Qt6::Core
         Qt6::Gui
